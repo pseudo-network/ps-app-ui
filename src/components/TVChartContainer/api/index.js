@@ -83,10 +83,10 @@ export default {
           onHistoryCallback(bars, { noData: true })
         }
       })
-    // .catch(err => {
-    //   console.log({ err })
-    //   // onErrorCallback(err)
-    // })
+      .catch(err => {
+        console.log({ err })
+        onErrorCallback(err)
+      })
   },
   subscribeBars: (
     symbolInfo,

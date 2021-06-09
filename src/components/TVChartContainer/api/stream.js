@@ -9,27 +9,28 @@ var _subs = []
 
 export default {
   subscribeBars: function (symbolInfo, resolution, updateCb, uid, resetCache) {
-    // const channelString = createChannelString(symbolInfo)
-    // socket.emit("SubAdd", { subs: [channelString] })
-    // var newSub = {
-    //   channelString,
-    //   uid,
-    //   resolution,
-    //   symbolInfo,
-    //   lastBar: historyProvider.history[symbolInfo.name].lastBar,
-    //   listener: updateCb,
-    // }
-    // _subs.push(newSub)
+    const channelString = createChannelString(symbolInfo)
+    socket.emit("SubAdd", { subs: [channelString] })
+
+    var newSub = {
+      channelString,
+      uid,
+      resolution,
+      symbolInfo,
+      lastBar: historyProvider.history[symbolInfo.name].lastBar,
+      listener: updateCb,
+    }
+    _subs.push(newSub)
   },
   unsubscribeBars: function (uid) {
-    // var subIndex = _subs.findIndex(e => e.uid === uid)
-    // if (subIndex === -1) {
-    //   //console.log("No subscription found for ",uid)
-    //   return
-    // }
-    // var sub = _subs[subIndex]
-    // socket.emit("SubRemove", { subs: [sub.channelString] })
-    // _subs.splice(subIndex, 1)
+    var subIndex = _subs.findIndex(e => e.uid === uid)
+    if (subIndex === -1) {
+      //console.log("No subscription found for ",uid)
+      return
+    }
+    var sub = _subs[subIndex]
+    socket.emit("SubRemove", { subs: [sub.channelString] })
+    _subs.splice(subIndex, 1)
   },
 }
 
@@ -45,10 +46,6 @@ socket.on("error", err => {
 socket.on("m", e => {
   // here we get all events the CryptoCompare connection has subscribed to
   // we need to send this new data to our subscribed charts
-
-  // todo: remove
-  return
-
   const _data = e.split("~")
   if (_data[0] === "3") {
     // console.log('Websocket Snapshot load event complete')
