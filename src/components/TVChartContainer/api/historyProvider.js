@@ -33,7 +33,7 @@ export default {
       // console.log("=.=.==.=.==.=.=.==.=.=.==")
       // console.log(data)
       // console.log("=.=.==.=.==.=.=.==.=.=.==")
-      if (data.s == "ok") {
+      if (data.length > 0) {
         // console.log(
         //   `Actually returned: ${new Date(
         //     data.TimeFrom * 1000
@@ -45,22 +45,16 @@ export default {
 
         var bars = []
 
-        for (var i = 0; i < data.t.length; i++) {
-          let t = 1000 * data.t[i]
-          var bar = {
-            time: t, //TradingView requires bar time in ms
-            low: data.l[i],
-            high: data.h[i],
-            open: data.o[i],
-            close: data.c[i],
-            volume: data.v[i],
+        bars = data.map(res => {
+          return {
+            time: res.unixTimeMS,
+            low: res.low,
+            high: res.high,
+            open: res.open,
+            close: res.close,
+            volume: res.tradeAmount,
           }
-          // console.log(bar)
-          bars.push(bar)
-        }
-        console.log("=.=.==.=.==.=.=.==.=.=.==")
-        console.log(bars)
-        console.log("=.=.==.=.==.=.=.==.=.=.==")
+        })
 
         // var bars = data.map(el => {
         //   return {

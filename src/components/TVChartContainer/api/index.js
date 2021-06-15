@@ -1,20 +1,11 @@
 import historyProvider from "./historyProvider"
 import stream from "./stream"
 
-const supportedResolutions = [
-  "1",
-  "3",
-  "5",
-  "15",
-  "30",
-  "60",
-  "120",
-  "240",
-  "D",
-]
+const supportedResolutions = ["1", "3", "5", "15", "30", "60"]
 
 const config = {
   supported_resolutions: supportedResolutions,
+  supports_search: false,
 }
 
 export default {
