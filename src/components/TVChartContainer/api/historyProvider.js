@@ -8,6 +8,8 @@ export default {
   history: history,
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
+    console.log("=-=-=-=-=-")
+    console.log(symbolInfo)
     const url = `${api_root}/history?from=${from}&to=${to}&resolution=${resolution}`
 
     return rp({
@@ -24,6 +26,8 @@ export default {
       if (data.length > 0) {
         var bars = []
         bars = data.map(res => {
+          // todo: remove outliers
+
           return {
             time: res.unixTimeMS,
             low: res.low,
