@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: tf-site-ui
-  name: tf-site-ui
+    app: ps-app-ui
+  name: ps-app-ui
 spec:
   type: LoadBalancer
   ports:
@@ -11,4 +11,4 @@ spec:
       targetPort: 80
       protocol: TCP
   selector:
-    app: tf-site-ui
+    app: ps-app-ui

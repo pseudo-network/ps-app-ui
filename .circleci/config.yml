@@ -52,8 +52,8 @@ workflows:
   docker-build-push-deploy-dev:
     jobs:
       - gcp-gcr/build-and-push-image:
-          image: tf-site-ui
-          tag: 0.0.8
+          image: ps-app-ui
+          tag: 0.0.2
           registry-url: gcr.io
           extra_build_args: "--build-arg=env=dev"
           filters:
@@ -62,10 +62,10 @@ workflows:
                 - dev
       - deploy:
           cluster: pw-dev
-          container: tf-site-ui
-          deployment: tf-site-ui
-          image: gcr.io/pineappleworkshop/tf-site-ui
-          tag: 0.0.8
+          container: ps-app-ui
+          deployment: ps-app-ui
+          image: gcr.io/pseudonetwork/ps-app-ui
+          tag: 0.0.2
           namespace: default
           filters:
             branches:
@@ -73,30 +73,12 @@ workflows:
                 - dev
           requires:
             - gcp-gcr/build-and-push-image
-      # - cypress/install:
-      #     yarn: true
-      #     filters:
-      #       branches:
-      #         only:
-      #           - dev
-      #     requires:
-      #       - deploy
-      # - cypress/run:
-      #     yarn: true
-      #     filters:
-      #       branches:
-      #         only:
-      #           - dev
-      #     requires:
-      #       - deploy
-      #       - cypress/install
-      #     start: 'yarn dev'
 
   docker-build-push-deploy-prod:
     jobs:
       - gcp-gcr/build-and-push-image:
-          image: tf-site-ui
-          tag: 0.0.8
+          image: ps-app-ui
+          tag: 0.0.2
           registry-url: gcr.io
           extra_build_args: "--build-arg=env=prod"
           filters:
@@ -105,10 +87,10 @@ workflows:
                 - prod
       - deploy:
           cluster: pw-prod
-          container: tf-site-ui
-          deployment: tf-site-ui
-          image: gcr.io/pineappleworkshop/tf-site-ui
-          tag: 0.0.8
+          container: ps-app-ui
+          deployment: ps-app-ui
+          image: gcr.io/pseudonetwork/ps-app-ui
+          tag: 0.0.2
           namespace: tf
           filters:
             branches:
@@ -116,20 +98,3 @@ workflows:
                 - prod
           requires:
             - gcp-gcr/build-and-push-image
-      # - cypress/install:
-      #     yarn: true
-      #     filters:
-      #       branches:
-      #         only:
-      #           - prod
-      #     requires:
-      #       - deploy
-      # - cypress/run:
-      #     yarn: true
-      #     filters:
-      #       branches:
-      #         only:
-      #           - prod
-      #     requires:
-      #       - cypress/install
-      #     start: 'yarn dev'

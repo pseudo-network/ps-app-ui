@@ -1,5 +1,5 @@
 service := ps-app-ui
-version := 0.0.0
+version := 0.0.2
 gcloud_proj := pseudonetwork
 cluster := ps-dev
 gcr-image := gcr.io/${gcloud_proj}/${service}:${version}

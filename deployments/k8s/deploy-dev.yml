@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tf-site-ui
+  name: ps-app-ui
 spec:
   selector:
     matchLabels:
-      app: tf-site-ui
+      app: ps-app-ui
   replicas: 1
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: tf-site-ui
+        app: ps-app-ui
     spec:
       containers:
-        - name: tf-site-ui
-          image: gcr.io/pineappleworkshop/tf-site-ui:0.0.8
+        - name: ps-app-ui
+          image: gcr.io/pseudonetwork/ps-app-ui:0.0.2
           env:
             - name: ENV
               value: "dev"
