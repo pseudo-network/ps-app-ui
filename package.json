@@ -3,6 +3,9 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "i": "^0.3.6",
+    "mathjs": "^2.1.1",
+    "npm": "^7.18.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.4",
