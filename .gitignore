@@ -1,8 +1,3 @@
-public/charting_library/
-public/datafeeds/
-src/charting_library/
-src/datafeeds/
-node_modules/
-static/
-build/
-node_modules
+# dependencies
+/node_modules
+/build
