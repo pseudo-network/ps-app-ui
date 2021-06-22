@@ -1,8 +1,8 @@
 service := ps-app-ui
 version := 0.0.2
-gcloud_proj := pseudonetwork
+gcloud_proj_id := sylvan-bonbon-317613
 cluster := ps-dev
-gcr-image := gcr.io/${gcloud_proj}/${service}:${version}
+gcr-image := gcr.io/${gcloud_proj_id}/${service}:${version}
 root := $(abspath $(shell pwd))
 port := 80
 

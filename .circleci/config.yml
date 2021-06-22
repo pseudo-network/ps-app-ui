@@ -64,7 +64,7 @@ workflows:
           cluster: pw-dev
           container: ps-app-ui
           deployment: ps-app-ui
-          image: gcr.io/pseudonetwork/ps-app-ui
+          image: gcr.io/sylvan-bonbon-317613/ps-app-ui
           tag: 0.0.2
           namespace: default
           filters:
@@ -89,7 +89,7 @@ workflows:
           cluster: pw-prod
           container: ps-app-ui
           deployment: ps-app-ui
-          image: gcr.io/pseudonetwork/ps-app-ui
+          image: gcr.io/sylvan-bonbon-317613/ps-app-ui
           tag: 0.0.2
           namespace: tf
           filters:
