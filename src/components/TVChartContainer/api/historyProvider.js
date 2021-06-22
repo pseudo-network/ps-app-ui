@@ -1,25 +1,25 @@
-
 var rp = require("request-promise").defaults({ json: true })
-const math = require('mathjs');
+const math = require("mathjs")
 
 // todo: should come from .env
-const api_root = "http://localhost:3444"
+const api_root = "http://api.pseudonetwork.net:3444"
+//const api_root = "http://localhost:3444"
 const history = {}
 const outlier_threshold = 3
 
-function calcZ(x, mean, std){
+function calcZ(x, mean, std) {
   return (x - mean) / std
 }
 
-function findOutliersInArray(arr){
+function findOutliersInArray(arr) {
   const mean = math.mean(arr)
   const std = math.std(arr)
 
   var outlierIndexes = []
   for (let i = 0; i < arr.length; i++) {
-    const a = arr[i];
+    const a = arr[i]
     const z = math.abs(calcZ(a, mean, std))
-    if (z > outlier_threshold){
+    if (z > outlier_threshold) {
       outlierIndexes.push(i)
     }
   }
@@ -46,16 +46,19 @@ export default {
 
       // todo: revise to check for errors
       if (data && data.length > 0) {
-
-        let lows = data.map(d => d.low)  
+        let lows = data.map(d => d.low)
         let highs = data.map(d => d.high)
         let opens = data.map(d => d.open)
         let closes = data.map(d => d.close)
 
-        let outlierIndexes = findOutliersInArray(lows).concat(findOutliersInArray(highs), findOutliersInArray(opens), findOutliersInArray(closes))
-  
-        data = data.filter(function(value, index) {
-          return outlierIndexes.indexOf(index) == -1;
+        let outlierIndexes = findOutliersInArray(lows).concat(
+          findOutliersInArray(highs),
+          findOutliersInArray(opens),
+          findOutliersInArray(closes)
+        )
+
+        data = data.filter(function (value, index) {
+          return outlierIndexes.indexOf(index) == -1
         })
 
         let bars = data.map(res => {
