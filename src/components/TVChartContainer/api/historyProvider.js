@@ -54,10 +54,9 @@ export default {
 
         let outlierIndexes = findOutliersInArray(lows).concat(findOutliersInArray(highs), findOutliersInArray(opens), findOutliersInArray(closes))
   
-        // nullify outliers in data
-        outlierIndexes.forEach(i=>{
-          data[i] = {}
-        })  
+        data = data.filter(function(value, index) {
+          return outlierIndexes.indexOf(index) == -1;
+        })
 
         let bars = data.map(res => {
           return {
