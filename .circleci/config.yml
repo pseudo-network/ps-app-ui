@@ -61,7 +61,7 @@ workflows:
               only:
                 - dev
       - deploy:
-          cluster: pw-dev
+          cluster: ps-dev
           container: ps-app-ui
           deployment: ps-app-ui
           image: gcr.io/sylvan-bonbon-317613/ps-app-ui
@@ -86,12 +86,12 @@ workflows:
               only:
                 - prod
       - deploy:
-          cluster: pw-prod
+          cluster: ps-prod
           container: ps-app-ui
           deployment: ps-app-ui
           image: gcr.io/sylvan-bonbon-317613/ps-app-ui
           tag: 0.0.4
-          namespace: tf
+          namespace: default
           filters:
             branches:
               only:
