@@ -8,6 +8,11 @@ import {
   useLocation,
   withRouter
 } from "react-router-dom";
+
+// Redux Components
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 //Material UI Components
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -49,12 +54,14 @@ import PermMediaOutlinedIcon from '@material-ui/icons/PermMediaOutlined';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 
-function ListItemObject (Title, IconName, Location, Children = [], isDisabled=false) {
+
+const drawerWidth = 240;
+
+function ListItemObject (Title, IconName, Location, isDisabled=false) {
   return {
     "title": Title,
     "icon": IconName,
     "path": Location,
-    "children": Children,
     "isDisabled": isDisabled
   };
 }
@@ -96,21 +103,71 @@ const useStyles = makeStyles((theme) => ({
   },
   nested: {
     paddingLeft: theme.spacing(4),
+  },drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    paddingTop: 50
   },
 }));
 
-export default (props)=> {
+
+const NavigationPanel = (props)=> {
+     // Where all the possible navigation locations and thier icons and titles are stored
+     const navItems = [
+      ListItemObject("Dashboard", <HomeOutlinedIcon/>, "/dashboard"),
+      ListItemObject("Safemoon Tracker", <HomeOutlinedIcon/>, "/"),
+      ListItemObject("Coin Researcher", <HomeOutlinedIcon/>, "/coin-research", true),
+    ]
+
+    const parentNavItems = [];
+
+
+
+
     // Generating and managing function for nav list items:
     const NavListItem = (({ navItem, key }) => {
       // Boolean checking if that list item is the current path
       var isSelected = (navItem.path == props.location.pathname);
         return (
-        <ListItem button onClick={(e)=>props.history.push(`${navItem.path}`)} id={key} selected={isSelected}>
-          <ListItemIcon>
-            {navItem.icon}
-          </ListItemIcon>
-          <ListItemText primary={navItem.title} />
-        </ListItem>
+          <>
+            {navItem.isDisabled? // if the nav list item is disabled:
+                <ListItem id={key}>
+                  <ListItemIcon>
+                  {navItem.icon}
+                </ListItemIcon>
+                <ListItemText primary={navItem.title} secondary={"Coming Soon!"} />
+              </ListItem>
+              :
+              <ListItem button onClick={(e)=>props.history.push(`${navItem.path}`)} id={key} selected={isSelected}>
+                <ListItemIcon>
+                {navItem.icon}
+              </ListItemIcon>
+              <ListItemText primary={navItem.title} />
+            </ListItem>
+            }
+          </>
         )
     });
 
@@ -149,24 +206,11 @@ export default (props)=> {
     });
     const classes = useStyles();
 
-
-     // Where all the possible navigation locations and thier icons and titles are stored
-     const navItems = [
-      ListItemObject("Dashboard", <HomeOutlinedIcon/>, "/dashboard"),
-      ListItemObject("Safemoon Tracker", <HomeOutlinedIcon/>, "/", true),
-      ListItemObject("Coin Researcher", <HomeOutlinedIcon/>, "/", true),
-    ]
-
-    const parentNavItems = [];
-
     return(
         <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Pseudocoin
-            </Typography>
+          <Toolbar className={classes.appBar}>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -176,7 +220,13 @@ export default (props)=> {
             paper: classes.drawerPaper,
           }}
         >
-          <Toolbar />
+          <AppBar position="relative">
+            <Toolbar>
+              <Typography variant="h4">
+                Pseudocoin
+              </Typography>
+            </Toolbar>
+          </AppBar>
           <div className={classes.drawerContainer}>
             <List>
             {parentNavItems.map((item, key) => {
@@ -189,7 +239,7 @@ export default (props)=> {
               {navItems.map((item, key) => {
                 //console.log("NavListItem" + key);
                 return(
-                  <NavListItem button navItem={item} id={item.path + "NavListItem" + key}/>
+                  <NavListItem navItem={item} id={item.path + "NavListItem" + key}/>
                   );
                 })
               }
@@ -207,3 +257,15 @@ export default (props)=> {
         </div>
       );
 }
+
+
+
+// Component Properties
+NavigationPanel.propTypes = {}
+
+// Component State
+function NavigationPanelState(state) {
+  return {
+  }
+}
+export default connect(NavigationPanelState)(withRouter(NavigationPanel));

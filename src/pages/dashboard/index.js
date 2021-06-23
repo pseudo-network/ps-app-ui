@@ -43,21 +43,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const CryptoDetail = (props) => {
+const Dashboard = (props) => {
     const classes = useStyles();
   
     return (
       <NavFrame page={"CryptoDetail"}>
-          <TVChartContainer />
+            YO!
       </NavFrame>
     );
   }
 // Component Properties
-CryptoDetail.propTypes = {}
+Dashboard.propTypes = {}
 
 // Component State
-function CryptoDetailState(state) {
+function DashboardState(state) {
   return {
   }
 }
-export default connect(CryptoDetailState)(CryptoDetail);
+export default connect(DashboardState)(Dashboard);
