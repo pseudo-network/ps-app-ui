@@ -9,15 +9,19 @@ import {
   withRouter,
 } from "react-router-dom";
 
+// Page imports
 import CryptoDetail from "./pages/cryptoDetail";
 import Dashboard from "./pages/dashboard";
+import DansTestPage from "./pages/dansTestPage";
 
+// NOTE: This is where new pages are added to the router
 const App = () => {
   return (
     <React.Fragment>
       <Router>
           <Switch>
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/dans-page" component={DansTestPage} />
             <Route path="/" component={CryptoDetail} />
           </Switch>
       </Router>

@@ -8,10 +8,13 @@ import thunk from "redux-thunk";
 
 // App Imports
 import user from "../data/user/state";
+import cryptoCurrencies from "../data/cryptoCurrency/state";
+
 
 // App Reducer
 const appReducer = combineReducers({
   user,
+  cryptoCurrencies
 });
 
 // Root Reducer
