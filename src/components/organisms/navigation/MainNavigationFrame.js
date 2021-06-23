@@ -25,6 +25,8 @@ import Box from "@material-ui/core/Box"
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
+import NightsStayIcon from '@material-ui/icons/NightsStay';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 const drawerWidth = 240
 
@@ -64,13 +66,8 @@ const NavigationPanel = props => {
   // Where all the possible navigation locations and thier icons and titles are stored
   const navItems = [
     ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
-    ListItemObject("Safemoon Tracker", <HomeOutlinedIcon />, "/"),
-    ListItemObject(
-      "Coin Researcher",
-      <HomeOutlinedIcon />,
-      "/coin-research",
-      true
-    ),
+    ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
+    ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research",true),
   ]
 
   const parentNavItems = []
@@ -146,7 +143,7 @@ const NavigationPanel = props => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Clipped drawer
+            Pseudonetwork
           </Typography>
         </Toolbar>
       </AppBar>
