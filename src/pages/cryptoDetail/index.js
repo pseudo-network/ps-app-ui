@@ -16,10 +16,10 @@ import styled, { withTheme } from "styled-components/macro";
 import { spacing } from "@material-ui/system";
 
 // Redux Components
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
-import NavFrame from "../../components/organisms/navigation/MainNavigationFrame"; // The top navigation bar and side navigation panel
+import NavFrame from "../../components/organisms/navigation/MainNavigationFrame" // The top navigation bar and side navigation panel
 
 const drawerWidth = 240;
 
@@ -46,7 +46,6 @@ CryptoDetail.propTypes = {}
 
 // Component State
 function CryptoDetailState(state) {
-  return {
-  }
+  return {}
 }
-export default connect(CryptoDetailState)(CryptoDetail);
+export default connect(CryptoDetailState)(CryptoDetail)

@@ -1,21 +1,10 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { TVChartContainer } from '../../components/molecules/TVChartContainer/index';
+import React from "react"
 
 // Redux Components
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
-import NavFrame from "../../components/organisms/navigation/MainNavigationFrame"; // The top navigation bar and side navigation panel
+import NavFrame from "../../components/organisms/navigation/MainNavigationFrame" // The top navigation bar and side navigation panel
 
 const drawerWidth = 240;
 
@@ -57,7 +46,6 @@ Dashboard.propTypes = {}
 
 // Component State
 function DashboardState(state) {
-  return {
-  }
+  return {}
 }
-export default connect(DashboardState)(Dashboard);
+export default connect(DashboardState)(Dashboard)
