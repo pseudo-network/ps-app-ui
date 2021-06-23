@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 import styled, { withTheme } from "styled-components/macro";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { spacing } from "@material-ui/system";
 
 // Redux Components
@@ -29,7 +30,6 @@ const Divider = styled(MuiDivider)(spacing);
 
 
 const CryptoDetail = (props) => {
-    const classes = useStyles();
   
     return (
       <NavFrame page={"CryptoDetail"}>
