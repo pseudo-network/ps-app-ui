@@ -1,15 +1,19 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { TVChartContainer } from '../../components/molecules/TVChartContainer/index';
+import {
+  Paper,
+  Avatar as MuiAvatar,
+  Box,
+  Breadcrumbs as MuiBreadcrumbs,
+  Button as MuiButton,
+  Card,
+  CardContent,
+  Divider as MuiDivider,
+  Grid,
+  LinearProgress as MuiLinearProgress,
+  Typography,
+} from "@material-ui/core";
+
+import styled, { withTheme } from "styled-components/macro";
+import { spacing } from "@material-ui/system";
 
 // Redux Components
 import PropTypes from 'prop-types';
@@ -19,28 +23,9 @@ import NavFrame from "../../components/organisms/navigation/MainNavigationFrame"
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerContainer: {
-    overflow: 'auto',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}));
+
+const Divider = styled(MuiDivider)(spacing);
+
 
 
 const CryptoDetail = (props) => {
@@ -48,7 +33,11 @@ const CryptoDetail = (props) => {
   
     return (
       <NavFrame page={"CryptoDetail"}>
-          <TVChartContainer />
+      <Grid container spacing={2} xs={12} sm={12} md={12} lg={12}>
+        <Grid item>
+          <TVChartContainer xs={12} sm={12} md={12} lg={12}/>
+        </Grid>
+      </Grid>
       </NavFrame>
     );
   }

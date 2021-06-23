@@ -19,6 +19,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "socket.io-client": "^4.1.2",
+    "styled-components": "^5.3.0",
     "typography": "^0.16.21"
   },
   "scripts": {

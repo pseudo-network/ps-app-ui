@@ -47,7 +47,7 @@ const Dashboard = (props) => {
     const classes = useStyles();
   
     return (
-      <NavFrame page={"CryptoDetail"}>
+      <NavFrame page={"Dashboard"}>
             YO!
       </NavFrame>
     );

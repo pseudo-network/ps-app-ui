@@ -246,10 +246,8 @@ const NavigationPanel = (props)=> {
             </List>
             </div>
         </Drawer>
-        <Toolbar />
         <Divider/>
             <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
                 <Box m={5} ml={8}>
                   {props.children}
                 </Box>
