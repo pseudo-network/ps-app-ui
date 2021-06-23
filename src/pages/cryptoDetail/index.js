@@ -12,9 +12,17 @@ import {
   Typography,
 } from "@material-ui/core"
 
+import styled, { withTheme } from "styled-components/macro"
+import { makeStyles, withStyles } from "@material-ui/core/styles"
+import { spacing } from "@material-ui/system"
+
 // Redux Components
 import { connect } from "react-redux"
 import NavFrame from "../../components/organisms/navigation/MainNavigationFrame" // The top navigation bar and side navigation panel
+
+const drawerWidth = 240
+
+const Divider = styled(MuiDivider)(spacing)
 
 const CryptoDetail = props => {
   return (
