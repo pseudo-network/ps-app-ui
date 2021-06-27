@@ -52,10 +52,11 @@ function ParentListItemObject (Title, IconName, clickMethod, isOpen, Children = 
   };
 }
 
-function ChildListItemObject (Title, Location) {
+function ChildListItemObject (Title, Location, isDisabled = false) {
   return {
     "title": Title,
-    "path": Location
+    "path": Location,
+    "isDisabled": isDisabled,
   };
 }
 
