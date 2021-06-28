@@ -1,1 +1,0 @@
-- Dan Explination: The Next Step up from that is molecules. Things like specialized "atoms" like "headerButton" that inherits and reuses our button code from the atom folder. Try to keep it to one or at most a few atoms being used together, as any biggerr then that would be more of an organism

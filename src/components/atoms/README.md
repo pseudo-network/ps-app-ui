@@ -1,1 +1,0 @@
-- Dan Explination: Atoms are the smallest forms of objects (Textboxes, Buttons, List Items, etc) We divide components in programming to allow for us to reuse code. Like programming a button once and being able to import it into a million places with a single line as appossed to writing all that button code in a million places.

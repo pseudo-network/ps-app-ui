@@ -14,24 +14,18 @@ import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import Collapse from "@material-ui/core/Collapse"
 import Drawer from "@material-ui/core/Drawer"
-import clsx from "clsx"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import List from "@material-ui/core/List"
-import IconButton from "@material-ui/core/IconButton"
 import Divider from "@material-ui/core/Divider"
-import Typography from "@material-ui/core/Typography"
-import Box from "@material-ui/core/Box"
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
-import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
-import NightsStayIcon from '@material-ui/icons/NightsStay';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
-import ExploreIcon from '@material-ui/icons/Explore';
+import NightsStayIcon from "@material-ui/icons/NightsStay"
+import TimelineIcon from "@material-ui/icons/Timeline"
+import FolderOpenIcon from "@material-ui/icons/FolderOpen"
+import TopBar from "../../molecules/TopBar/TopBar"
 
-
-const drawerWidth = 240
+const drawerWidth = 300
 
 function ListItemObject(Title, IconName, Location, isDisabled = false) {
   return {
@@ -42,28 +36,34 @@ function ListItemObject(Title, IconName, Location, isDisabled = false) {
   }
 }
 
-function ParentListItemObject (Title, IconName, clickMethod, isOpen, Children = []) {
+function ParentListItemObject(
+  Title,
+  IconName,
+  clickMethod,
+  isOpen,
+  Children = []
+) {
   return {
-    "title": Title,
-    "icon": IconName,
-    "clickMethod": clickMethod,
-    "isOpen": isOpen,
-    "children": Children
-  };
+    title: Title,
+    icon: IconName,
+    clickMethod: clickMethod,
+    isOpen: isOpen,
+    children: Children,
+  }
 }
 
-function ChildListItemObject (Title, Location, isDisabled = false) {
+function ChildListItemObject(Title, Location, isDisabled = false) {
   return {
-    "title": Title,
-    "path": Location,
-    "isDisabled": isDisabled,
-  };
+    title: Title,
+    path: Location,
+    isDisabled: isDisabled,
+  }
 }
-
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
+    flexGrow: 1,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -82,28 +82,43 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  listHeader: {
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
+    color: "#836AFF",
+  },
+  listItem: {
+    borderRadius: ".5rem",
+  },
+  listItemParent: {
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
+  },
 }))
 
-const NavigationPanel = props => {
-  
-    
-    // Example Parent List Item Necessary additions
-    /*
+const NavFrame = props => {
+  // Example Parent List Item Necessary additions
+  /*
     const [dansListOpen, setDansListOpen] = React.useState(false);
     const handleDansListClick = () => {
       setDansListOpen(!dansListOpen);
     };*/
-  
 
-    // Where all the possible navigation locations and thier icons and titles are stored
-    const navItems = [
-      ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
-      ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
-      ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research", true),
-      ListItemObject("Dans Test Page",<FolderOpenIcon />,"/dans-page"),
-    ]
-  
-    const parentNavItems = [
+  // Where all the possible navigation locations and thier icons and titles are stored
+  const navItems = [
+    ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
+    ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
+    ListItemObject("Coin Researcher", <TimelineIcon />, "/coin-research", true),
+    ListItemObject("Dans Test Page", <FolderOpenIcon />, "/dans-page"),
+  ]
+
+  const parentNavItems = [
     // Example Parent List Item
     /*ParentListItemObject("More Jazz", <ExploreIcon/>, handleDansListClick, dansListOpen,
     [
@@ -112,18 +127,19 @@ const NavigationPanel = props => {
     ])*/
   ]
 
-    
   /*
    HELPER FUNCTIONS
   */
   // Generating and managing function for nav list items:
   const NavListItem = ({ navItem, key }) => {
+    const classes = useStyles()
+
     // Boolean checking if that list item is the current path
     var isSelected = navItem.path == props.location.pathname
     return (
       <>
         {navItem.isDisabled ? ( // if the nav list item is disabled:
-          <ListItem id={key}>
+          <ListItem id={key} className={classes.listItem}>
             <ListItemIcon>{navItem.icon}</ListItemIcon>
             <ListItemText primary={navItem.title} secondary={"Coming Soon!"} />
           </ListItem>
@@ -133,6 +149,7 @@ const NavigationPanel = props => {
             onClick={e => props.history.push(`${navItem.path}`)}
             id={key}
             selected={isSelected}
+            className={classes.listItem}
           >
             <ListItemIcon>{navItem.icon}</ListItemIcon>
             <ListItemText primary={navItem.title} />
@@ -182,8 +199,21 @@ const NavigationPanel = props => {
     END HELPER FUNCTIONS
   */
 
-
   const classes = useStyles()
+
+  const handleConnectWalletClick = () => {
+    if (typeof window.ethereum !== "undefined") {
+      metamask()
+    }
+  }
+
+  const metamask = async () => {
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" })
+    const account = accounts[0]
+    console.log(account)
+
+    // todo: set state of account address
+  }
 
   /*
     ON RENDER FUNCTION/ MOUNT COMPENENT
@@ -191,13 +221,7 @@ const NavigationPanel = props => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Pseudonetwork
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <TopBar />
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -209,18 +233,19 @@ const NavigationPanel = props => {
         <div className={classes.drawerContainer}>
           {/* Navigation List */}
           <List>
+            <h4 className={classes.listHeader}>Pages</h4>
             {navItems.map((item, key) => {
               //console.log("NavListItem" + key);
               return (
-                <NavListItem
-                  navItem={item}
-                  id={item.path + "NavListItem" + key}
-                />
+                <div className={classes.listItemParent}>
+                  <NavListItem
+                    navItem={item}
+                    id={item.path + "NavListItem" + key}
+                  />
+                </div>
               )
             })}
-            <Divider/>
-            {
-            parentNavItems.map((item, key) => {
+            {parentNavItems.map((item, key) => {
               //console.log("NavListParentItem" + key);
               return (
                 <ParentNavListItems
@@ -229,8 +254,7 @@ const NavigationPanel = props => {
                   id={item.path + "NavListParentItem" + key}
                 />
               )
-            })
-            }
+            })}
           </List>
         </div>
       </Drawer>
@@ -244,10 +268,10 @@ const NavigationPanel = props => {
 }
 
 // Component Properties
-NavigationPanel.propTypes = {}
+NavFrame.propTypes = {}
 
 // Component State
-function NavigationPanelState(state) {
+function NavFrameState(state) {
   return {}
 }
-export default connect(NavigationPanelState)(withRouter(NavigationPanel))
+export default connect(NavFrameState)(withRouter(NavFrame))
