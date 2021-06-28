@@ -28,6 +28,8 @@ const useStyles = makeStyles(theme => ({
     textOverflow: "ellipsis",
     maxWidth: "20ch",
     color: "#A694FE",
+    fontWeight: 600,
+    textTransform: "none",
   },
 }))
 

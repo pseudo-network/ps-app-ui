@@ -24,6 +24,8 @@ import NightsStayIcon from "@material-ui/icons/NightsStay"
 import TimelineIcon from "@material-ui/icons/Timeline"
 import FolderOpenIcon from "@material-ui/icons/FolderOpen"
 import TopBar from "../../molecules/TopBar/TopBar"
+import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
+import Watermark from "../../molecules/Watermark/Watermark"
 
 const drawerWidth = 300
 
@@ -64,9 +66,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     flexGrow: 1,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    position: "relative",
   },
   drawer: {
     width: drawerWidth,
@@ -88,6 +88,9 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
+  toolbar: {
+    minHeight: 80,
+  },
   listHeader: {
     paddingLeft: "1.5em",
     paddingRight: "1.5em",
@@ -99,6 +102,15 @@ const useStyles = makeStyles(theme => ({
   listItemParent: {
     paddingLeft: "1.5em",
     paddingRight: "1.5em",
+  },
+  socialMediaRowParent: {
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
+    position: "absolute",
+    bottom: 10,
+    width: "100%",
+    display: "grid",
+    justifyContent: "center",
   },
 }))
 
@@ -229,7 +241,8 @@ const NavFrame = props => {
           paper: classes.drawerPaper,
         }}
       >
-        <Toolbar />
+        <Toolbar className={classes.toolbar} />
+
         <div className={classes.drawerContainer}>
           {/* Navigation List */}
           <List>
@@ -256,11 +269,17 @@ const NavFrame = props => {
               )
             })}
           </List>
+          <div className={classes.socialMediaRowParent}>
+            {" "}
+            <SocialMediaRow />
+            <br />
+            <Watermark />
+          </div>
         </div>
       </Drawer>
       <Divider />
       <main className={classes.content}>
-        <Toolbar />
+        <Toolbar className={classes.toolbar} />
         {props.children}
       </main>
     </div>

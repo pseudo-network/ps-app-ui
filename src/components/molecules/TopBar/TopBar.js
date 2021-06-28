@@ -31,7 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    // padding: ".5em",
+    paddingTop: ".60em",
+    paddingBottom: ".60em",
+    borderBottom: ".01px solid #545761",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -39,6 +41,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     color: "#ACB0BB",
+    fontWeight: 600,
   },
   link: {
     paddingLeft: 10,
