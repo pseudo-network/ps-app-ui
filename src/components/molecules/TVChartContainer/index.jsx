@@ -12,7 +12,6 @@ function getLanguageFromURL() {
 // datafeedUrl: 'http://localhost:3444',
 // datafeedUrl: 'https://demo_feed.tradingview.com'
 export class TVChartContainer extends React.PureComponent {
-
 	constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +50,7 @@ export class TVChartContainer extends React.PureComponent {
 	componentDidMount() {
 		const widgetOptions = {
 			debug: false,
+			theme: "Dark",
 			symbol: this.state.symbol,
 			datafeed: Datafeed,
 			interval: this.state.interval,

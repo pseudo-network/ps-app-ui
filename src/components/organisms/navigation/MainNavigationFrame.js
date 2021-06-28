@@ -193,7 +193,7 @@ const NavigationPanel = props => {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h4" noWrap>
+          <Typography variant="h6" noWrap>
             Pseudonetwork
           </Typography>
         </Toolbar>

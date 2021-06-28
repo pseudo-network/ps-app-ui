@@ -9,6 +9,9 @@ import {
   withRouter,
 } from "react-router-dom";
 
+// Main Theme import:
+import AppThemeProvider from "./theme/main";
+
 // Page imports
 import CryptoDetail from "./pages/cryptoDetail";
 import Dashboard from "./pages/dashboard";
@@ -18,13 +21,15 @@ import DansTestPage from "./pages/dansTestPage";
 const App = () => {
   return (
     <React.Fragment>
-      <Router>
-          <Switch>
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/dans-page" component={DansTestPage} />
-            <Route path="/" component={CryptoDetail} />
-          </Switch>
-      </Router>
+      <AppThemeProvider>
+        <Router>
+            <Switch>
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/dans-page" component={DansTestPage} />
+              <Route path="/" component={CryptoDetail} />
+            </Switch>
+        </Router>
+      </AppThemeProvider>
     </React.Fragment>
   );
 };
