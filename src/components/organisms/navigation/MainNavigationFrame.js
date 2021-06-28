@@ -194,7 +194,7 @@ const NavigationPanel = props => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Pseudonetwork
+            PseudoNetwork
           </Typography>
         </Toolbar>
       </AppBar>
