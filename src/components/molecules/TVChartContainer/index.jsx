@@ -12,6 +12,24 @@ function getLanguageFromURL() {
 // datafeedUrl: 'http://localhost:3444',
 // datafeedUrl: 'https://demo_feed.tradingview.com'
 export class TVChartContainer extends React.PureComponent {
+	constructor(props) {
+        super(props);
+        this.state = {
+            symbol: 'SAFEMOON/WBSC',
+			interval: '15',
+			height: props.height || "calc(100vh - 80px)",
+			containerId: props.chartName || 'Coin-Chart',
+			libraryPath: '/charting_library/',
+			chartsStorageUrl: 'https://saveload.tradingview.com',
+			chartsStorageApiVersion: '1.1',
+			clientId: 'tradingview.com',
+			userId: 'public_user_id',
+			fullscreen: false,
+			autosize: true,
+			studiesOverrides: {},
+        }
+    }
+
 	static defaultProps = {
 		symbol: 'SAFEMOON/WBSC',
 		interval: '15',
@@ -32,21 +50,22 @@ export class TVChartContainer extends React.PureComponent {
 	componentDidMount() {
 		const widgetOptions = {
 			debug: false,
-			symbol: this.props.symbol,
+			theme: "Dark",
+			symbol: this.state.symbol,
 			datafeed: Datafeed,
-			interval: this.props.interval,
-			container_id: this.props.containerId,
-			library_path: this.props.libraryPath,
+			interval: this.state.interval,
+			container_id: this.state.containerId,
+			library_path: this.state.libraryPath,
 			locale: getLanguageFromURL() || "en",
 			disabled_features: ["use_localstorage_for_settings"],
-			enabled_features: ["study_templates"],
-			charts_storage_url: this.props.chartsStorageUrl,
-			charts_storage_api_version: this.props.chartsStorageApiVersion,
-			client_id: this.props.clientId,
-			user_id: this.props.userId,
-			fullscreen: this.props.fullscreen,
-			autosize: this.props.autosize,
-			studies_overrides: this.props.studiesOverrides,
+			//enabled_features: ["study_templates"],
+			charts_storage_url: this.state.chartsStorageUrl,
+			charts_storage_api_version: this.state.chartsStorageApiVersion,
+			client_id: this.state.clientId,
+			user_id: this.state.userId,
+			fullscreen: this.state.fullscreen,
+			autosize: this.state.autosize,
+			studies_overrides: this.state.studiesOverrides,
 			overrides: {
 			  // "mainSeriesProperties.showCountdown": true,
 			  "paneProperties.background": "#131722",
@@ -85,13 +104,17 @@ export class TVChartContainer extends React.PureComponent {
 			this.tvWidget.remove();
 			this.tvWidget = null;
 		}
+		// removed from render temporarilly to allow size being passed through props
+		{className={ 'TVChartContainer' }}
 	}*/
 
 	render() {
 		return (
 			<div
-				id={ this.props.containerId }
-				className={ 'TVChartContainer' }
+				id={ this.state.containerId }
+				style={{
+					"height": this.state.height
+				}}
 			/>
 		);
 	}

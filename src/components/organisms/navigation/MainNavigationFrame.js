@@ -27,6 +27,9 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import ExploreIcon from '@material-ui/icons/Explore';
+
 
 const drawerWidth = 240
 
@@ -38,6 +41,25 @@ function ListItemObject(Title, IconName, Location, isDisabled = false) {
     isDisabled: isDisabled,
   }
 }
+
+function ParentListItemObject (Title, IconName, clickMethod, isOpen, Children = []) {
+  return {
+    "title": Title,
+    "icon": IconName,
+    "clickMethod": clickMethod,
+    "isOpen": isOpen,
+    "children": Children
+  };
+}
+
+function ChildListItemObject (Title, Location, isDisabled = false) {
+  return {
+    "title": Title,
+    "path": Location,
+    "isDisabled": isDisabled,
+  };
+}
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,15 +85,37 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NavigationPanel = props => {
-  // Where all the possible navigation locations and thier icons and titles are stored
-  const navItems = [
-    ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
-    ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
-    ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research",true),
+  
+    
+    // Example Parent List Item Necessary additions
+    /*
+    const [dansListOpen, setDansListOpen] = React.useState(false);
+    const handleDansListClick = () => {
+      setDansListOpen(!dansListOpen);
+    };*/
+  
+
+    // Where all the possible navigation locations and thier icons and titles are stored
+    const navItems = [
+      ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
+      ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
+      ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research", true),
+      ListItemObject("Dans Test Page",<FolderOpenIcon />,"/dans-page"),
+    ]
+  
+    const parentNavItems = [
+    // Example Parent List Item
+    /*ParentListItemObject("More Jazz", <ExploreIcon/>, handleDansListClick, dansListOpen,
+    [
+      ChildListItemObject("Anotha One", "/dans-page"),
+      ChildListItemObject("Anotha Two", "/dans-page"),
+    ])*/
   ]
 
-  const parentNavItems = []
-
+    
+  /*
+   HELPER FUNCTIONS
+  */
   // Generating and managing function for nav list items:
   const NavListItem = ({ navItem, key }) => {
     // Boolean checking if that list item is the current path
@@ -134,9 +178,16 @@ const NavigationPanel = props => {
       </>
     )
   }
+  /*
+    END HELPER FUNCTIONS
+  */
+
 
   const classes = useStyles()
 
+  /*
+    ON RENDER FUNCTION/ MOUNT COMPENENT
+  */
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -156,17 +207,8 @@ const NavigationPanel = props => {
       >
         <Toolbar />
         <div className={classes.drawerContainer}>
+          {/* Navigation List */}
           <List>
-            {parentNavItems.map((item, key) => {
-              //console.log("NavListParentItem" + key);
-              return (
-                <ParentNavListItems
-                  button
-                  navItem={item}
-                  id={item.path + "NavListParentItem" + key}
-                />
-              )
-            })}
             {navItems.map((item, key) => {
               //console.log("NavListItem" + key);
               return (
@@ -176,6 +218,19 @@ const NavigationPanel = props => {
                 />
               )
             })}
+            <Divider/>
+            {
+            parentNavItems.map((item, key) => {
+              //console.log("NavListParentItem" + key);
+              return (
+                <ParentNavListItems
+                  button
+                  navItem={item}
+                  id={item.path + "NavListParentItem" + key}
+                />
+              )
+            })
+            }
           </List>
         </div>
       </Drawer>
