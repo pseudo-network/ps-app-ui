@@ -101,6 +101,7 @@ const NavigationPanel = props => {
       ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
       ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research", true),
       ListItemObject("Dans Test Page",<FolderOpenIcon />,"/dans-page"),
+      ListItemObject("Benny Test Page",<FolderOpenIcon />,"/ben-page"),
     ]
   
     const parentNavItems = [
