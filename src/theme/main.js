@@ -38,6 +38,23 @@ const theme = createMuiTheme({
     //   // main:
     // },
   },
+
+  // light
+  // palette: {
+  //   type: "light",
+  //   primary: {
+  //     main: "#fff",
+  //   },
+  //   secondary: {
+  //     main: "#070B15",
+  //   },
+  //   text: {
+  //   },
+  //   action: {
+  //     active: "#836AFF",
+  //     hover: "#14171F",
+  //   },
+  // },
 })
 
 export default function AppThemeProvider(props) {
