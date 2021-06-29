@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Column, Table } from 'react-virtualized';
 
-import NavFrame from "../../components/organisms/navigation/MainNavigationFrame"
+import NavFrame from "../../components/organisms/NavFrame/NavFrame"
 import LiveViewContainer from "../../components/molecules/LiveViewContainer" 
 // import LiveViewData from "../../components/molecules/LiveViewContainer/api/transactionProvider.js"
 
