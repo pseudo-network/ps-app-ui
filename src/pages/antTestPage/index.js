@@ -47,7 +47,20 @@ const AntPage = props => {
     // Page name has to line up with component name on import in app.jsx file
   return (
   <NavFrame page={"AntTestPage"}>
-    <LiveViewContainer/>
+    <Grid container spacing={6}>
+            <Grid item xs={6}>
+              <LiveViewContainer/>
+            </Grid>
+            <Grid item xs={6}>
+              <LiveViewContainer/>
+            </Grid>
+            <Grid item xs={6}>
+              <LiveViewContainer/>
+            </Grid>
+            <Grid item xs={6}>
+              <LiveViewContainer/>
+            </Grid>
+        </Grid>
   </NavFrame>)
 }
 // Component Properties

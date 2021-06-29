@@ -1,12 +1,20 @@
-import React from "react"
+import React , { useEffect } from "react";
 import { connect } from "react-redux"
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
-import { AutoSizer, Column, Table } from 'react-virtualized';
+//import { AutoSizer, Column, Table } from 'react-virtualized';
 import transactionProvider from "./api/transactionProvider"
+import {getTransactions} from "../../../data/cryptoCurrency/actions"
+
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 
 const styles = (theme) => ({
@@ -39,111 +47,52 @@ const styles = (theme) => ({
   },
 });
 
-class MuiVirtualizedTable extends React.PureComponent {
-  static defaultProps = {
-    headerHeight: 48,
-    rowHeight: 48,
-  };
+const TransactionTable = (props) => {
 
-  getRowClassName = ({ index }) => {
-    const { classes, onRowClick } = this.props;
+  /*constructor(props) {
+    super(props);
+    props.getTransactions();
+  }*/
 
-    return clsx(classes.tableRow, classes.flexContainer, {
-      [classes.tableRowHover]: index !== -1 && onRowClick != null,
-    });
-  };
-
-  cellRenderer = ({ cellData, columnIndex }) => {
-    const { columns, classes, rowHeight, onRowClick } = this.props;
-    const isNumeric = (columnIndex != null && columns[columnIndex].numeric) || false;
-    const isTxId = (columnIndex != null && columns[columnIndex].isTxId) || false;
-    var formatedCellData = cellData;
-
-    if (isNumeric) {
-        if (columns[columnIndex].isCurrency) {
-            formatedCellData = `$${cellData.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 20 })}`;
-        } else {
-          formatedCellData = cellData.toLocaleString();
-        }
+  useEffect(()=>{
+    if (!props.cryptoCurrencies.isLoading){
+      props.getTransactions();
     }
-    else if (isTxId) {
-        const displayableTxIdLength = 6;
-        const shortenedTxId = cellData.substring(0,displayableTxIdLength)
-        formatedCellData = <a target="_blank" rel="noreferrer" href={`https://bscscan.com/tx/${cellData}`}>{shortenedTxId}</a>;
-    }
+  }, []);
 
-    return (
-      <TableCell
-        component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, {
-          [classes.noClick]: onRowClick == null,
-        })}
-        variant="body"
-        style={{ height: rowHeight }}
-        align={isNumeric ? 'right' : 'left'}
-      >
-        {formatedCellData}
-      </TableCell>
+      return (
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Buy Currency</TableCell>
+              <TableCell>Buy Amount:</TableCell>
+              <TableCell>Sell Currency</TableCell>
+              <TableCell>Sell Amount</TableCell>
+              <TableCell>Time</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!props.cryptoCurrencies.isLoading&&
+              props.cryptoCurrencies.transactionData.map((transaction, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell>{transaction.buyCurrency.symbol}</TableCell>
+                    <TableCell>{transaction.buyAmount}</TableCell>
+                    <TableCell>{transaction.sellCurrency.symbol}</TableCell>
+                    <TableCell>{transaction.sellAmount}</TableCell>
+                    <TableCell>{transaction.timeInterval.second}</TableCell>
+                  </TableRow>
+                )
+              })
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
-  };
-
-  headerRenderer = ({ label, columnIndex }) => {
-    const { headerHeight, columns, classes } = this.props;
-
-    return (
-      <TableCell
-        component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
-        variant="head"
-        style={{ height: headerHeight }}
-        align={columns[columnIndex].numeric || false ? 'right' : 'left'}
-      >
-        <span>{label}</span>
-      </TableCell>
-    );
-  };
-
-  render() {
-    const { classes, columns, rowHeight, headerHeight, ...tableProps } = this.props;
-    return (
-      <AutoSizer>
-        {({ height, width }) => (
-          <Table
-            height={height}
-            width={width}
-            rowHeight={rowHeight}
-            gridStyle={{
-              direction: 'inherit',
-            }}
-            headerHeight={headerHeight}
-            className={classes.table}
-            {...tableProps}
-            rowClassName={this.getRowClassName}
-          >
-            {columns.map(({ dataKey, ...other }, index) => {
-              return (
-                <Column
-                  key={dataKey}
-                  headerRenderer={(headerProps) =>
-                    this.headerRenderer({
-                      ...headerProps,
-                      columnIndex: index,
-                    })
-                  }
-                  className={classes.flexContainer}
-                  cellRenderer={this.cellRenderer}
-                  dataKey={dataKey}
-                  {...other}
-                />
-              );
-            })}
-          </Table>
-        )}
-      </AutoSizer>
-    );
-  }
 }
 
+/*
 MuiVirtualizedTable.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.arrayOf(
@@ -160,7 +109,6 @@ MuiVirtualizedTable.propTypes = {
   onRowClick: PropTypes.func,
   rowHeight: PropTypes.number,
 };
-
 const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
 // ---
@@ -180,7 +128,7 @@ function createData(id, buySell, tokens, price, pricePerToken, time, txId) {
 const rows = [];
 
 const price = transactionProvider.getTransaction().then(data => data)
-  console.log(price)
+//  console.log(price)
   
 for (let i = 0; i < 200; i += 1) {
   const randomSelection = sample[Math.floor(Math.random() * sample.length)];
@@ -191,59 +139,23 @@ const TransactionHistoryPage = props => {
   if (props.user.isLoading){
   }
 return (
-      <Paper style={{ height: 400, width: '100%' }}>
-      <VirtualizedTable
-        rowCount={rows.length}
-        rowGetter={({ index }) => rows[index]}
-        columns={[
-          {
-            width: 120,
-            label: 'Buy/Sell',
-            dataKey: 'buySell',
-          },
-          {
-            width: 120,
-            label: 'Tokens',
-            dataKey: 'tokens',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'Price',
-            dataKey: 'price',
-            numeric: true,
-            isCurrency: true,
-          },
-          {
-            width: 140,
-            label: 'Price/Token',
-            dataKey: 'pricePerToken',
-            numeric: true,
-            isCurrency: true,
-          },
-          {
-            width: 120,
-            label: 'Time',
-            dataKey: 'time',
-          },
-          {
-            width: 120,
-            label: 'Tx Id',
-            dataKey: 'txId',
-            isTxId: true
-          },
-        ]}
-      />
+    <Paper style={{ height: 400, width: '100%' }}>
+      
     </Paper>)
-}
+}*/
 // Component Properties
-TransactionHistoryPage.propTypes = {}
+TransactionTable.propTypes = {
+  user: PropTypes.object.isRequired,
+  cryptoCurrencies: PropTypes.object.isRequired,
+  getTransactions: PropTypes.func.isRequired,
+}
 
 // Component State
-function TransactionHistoryPageState(state) {
-return {
-    user: state.user
-}
+function TransactionTableState(state) {
+  return {
+      user: state.user,
+      cryptoCurrencies: state.cryptoCurrencies,
+  }
 }
 
-export default connect(TransactionHistoryPageState)(TransactionHistoryPage)
+export default connect(TransactionTableState, { getTransactions })(TransactionTable)
