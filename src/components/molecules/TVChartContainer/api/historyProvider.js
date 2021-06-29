@@ -2,8 +2,8 @@ var rp = require("request-promise").defaults({ json: true })
 const math = require("mathjs")
 
 // todo: should come from .env
-//const api_root = "http://api.pseudonetwork.net:3444"
-const api_root = "http://localhost:3444"
+const api_root = "http://api.pseudonetwork.net:3444"
+// const api_root = "http://localhost:3444"
 const history = {}
 const outlier_threshold = 3
 
