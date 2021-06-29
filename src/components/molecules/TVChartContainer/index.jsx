@@ -50,7 +50,7 @@ export class TVChartContainer extends React.PureComponent {
 	componentDidMount() {
 		const widgetOptions = {
 			debug: false,
-			theme: "Dark",
+			theme: "light",
 			symbol: this.state.symbol,
 			datafeed: Datafeed,
 			interval: this.state.interval,
