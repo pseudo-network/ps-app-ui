@@ -12,7 +12,6 @@ function getLanguageFromURL() {
 // datafeedUrl: 'http://localhost:3444',
 // datafeedUrl: 'https://demo_feed.tradingview.com'
 export class TVChartContainer extends React.PureComponent {
-
 	constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +50,7 @@ export class TVChartContainer extends React.PureComponent {
 	componentDidMount() {
 		const widgetOptions = {
 			debug: false,
+			theme: "Dark",
 			symbol: this.state.symbol,
 			datafeed: Datafeed,
 			interval: this.state.interval,
@@ -58,7 +58,7 @@ export class TVChartContainer extends React.PureComponent {
 			library_path: this.state.libraryPath,
 			locale: getLanguageFromURL() || "en",
 			disabled_features: ["use_localstorage_for_settings"],
-			enabled_features: ["study_templates"],
+			//enabled_features: ["study_templates"],
 			charts_storage_url: this.state.chartsStorageUrl,
 			charts_storage_api_version: this.state.chartsStorageApiVersion,
 			client_id: this.state.clientId,

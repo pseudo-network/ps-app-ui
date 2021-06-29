@@ -52,10 +52,11 @@ function ParentListItemObject (Title, IconName, clickMethod, isOpen, Children = 
   };
 }
 
-function ChildListItemObject (Title, Location) {
+function ChildListItemObject (Title, Location, isDisabled = false) {
   return {
     "title": Title,
-    "path": Location
+    "path": Location,
+    "isDisabled": isDisabled,
   };
 }
 
@@ -101,6 +102,7 @@ const NavigationPanel = props => {
       ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research", true),
       ListItemObject("Dans Test Page",<FolderOpenIcon />,"/dans-page"),
       ListItemObject("Ants Test Page",<FolderOpenIcon />,"/ant-page"),
+      ListItemObject("Benny Test Page",<FolderOpenIcon />,"/ben-page"),
     ]
   
     const parentNavItems = [
@@ -193,7 +195,7 @@ const NavigationPanel = props => {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h4" noWrap>
+          <Typography variant="h6" noWrap>
             Pseudonetwork
           </Typography>
         </Toolbar>
