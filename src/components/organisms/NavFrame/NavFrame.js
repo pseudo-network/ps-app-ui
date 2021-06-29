@@ -121,16 +121,19 @@ const NavFrame = props => {
     const handleDansListClick = () => {
       setDansListOpen(!dansListOpen);
     };*/
+  
 
-  // Where all the possible navigation locations and thier icons and titles are stored
-  const navItems = [
-    ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
-    ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
-    ListItemObject("Coin Researcher", <TimelineIcon />, "/coin-research", true),
-    ListItemObject("Dans Test Page", <FolderOpenIcon />, "/dans-page"),
-  ]
-
-  const parentNavItems = [
+    // Where all the possible navigation locations and thier icons and titles are stored
+    const navItems = [
+      ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
+      ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
+      ListItemObject("Coin Researcher",<TimelineIcon />,"/coin-research", true),
+      ListItemObject("Dans Test Page",<FolderOpenIcon />,"/dans-page"),
+      ListItemObject("Ants Test Page",<FolderOpenIcon />,"/ant-page"),
+      ListItemObject("Benny Test Page",<FolderOpenIcon />,"/ben-page"),
+    ]
+  
+    const parentNavItems = [
     // Example Parent List Item
     /*ParentListItemObject("More Jazz", <ExploreIcon/>, handleDansListClick, dansListOpen,
     [
