@@ -11,7 +11,7 @@ function getLanguageFromURL() {
 
 // datafeedUrl: 'http://localhost:3444',
 // datafeedUrl: 'https://demo_feed.tradingview.com'
-export class TVChartContainer extends React.PureComponent {
+export class TVChart extends React.PureComponent {
 	constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +27,8 @@ export class TVChartContainer extends React.PureComponent {
 			fullscreen: false,
 			autosize: true,
 			studiesOverrides: {},
+			allow_symbol_change: false,
+			hide_legend: true,
         }
     }
 
@@ -42,6 +44,8 @@ export class TVChartContainer extends React.PureComponent {
 		fullscreen: false,
 		autosize: true,
 		studiesOverrides: {},
+		allow_symbol_change: false,
+		hide_legend: true,
 	};
 
 
@@ -66,6 +70,8 @@ export class TVChartContainer extends React.PureComponent {
 			fullscreen: this.state.fullscreen,
 			autosize: this.state.autosize,
 			studies_overrides: this.state.studiesOverrides,
+			allow_symbol_change: false,
+			hide_legend: true,
 			overrides: {
 			  // "mainSeriesProperties.showCountdown": true,
 			  "paneProperties.background": "#131722",
@@ -80,23 +86,6 @@ export class TVChartContainer extends React.PureComponent {
 
 		const tvWidget = new widget(widgetOptions);
 		this.tvWidget = tvWidget;
-
-		tvWidget.onChartReady(() => {
-			tvWidget.headerReady().then(() => {
-				const button = tvWidget.createButton();
-				button.setAttribute('title', 'Click to show a notification popup');
-				button.classList.add('apply-common-tooltip');
-				button.addEventListener('click', () => tvWidget.showNoticeDialog({
-					title: 'Notification',
-					body: 'TradingView Charting Library API works correctly',
-					callback: () => {
-						console.log('Noticed!');
-					},
-				}));
-
-				button.innerHTML = 'Check API';
-			});
-		});
 	}
 	/*
 	componentWillUnmount() {

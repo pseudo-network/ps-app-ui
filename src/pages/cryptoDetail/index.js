@@ -1,17 +1,20 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { TVChartContainer } from "../../components/molecules/TVChartContainer/index"
+import { TVChartContainer } from "../../components/molecules/TVChart/index"
 
 // Redux Components
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
 import NavFrame from "../../components/organisms/NavFrame/NavFrame" // The top navigation bar and side navigation panel
-
+import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
+import LiveViewContainer from "../../components/molecules/LiveViewContainer"
 const CryptoDetail = props => {
   return (
     <NavFrame page={"CryptoDetail"}>
-      <TVChartContainer />
+      <TVChartWithHeader />
+      <br />
+      <LiveViewContainer />
     </NavFrame>
   )
 }

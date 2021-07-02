@@ -22,9 +22,13 @@ export function getTransactions(coinAddress, isLoading = true) {
       isLoading,
     })
     // Sending the john
-    return axios.get(`${api_root}/transaction`).then(response => {
-      // Process Data
-      /*response.data.map(item =>  {
+    const safemoon = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" //temporary
+
+    return axios
+      .get(`${api_root}/currencies/${safemoon}/transactions`)
+      .then(response => {
+        // Process Data
+        /*response.data.map(item =>  {
                 console.log(item);
                 /*
                 let price = data.map(d => d.tradeAmount)
@@ -44,12 +48,12 @@ export function getTransactions(coinAddress, isLoading = true) {
                     sellAmount
                 }
             });*/
-      console.log("response.data")
-      console.log(response.data)
-      dispatch(updateTransactions(response.data))
-      dispatch({
-        type: GET_TRANSACTION_RESPONSE,
+        console.log("response.data")
+        console.log(response.data)
+        dispatch(updateTransactions(response.data))
+        dispatch({
+          type: GET_TRANSACTION_RESPONSE,
+        })
       })
-    })
   }
 }

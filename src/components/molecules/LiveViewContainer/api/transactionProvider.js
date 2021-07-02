@@ -6,7 +6,10 @@ export default {
   transaction: transaction,
 
   getTransaction: async function () {
-    let response = await fetch(`${api_root}/transaction`)
+    const safemoon = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" //temporary
+    let response = await fetch(
+      `${api_root}/currencies/${safemoon}/transactions`
+    )
     let data = await response.json()
 
     if (data && data.length > 0) {
