@@ -43,7 +43,7 @@ import {
 
 import NavFrame from "../../components/organisms/NavFrame/NavFrame" // The top navigation bar and side navigation panel
 
-import { TVChartContainer } from "../../components/molecules/TVChartContainer/index"
+import { TVChart } from "../../components/molecules/TVChart/index"
 
 const Divider = styled(MuiDivider)(spacing)
 
@@ -64,16 +64,16 @@ const DansPage = props => {
     <NavFrame page={"DansTestPage"}>
       <Grid container spacing={6}>
         <Grid item xs={6} style={{ background: "orange" }}>
-          <TVChartContainer chartName={"Chart1"} height={"300px"} />
+          <TVChart chartName={"Chart1"} height={"300px"} />
         </Grid>
         <Grid item xs={6} style={{ background: "blue" }}>
-          <TVChartContainer chartName={"Chart2"} height={"300px"} />
+          <TVChart chartName={"Chart2"} height={"300px"} />
         </Grid>
         <Grid item xs={6} style={{ background: "green" }}>
-          <TVChartContainer chartName={"Chart3"} height={"300px"} />
+          <TVChart chartName={"Chart3"} height={"300px"} />
         </Grid>
         <Grid item xs={6} style={{ background: "red" }}>
-          <TVChartContainer chartName={"Chart4"} height={"300px"} />
+          <TVChart chartName={"Chart4"} height={"300px"} />
         </Grid>
       </Grid>
     </NavFrame>

@@ -94,7 +94,7 @@ export class TVChart extends React.PureComponent {
 			this.tvWidget = null;
 		}
 		// removed from render temporarilly to allow size being passed through props
-		{className={ 'TVChartContainer' }}
+		{className={ 'TVChart' }}
 	}*/
 
 	render() {

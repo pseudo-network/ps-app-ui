@@ -1,6 +1,5 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { TVChartContainer } from "../../components/molecules/TVChart/index"
 
 // Redux Components
 import PropTypes from "prop-types"
