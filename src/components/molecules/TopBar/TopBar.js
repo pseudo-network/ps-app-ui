@@ -23,7 +23,7 @@ import PSButton from "../../atoms/PSButton/PSButton"
 import PSLink from "../../atoms/PSLink/PSLink"
 import PSDialog from "../PSDialog/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
-
+import {SearchBar} from "../../atoms/PSSearchBar/PSSearchBar"
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -31,8 +31,8 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    paddingTop: ".60em",
-    paddingBottom: ".60em",
+    paddingTop: ".20em",
+    paddingBottom: ".20em",
     borderBottom: ".01px solid #545761",
   },
   menuButton: {
@@ -128,6 +128,7 @@ const TopBar = props => {
           <Typography variant="h6" className={classes.title}>
             Pseudonetwork
           </Typography>
+          <SearchBar/>
           {!account ? (
             <PSButton
               onClick={handleConnectWalletClick}
