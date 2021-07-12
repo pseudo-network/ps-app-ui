@@ -23,7 +23,7 @@ import PSButton from "../../atoms/PSButton/PSButton"
 import PSLink from "../../atoms/PSLink/PSLink"
 import PSDialog from "../PSDialog/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
-import {SearchBar} from "../../atoms/PSSearchBar/PSSearchBar"
+import SearchBar from "../../atoms/PSSearchBar/PSSearchBar"
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",

@@ -1,7 +1,7 @@
 // Imports
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-const api_root = "http://localhost:3444";
+const api_root = "http://34.69.134.192:3444";
 
 export const UPDATE_CURRENCIES = 'UPDATE_CURENCIES';
 
