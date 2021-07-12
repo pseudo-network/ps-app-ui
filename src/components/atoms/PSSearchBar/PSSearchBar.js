@@ -1,8 +1,11 @@
 import React , { useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { spacing } from "@material-ui/system";
-import styled from "styled-components/macro";
 import PropTypes from 'prop-types';
+
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
+import styled from "styled-components/macro"
 import { withStyles } from '@material-ui/core/styles';
 import {getTransactions} from "../../../data/cryptoCurrency/actions"
 import {
@@ -41,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export const SearchBar = (props) => {
-    
+    const [SearchResultOpen, setSearchResultOpen] = React.useState(false);
+    const [SearchTarget, setSearchTarget] = React.useState(false);
     const classes = useStyles();
 
     const CurrentLookupTypeButton = () =>{
@@ -51,8 +55,28 @@ export const SearchBar = (props) => {
         </IconButton>
         );
     }
+
+    const handleSearchTargetBoxOpen = () =>{
+        setSearchResultOpen(true);
+    }
+    const handleSearchTargetBoxClose = () =>{
+        setSearchResultOpen(false);
+    }
+
    // Default placeholder if an onsearch isnt passed
-    const defaultHandleSearchTargetChange = () =>{}
+    const defaultHandleSearchTargetChange = (event) =>{
+        if (event.target.value != ""){
+            if (!SearchResultOpen){
+                handleSearchTargetBoxOpen();
+            }
+
+        }
+        else {
+            if (SearchResultOpen){
+                handleSearchTargetBoxClose();
+            }
+        }
+    }
 
     return (
     <Grid xs={4} s={4} className={classes.baseStyling}>
@@ -61,7 +85,7 @@ export const SearchBar = (props) => {
             variant="outlined"
             id={"searchTarget"}
             type={"text"}
-            onChange={props.handleSearchTargetChange || defaultHandleSearchTargetChange}
+            onChange={defaultHandleSearchTargetChange}
             autoFocus={"autofocus"}
             placeholder={"Search Coins"}
             name={"searchTarget"}
@@ -80,10 +104,33 @@ export const SearchBar = (props) => {
                 vertical: 'top',
                 horizontal: 'left',
             }}
+            open={SearchResultOpen}
             >
-            The content of the Popover.
+            {props.cryptoCurrency.searchResults.map((item, key) => {
+                return (
+                    <>
+                        <Typography>{item.name}</Typography>
+                        <Typography>{item.network}</Typography>
+                    </>
+                )
+            })}
         </Popover>
     </Grid>
     );
 }
+
+
+// Component Properties
+SearchBar.propTypes = {
+    cryptoCurrency: PropTypes.object.isRequired,
+}
+
+// Component State
+function SearchBarState(state) {
+  return {
+    cryptoCurrency: state.cryptoCurrency
+  }
+}
+export default connect(SearchBarState)(withRouter(SearchBar))
+
 

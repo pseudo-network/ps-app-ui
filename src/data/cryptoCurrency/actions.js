@@ -9,8 +9,17 @@ export const GET_TRANSACTION_REQUEST = 'GET_TRANSACTION_REQUEST';
 export const GET_TRANSACTION_RESPONSE = 'GET_TRANSACTION_RESPONSE';
 export const UPDATE_TRANSACTIONS = 'UPDATE_TRANSACTIONS';
 
+
+export const GET_SEARCH_REQUEST = 'GET_SEARCH_REQUEST';
+export const GET_SEARCH_RESPONSE = 'GET_SEARCH_RESPONSE';
+export const UPDATE_SEARCH_RESULTS = 'UPDATE_SEARCH_RESULTS';
+
 export function updateTransactions(newTransactions) {
     return {type: UPDATE_TRANSACTIONS,  newTransactions}
+}
+
+export function updateSearchResults(results) {
+    return {type: UPDATE_SEARCH_RESULTS,  results}
 }
 
 export function getTransactions(coinAddress, isLoading=true) {
@@ -48,6 +57,27 @@ export function getTransactions(coinAddress, isLoading=true) {
             dispatch(updateTransactions(response.data));
             dispatch({
                 type: GET_TRANSACTION_RESPONSE
+            });
+        })
+    }
+}
+
+export function searchCoins(searchTarget, isLoading=true) {
+    var urlEncodedSearchTarget = searchTarget;//encodeURIComponent(myUrl);
+    return dispatch => {
+        // Telling the dispatch we are starting to load this component
+        dispatch({
+          type: GET_SEARCH_REQUEST,
+          isLoading
+        });
+        // Sending the john
+        return axios.get(`${api_root}/currencies?search_query='` + urlEncodedSearchTarget).then( response =>{
+            // Process Data
+            console.log("response.data");
+            console.log(response.data);
+            dispatch(updateSearchResults(response.data));
+            dispatch({
+                type: GET_SEARCH_RESPONSE
             });
         })
     }
