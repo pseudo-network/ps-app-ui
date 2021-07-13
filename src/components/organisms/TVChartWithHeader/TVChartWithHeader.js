@@ -29,6 +29,12 @@ const useStyles = makeStyles(theme => ({
 
 const TVChartWithHeader = props => {
   const classes = useStyles()
+  const [usd, setUSD] = useState(true)
+  const baseCurrencyAddress = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3"
+
+  useEffect(() => {
+    console.log(usd)
+  }, [usd])
 
   /*
     ON RENDER FUNCTION/ MOUNT COMPENENT
@@ -38,13 +44,15 @@ const TVChartWithHeader = props => {
       <Box className={classes.root}>
         <Typography>USD</Typography>
         <Switch
-          defaultChecked
           color="default"
           inputProps={{ "aria-label": "checkbox with default color" }}
+          onClick={() => {
+            setUSD(!usd)
+          }}
         />
         <Typography>BNB</Typography>
       </Box>
-      <TVChart />
+      <TVChart baseCurrencyAddress={baseCurrencyAddress} usd={usd} />
     </>
   )
 }

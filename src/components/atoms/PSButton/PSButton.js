@@ -20,13 +20,15 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // backgroundColor: theme.pallete.secondary,
+    backgroundColor: "rgba(131, 106, 255, 0.25)",
+    border: "1px solid #836AFF",
+    padding: ".66em",
   },
   text: {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    maxWidth: "20ch",
+    maxWidth: "16ch",
     color: "#A694FE",
     fontWeight: 600,
     textTransform: "none",

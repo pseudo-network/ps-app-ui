@@ -9,20 +9,12 @@ import { connect } from "react-redux"
 //Material UI Components
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import MenuIcon from "@material-ui/icons/Menu"
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  CssBaseline,
-  Button,
-  Grid,
-  Box,
-} from "@material-ui/core"
+import { AppBar, Toolbar, Typography, IconButton, Box } from "@material-ui/core"
 import PSButton from "../../atoms/PSButton/PSButton"
 import PSLink from "../../atoms/PSLink/PSLink"
 import PSDialog from "../PSDialog/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
+import PSLabel from "../../atoms/PSLabel/PSLabel"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,10 +38,14 @@ const useStyles = makeStyles(theme => ({
   link: {
     paddingLeft: 10,
   },
+  balance: {
+    marginRight: 10,
+  },
 }))
 
 const TopBar = props => {
   const [account, setAccount] = useState(null)
+  const [balance, setBalance] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const classes = useStyles()
@@ -72,6 +68,43 @@ const TopBar = props => {
     const accounts = await ethereum.request({ method: "eth_requestAccounts" })
     const account = accounts[0]
     setAccount(account)
+    getBalance(account)
+    // todo: get balance
+  }
+
+  const getBalance = accountAddress => {
+    const currencyAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7"
+    const qs = `{
+      ethereum {
+        address(address: {is: "${accountAddress}"}) {
+          balances(currency: {in: ["ETH", "${currencyAddress}"]}) {
+            currency {
+              symbol
+            }
+            value
+          }
+        }
+      }
+    }`
+
+    fetch("https://graphql.bitquery.io", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": "BQYug1u2azt1EzuPggXfnhdhzFObRW0g",
+      },
+      body: JSON.stringify({ query: qs }),
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res) {
+          const balance = String(
+            res?.data?.ethereum?.address[0]?.balances[0]?.value
+          )
+          const balanceShort = balance.substring(0, 6)
+          setBalance(balanceShort)
+        }
+      })
   }
 
   const copyAddressToClipboard = () => {
@@ -111,9 +144,6 @@ const TopBar = props => {
     )
   }
 
-  /*
-    ON RENDER FUNCTION/ MOUNT COMPENENT
-  */
   return (
     <>
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
@@ -129,12 +159,19 @@ const TopBar = props => {
             Pseudonetwork
           </Typography>
           {!account ? (
-            <PSButton
-              onClick={handleConnectWalletClick}
-              text={"Connect Wallet"}
-            ></PSButton>
+            <>
+              <PSButton
+                onClick={handleConnectWalletClick}
+                text={"Connect Wallet"}
+              ></PSButton>
+            </>
           ) : (
-            <PSButton onClick={handleOpenDialogClick} text={account} />
+            <>
+              <div className={classes.balance}>
+                <PSLabel text={balance} />
+              </div>
+              <PSButton onClick={handleOpenDialogClick} text={account} />
+            </>
           )}
         </Toolbar>
       </AppBar>
