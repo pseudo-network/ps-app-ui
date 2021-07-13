@@ -52,7 +52,7 @@ const TVChartWithHeader = props => {
         />
         <Typography>BNB</Typography>
       </Box>
-      <TVChart baseCurrencyAddress={baseCurrencyAddress} usd={usd} />
+      <TVChart baseCurrencyAddress={baseCurrencyAddress} usd={usd} symbol={props.symbol || "UNKNOWN"} />
     </>
   )
 }

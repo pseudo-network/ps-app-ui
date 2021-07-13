@@ -1,12 +1,12 @@
 import * as React from "react"
 import { widget } from "../../../charting_library/charting_library"
 import Datafeed from "./api"
-export class TVChart extends React.PureComponent {
+export class TVChart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       theme: props.theme || "Dark",
-      symbol: "SAFEMOON/WBSC",
+      symbol: props.symbol || "SAFEMOON/WBSC",
       interval: "15",
       height: props.height || "calc(100vh - 80px)",
       containerId: props.chartName || "Coin-Chart",

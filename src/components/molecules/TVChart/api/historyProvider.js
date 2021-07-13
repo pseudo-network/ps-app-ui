@@ -32,9 +32,11 @@ export default {
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
     //{{base_url}}/currencies/:address/history?to=1623110400&resolution=1D&from=1623110300&base_currency=0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3
+    console.log("symbolInfo");
+    console.log(symbolInfo);
     const safemoon = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" //temporary
     const usdc = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c" //temporary
-    const url = `${api_root}/currencies/${safemoon}/history?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdc}`
+    const url = `${api_root}/currencies/${symbolInfo.description}/history?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdc}`
 
     return rp({
       url: `${url}`,
@@ -84,6 +86,31 @@ export default {
       } else {
         return []
       }
+    })
+  },
+
+
+  searchCustomAPI: function (userInput, exchange, symbolType) {
+    //{{base_url}}/currencies/:address/history?to=1623110400&resolution=1D&from=1623110300&base_currency=0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3
+    const url = `http://34.69.134.192:3444/currencies?search_query=${userInput}`
+
+    return rp({
+      url: `${url}`,
+      // qs,`
+    }).then(data => {
+      var formattedResponse = []
+      data.map((item)=>{
+        var newFormattedItem = {
+          "symbol": item.symbol,
+          "full_name": item.name,
+          "description": item.symbol,
+          "exchange": item.exchange,
+          "ticker": item.name + ":" + item.address,
+          "type": "crypto",
+        }
+        formattedResponse.push(newFormattedItem);
+      }) 
+      return formattedResponse;
     })
   },
 }

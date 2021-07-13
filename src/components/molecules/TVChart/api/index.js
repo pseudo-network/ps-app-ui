@@ -13,9 +13,14 @@ export default {
     console.log("=====onReady running")
     setTimeout(() => cb(config), 0)
   },
+
   searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
     console.log("====Search Symbols running")
+    historyProvider.searchCustomAPI(userInput, exchange, symbolType).then(results => {
+      onResultReadyCallback(results);
+    });
   },
+
   resolveSymbol: (
     symbolName,
     onSymbolResolvedCallback,
@@ -23,12 +28,12 @@ export default {
   ) => {
     // expects a symbolInfo object in response
     console.log("======resolveSymbol running")
-    // console.log('resolveSymbol:',{symbolName})
-    var split_data = symbolName.split(/[:/]/)
-    // console.log({split_data})
+    console.log('resolveSymbol:',{symbolName})
+    const split_data = symbolName.split(":")
+    console.log(split_data)
     var symbol_stub = {
-      name: symbolName,
-      description: "",
+      name: split_data[0],
+      description: split_data[1],
       type: "crypto",
       session: "24x7",
       timezone: "Etc/UTC",
