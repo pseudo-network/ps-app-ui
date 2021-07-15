@@ -55,7 +55,7 @@ const DansPage = props => {
 DansPage.propTypes = {}
 
 // Component State
-function DansPageState (state) {
+function DansPageState(state) {
   return {
     user: state.user
   }
