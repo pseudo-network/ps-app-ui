@@ -17,7 +17,7 @@ export default {
 
   searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
     console.log("====Search Symbols running")
-    const url = `http://34.69.134.192:3444/currencies?search_query=${userInput}`
+    const url = `http://34.69.134.192:3444/currencies?search_query=${userInput.toLowerCase()}`
 
     rp({
       url: `${url}`,
@@ -25,6 +25,7 @@ export default {
       .then((data) => {
         const results = []
         data.map((item) => {
+          console.log("result", item)
           const searchResult = {
             symbol: item.name,
             full_name: item.name,
