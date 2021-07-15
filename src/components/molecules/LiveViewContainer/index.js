@@ -1,45 +1,45 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import TableCell from '@material-ui/core/TableCell'
-import Paper from '@material-ui/core/Paper'
+import React, { useEffect } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import TableCell from "@material-ui/core/TableCell"
+import Paper from "@material-ui/core/Paper"
 // import { AutoSizer, Column, Table } from 'react-virtualized';
-import { getTransactions } from '../../../data/cryptoCurrency/actions'
+import { getTransactions } from "../../../data/cryptoCurrency/actions"
 
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableContainer from "@material-ui/core/TableContainer"
+import TableHead from "@material-ui/core/TableHead"
+import TableRow from "@material-ui/core/TableRow"
 
 const styles = (theme) => ({
   flexContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    boxSizing: 'border-box'
+    display: "flex",
+    alignItems: "center",
+    boxSizing: "border-box",
   },
   table: {
     // temporary right-to-left patch, waiting for
     // https://github.com/bvaughn/react-virtualized/issues/454
-    '& .ReactVirtualized__Table__headerRow': {
+    "& .ReactVirtualized__Table__headerRow": {
       flip: false,
-      paddingRight: theme.direction === 'rtl' ? '0 !important' : undefined
-    }
+      paddingRight: theme.direction === "rtl" ? "0 !important" : undefined,
+    },
   },
   tableRow: {
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   tableRowHover: {
-    '&:hover': {
-      backgroundColor: theme.palette.grey[200]
-    }
+    "&:hover": {
+      backgroundColor: theme.palette.grey[200],
+    },
   },
   tableCell: {
-    flex: 1
+    flex: 1,
   },
   noClick: {
-    cursor: 'initial'
-  }
+    cursor: "initial",
+  },
 })
 
 const TransactionTable = (props) => {
@@ -55,34 +55,33 @@ const TransactionTable = (props) => {
   }, [])
 
   return (
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Buy Currency</TableCell>
-              <TableCell>Buy Amount:</TableCell>
-              <TableCell>Sell Currency</TableCell>
-              <TableCell>Sell Amount</TableCell>
-              <TableCell>Time</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!props.cryptoCurrencies.isLoading &&
-              props.cryptoCurrencies.transactionData.map((transaction, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell>{transaction.buyCurrency.symbol}</TableCell>
-                    <TableCell>{transaction.buyAmount}</TableCell>
-                    <TableCell>{transaction.sellCurrency.symbol}</TableCell>
-                    <TableCell>{transaction.sellAmount}</TableCell>
-                    <TableCell>{transaction.timeInterval.second}</TableCell>
-                  </TableRow>
-                )
-              })
-            }
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Buy Currency</TableCell>
+            <TableCell>Buy Amount:</TableCell>
+            <TableCell>Sell Currency</TableCell>
+            <TableCell>Sell Amount</TableCell>
+            <TableCell>Time</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {!props.cryptoCurrencies.isLoading &&
+            props.cryptoCurrencies.transactionData.map((transaction, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell>{transaction.buyCurrency.symbol}</TableCell>
+                  <TableCell>{transaction.buyAmount}</TableCell>
+                  <TableCell>{transaction.sellCurrency.symbol}</TableCell>
+                  <TableCell>{transaction.sellAmount}</TableCell>
+                  <TableCell>{transaction.timeInterval.second}</TableCell>
+                </TableRow>
+              )
+            })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 
@@ -141,15 +140,17 @@ return (
 TransactionTable.propTypes = {
   user: PropTypes.object.isRequired,
   cryptoCurrencies: PropTypes.object.isRequired,
-  getTransactions: PropTypes.func.isRequired
+  getTransactions: PropTypes.func.isRequired,
 }
 
 // Component State
-function TransactionTableState (state) {
+function TransactionTableState(state) {
   return {
     user: state.user,
-    cryptoCurrencies: state.cryptoCurrencies
+    cryptoCurrencies: state.cryptoCurrencies,
   }
 }
 
-export default connect(TransactionTableState, { getTransactions })(TransactionTable)
+export default connect(TransactionTableState, { getTransactions })(
+  TransactionTable
+)

@@ -1,43 +1,43 @@
 // React Components and Hooks
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import React from "react"
+import { withRouter } from "react-router-dom"
 
 // Redux Components
-import { connect } from 'react-redux'
+import { connect } from "react-redux"
 
 // Material UI Components
-import { makeStyles } from '@material-ui/core/styles'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import Collapse from '@material-ui/core/Collapse'
-import Drawer from '@material-ui/core/Drawer'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined'
-import Toolbar from '@material-ui/core/Toolbar'
-import NightsStayIcon from '@material-ui/icons/NightsStay'
-import TimelineIcon from '@material-ui/icons/Timeline'
-import FolderOpenIcon from '@material-ui/icons/FolderOpen'
-import TopBar from '../../molecules/TopBar/TopBar'
-import SocialMediaRow from '../../molecules/SocialMediaRow/SocialMediaRow'
-import Watermark from '../../molecules/Watermark/Watermark'
+import { makeStyles } from "@material-ui/core/styles"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import ExpandLess from "@material-ui/icons/ExpandLess"
+import ExpandMore from "@material-ui/icons/ExpandMore"
+import Collapse from "@material-ui/core/Collapse"
+import Drawer from "@material-ui/core/Drawer"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import List from "@material-ui/core/List"
+import Divider from "@material-ui/core/Divider"
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
+import Toolbar from "@material-ui/core/Toolbar"
+import NightsStayIcon from "@material-ui/icons/NightsStay"
+import TimelineIcon from "@material-ui/icons/Timeline"
+import FolderOpenIcon from "@material-ui/icons/FolderOpen"
+import TopBar from "../../molecules/TopBar/TopBar"
+import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
+import Watermark from "../../molecules/Watermark/Watermark"
 
 const drawerWidth = 300
 
-function ListItemObject (Title, IconName, Location, isDisabled = false) {
+function ListItemObject(Title, IconName, Location, isDisabled = false) {
   return {
     title: Title,
     icon: IconName,
     path: Location,
-    isDisabled: isDisabled
+    isDisabled: isDisabled,
   }
 }
 
-function ParentListItemObject (
+function ParentListItemObject(
   Title,
   IconName,
   clickMethod,
@@ -49,71 +49,71 @@ function ParentListItemObject (
     icon: IconName,
     clickMethod: clickMethod,
     isOpen: isOpen,
-    children: Children
+    children: Children,
   }
 }
 
-function ChildListItemObject (Title, Location, isDisabled = false) {
+function ChildListItemObject(Title, Location, isDisabled = false) {
   return {
     title: Title,
     path: Location,
-    isDisabled: isDisabled
+    isDisabled: isDisabled,
   }
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
     flexGrow: 1,
-    position: 'relative'
+    position: "relative",
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerContainer: {
-    overflow: 'auto'
+    overflow: "auto",
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   toolbar: {
-    minHeight: 80
+    minHeight: 80,
   },
   listHeader: {
-    paddingLeft: '1.5em',
-    paddingRight: '1.5em',
-    color: '#836AFF'
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
+    color: "#836AFF",
   },
   listItem: {
-    borderRadius: '.5rem'
+    borderRadius: ".5rem",
   },
   listItemParent: {
-    paddingLeft: '1.5em',
-    paddingRight: '1.5em'
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
   },
   socialMediaRowParent: {
-    paddingLeft: '1.5em',
-    paddingRight: '1.5em',
-    position: 'absolute',
+    paddingLeft: "1.5em",
+    paddingRight: "1.5em",
+    position: "absolute",
     bottom: 10,
-    width: '100%',
-    display: 'grid',
-    justifyContent: 'center'
-  }
+    width: "100%",
+    display: "grid",
+    justifyContent: "center",
+  },
 }))
 
-const NavFrame = props => {
+const NavFrame = (props) => {
   // Example Parent List Item Necessary additions
   /*
     const [dansListOpen, setDansListOpen] = React.useState(false);
@@ -123,12 +123,12 @@ const NavFrame = props => {
 
   // Where all the possible navigation locations and thier icons and titles are stored
   const navItems = [
-    ListItemObject('Dashboard', <HomeOutlinedIcon />, '/dashboard'),
-    ListItemObject('Safemoon Tracker', <NightsStayIcon />, '/'),
-    ListItemObject('Coin Researcher', <TimelineIcon />, '/coin-research', true),
-    ListItemObject('Dans Test Page', <FolderOpenIcon />, '/dans-page'),
-    ListItemObject('Ants Test Page', <FolderOpenIcon />, '/ant-page'),
-    ListItemObject('Benny Test Page', <FolderOpenIcon />, '/ben-page')
+    ListItemObject("Dashboard", <HomeOutlinedIcon />, "/dashboard"),
+    ListItemObject("Safemoon Tracker", <NightsStayIcon />, "/"),
+    ListItemObject("Coin Researcher", <TimelineIcon />, "/coin-research", true),
+    ListItemObject("Dans Test Page", <FolderOpenIcon />, "/dans-page"),
+    ListItemObject("Ants Test Page", <FolderOpenIcon />, "/ant-page"),
+    ListItemObject("Benny Test Page", <FolderOpenIcon />, "/ben-page"),
   ]
 
   const parentNavItems = [
@@ -154,12 +154,12 @@ const NavFrame = props => {
         {navItem.isDisabled ? ( // if the nav list item is disabled:
           <ListItem id={key} className={classes.listItem}>
             <ListItemIcon>{navItem.icon}</ListItemIcon>
-            <ListItemText primary={navItem.title} secondary={'Coming Soon!'} />
+            <ListItemText primary={navItem.title} secondary={"Coming Soon!"} />
           </ListItem>
         ) : (
           <ListItem
             button
-            onClick={e => props.history.push(`${navItem.path}`)}
+            onClick={(e) => props.history.push(`${navItem.path}`)}
             id={key}
             selected={isSelected}
             className={classes.listItem}
@@ -178,8 +178,8 @@ const NavFrame = props => {
     return (
       <ListItem
         button
-        onClick={e => props.history.push(`${navItem.path}`)}
-        id={navItem.path + 'NavListChildItem' + key}
+        onClick={(e) => props.history.push(`${navItem.path}`)}
+        id={navItem.path + "NavListChildItem" + key}
         selected={isSelected}
         className={classes.nested}
       >
@@ -215,13 +215,13 @@ const NavFrame = props => {
   const classes = useStyles()
 
   const handleConnectWalletClick = () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum !== "undefined") {
       metamask()
     }
   }
 
   const metamask = async () => {
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" })
     const account = accounts[0]
     console.log(account)
 
@@ -239,7 +239,7 @@ const NavFrame = props => {
         className={classes.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <Toolbar className={classes.toolbar} />
@@ -254,7 +254,7 @@ const NavFrame = props => {
                 <div className={classes.listItemParent}>
                   <NavListItem
                     navItem={item}
-                    id={item.path + 'NavListItem' + key}
+                    id={item.path + "NavListItem" + key}
                   />
                 </div>
               )
@@ -265,13 +265,13 @@ const NavFrame = props => {
                 <ParentNavListItems
                   button
                   navItem={item}
-                  id={item.path + 'NavListParentItem' + key}
+                  id={item.path + "NavListParentItem" + key}
                 />
               )
             })}
           </List>
           <div className={classes.socialMediaRowParent}>
-            {' '}
+            {" "}
             <SocialMediaRow />
             <br />
             <Watermark />
@@ -291,7 +291,7 @@ const NavFrame = props => {
 NavFrame.propTypes = {}
 
 // Component State
-function NavFrameState (state) {
+function NavFrameState(state) {
   return {}
 }
 export default connect(NavFrameState)(withRouter(NavFrame))

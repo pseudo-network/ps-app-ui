@@ -1,16 +1,16 @@
 // React Components and Hooks
-import React from 'react'
+import React from "react"
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from "@material-ui/core/styles"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    color: 'white',
-    cursor: 'pointer'
-  }
+    color: "white",
+    cursor: "pointer",
+  },
 }))
 
-const PSLink = props => {
+const PSLink = (props) => {
   const classes = useStyles()
 
   /*

@@ -30,7 +30,7 @@ export default {
     // var sub = _subs[subIndex]
     // socket.emit("SubRemove", { subs: [sub.channelString] })
     // _subs.splice(subIndex, 1)
-  }
+  },
 }
 
 // socket.on("connect", () => {
@@ -83,13 +83,13 @@ export default {
 // })
 
 // Take a single trade, and subscription record, return updated bar
-function updateBar (data, sub) {
+function updateBar(data, sub) {
   const lastBar = sub.lastBar
   let resolution = sub.resolution
-  if (resolution.includes('D')) {
+  if (resolution.includes("D")) {
     // 1 day in minutes === 1440
     resolution = 1440
-  } else if (resolution.includes('W')) {
+  } else if (resolution.includes("W")) {
     // 1 week in minutes === 10080
     resolution = 10080
   }
@@ -107,7 +107,7 @@ function updateBar (data, sub) {
       high: lastBar.close,
       low: lastBar.close,
       close: data.price,
-      volume: data.volume
+      volume: data.volume,
     }
   } else {
     // update lastBar candle!
@@ -125,9 +125,9 @@ function updateBar (data, sub) {
 }
 
 // takes symbolInfo object as input and creates the subscription string to send to CryptoCompare
-function createChannelString (symbolInfo) {
+function createChannelString(symbolInfo) {
   const channel = symbolInfo.name.split(/[:/]/)
-  const exchange = channel[0] === 'GDAX' ? 'Coinbase' : channel[0]
+  const exchange = channel[0] === "GDAX" ? "Coinbase" : channel[0]
   const to = channel[2]
   const from = channel[1]
   // subscribe to the CryptoCompare trade channel for the pair and exchange
