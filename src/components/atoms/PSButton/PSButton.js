@@ -1,38 +1,26 @@
-//React Components and Hooks
-import React, { useState, useRef, useEffect, withStyles } from "react"
-import { withRouter } from "react-router-dom"
+// React Components and Hooks
+import React from 'react'
 
-// Redux Components
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-
-//Material UI Components
-import { makeStyles, useTheme } from "@material-ui/core/styles"
-import MenuIcon from "@material-ui/icons/Menu"
+import { makeStyles } from '@material-ui/core/styles'
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  CssBaseline,
-  Button,
-} from "@material-ui/core"
+  Button
+} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: "rgba(131, 106, 255, 0.25)",
-    border: "1px solid #836AFF",
-    padding: ".66em",
+    backgroundColor: 'rgba(131, 106, 255, 0.25)',
+    border: '1px solid #836AFF',
+    padding: '.66em'
   },
   text: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "16ch",
-    color: "#A694FE",
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '16ch',
+    color: '#A694FE',
     fontWeight: 600,
-    textTransform: "none",
-  },
+    textTransform: 'none'
+  }
 }))
 
 const PSButton = props => {

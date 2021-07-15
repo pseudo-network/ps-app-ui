@@ -1,22 +1,18 @@
 // App Imports
-import {  
-    UPDATE_CURRENCIES,
-    GET_TRANSACTION_REQUEST,
-    GET_TRANSACTION_RESPONSE,
-    UPDATE_TRANSACTIONS
-} from './actions';
-
-
+import {
+  UPDATE_CURRENCIES,
+  GET_TRANSACTION_REQUEST,
+  GET_TRANSACTION_RESPONSE,
+  UPDATE_TRANSACTIONS
+} from './actions'
 
 // Initial State
 export const currenciesInitialState = {
   error: null,
   isLoading: false,
-  currencySymbol: "POOCOIN",
+  currencySymbol: 'POOCOIN',
   transactionData: []
 }
-
-
 
 // State
 export default (state = currenciesInitialState, action) => {
@@ -26,7 +22,7 @@ export default (state = currenciesInitialState, action) => {
         ...state
       }
     case UPDATE_TRANSACTIONS:
-      let transactions = state.transactionData.concat(action.newTransactions)
+      const transactions = state.transactionData.concat(action.newTransactions)
       return {
         ...state,
         transactionData: transactions

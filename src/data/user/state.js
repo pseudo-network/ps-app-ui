@@ -1,8 +1,8 @@
 // App Imports
-import { 
-    SET_USER, 
-    UPDATE_USER, 
-    updateUserLocalStorage
+import {
+  SET_USER,
+  UPDATE_USER,
+  updateUserLocalStorage
 } from './actions'
 
 // Initial State
@@ -10,7 +10,7 @@ export const userInitialState = {
   error: null,
   isLoading: false,
   isAuthenticated: false,
-  details: null,
+  details: null
 }
 
 // State
@@ -24,12 +24,12 @@ export default (state = userInitialState, action) => {
         error: action.error
       }
     case UPDATE_USER:
-      const newUser = Object.assign({}, state.details, action.newData);
-      updateUserLocalStorage(newUser);
+      const newUser = Object.assign({}, state.details, action.newData)
+      updateUserLocalStorage(newUser)
       return {
         ...state,
         isAuthenticated: !isEmpty(state.details),
-        details: newUser,
+        details: newUser
       }
     default:
       return state

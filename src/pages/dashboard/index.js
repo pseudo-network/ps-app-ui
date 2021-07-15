@@ -1,19 +1,17 @@
-import React from "react"
-import { makeStyles, withStyles } from "@material-ui/core/styles"
-// Redux Components
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
+import React from 'react'
 
-import NavFrame from "../../components/organisms/NavFrame/NavFrame" // The top navigation bar and side navigation panel
+import { connect } from 'react-redux'
+
+import NavFrame from '../../components/organisms/NavFrame/NavFrame' // The top navigation bar and side navigation panel
 
 const Dashboard = props => {
-  return <NavFrame page={"Dashboard"}>YO!</NavFrame>
+  return <NavFrame page={'Dashboard'}>YO!</NavFrame>
 }
 // Component Properties
 Dashboard.propTypes = {}
 
 // Component State
-function DashboardState(state) {
+function DashboardState (state) {
   return {}
 }
 export default connect(DashboardState)(Dashboard)

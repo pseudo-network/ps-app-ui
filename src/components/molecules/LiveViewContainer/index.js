@@ -1,66 +1,60 @@
-import React , { useEffect } from "react";
-import { connect } from "react-redux"
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { withStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import Paper from '@material-ui/core/Paper';
-//import { AutoSizer, Column, Table } from 'react-virtualized';
-import transactionProvider from "./api/transactionProvider"
-import {getTransactions} from "../../../data/cryptoCurrency/actions"
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import TableCell from '@material-ui/core/TableCell'
+import Paper from '@material-ui/core/Paper'
+// import { AutoSizer, Column, Table } from 'react-virtualized';
+import { getTransactions } from '../../../data/cryptoCurrency/actions'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 
 const styles = (theme) => ({
   flexContainer: {
     display: 'flex',
     alignItems: 'center',
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   },
   table: {
     // temporary right-to-left patch, waiting for
     // https://github.com/bvaughn/react-virtualized/issues/454
     '& .ReactVirtualized__Table__headerRow': {
       flip: false,
-      paddingRight: theme.direction === 'rtl' ? '0 !important' : undefined,
-    },
+      paddingRight: theme.direction === 'rtl' ? '0 !important' : undefined
+    }
   },
   tableRow: {
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
   tableRowHover: {
     '&:hover': {
-      backgroundColor: theme.palette.grey[200],
-    },
+      backgroundColor: theme.palette.grey[200]
+    }
   },
   tableCell: {
-    flex: 1,
+    flex: 1
   },
   noClick: {
-    cursor: 'initial',
-  },
-});
+    cursor: 'initial'
+  }
+})
 
 const TransactionTable = (props) => {
-
-  /*constructor(props) {
+  /* constructor(props) {
     super(props);
     props.getTransactions();
-  }*/
+  } */
 
-  useEffect(()=>{
-    if (!props.cryptoCurrencies.isLoading){
-      props.getTransactions();
+  useEffect(() => {
+    if (!props.cryptoCurrencies.isLoading) {
+      props.getTransactions()
     }
-  }, []);
+  }, [])
 
-      return (
+  return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -73,7 +67,7 @@ const TransactionTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {!props.cryptoCurrencies.isLoading&&
+            {!props.cryptoCurrencies.isLoading &&
               props.cryptoCurrencies.transactionData.map((transaction, index) => {
                 return (
                   <TableRow key={index}>
@@ -89,7 +83,7 @@ const TransactionTable = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-    );
+  )
 }
 
 /*
@@ -129,7 +123,7 @@ const rows = [];
 
 const price = transactionProvider.getTransaction().then(data => data)
 //  console.log(price)
-  
+
 for (let i = 0; i < 200; i += 1) {
   const randomSelection = sample[Math.floor(Math.random() * sample.length)];
   rows.push(createData(i, ...randomSelection));
@@ -140,21 +134,21 @@ const TransactionHistoryPage = props => {
   }
 return (
     <Paper style={{ height: 400, width: '100%' }}>
-      
+
     </Paper>)
-}*/
+} */
 // Component Properties
 TransactionTable.propTypes = {
   user: PropTypes.object.isRequired,
   cryptoCurrencies: PropTypes.object.isRequired,
-  getTransactions: PropTypes.func.isRequired,
+  getTransactions: PropTypes.func.isRequired
 }
 
 // Component State
-function TransactionTableState(state) {
+function TransactionTableState (state) {
   return {
-      user: state.user,
-      cryptoCurrencies: state.cryptoCurrencies,
+    user: state.user,
+    cryptoCurrencies: state.cryptoCurrencies
   }
 }
 

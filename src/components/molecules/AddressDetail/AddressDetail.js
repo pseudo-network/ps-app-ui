@@ -1,22 +1,13 @@
-//React Components and Hooks
-import React, { useState, useRef, useEffect, withStyles } from "react"
+// React Components and Hooks
+import React from 'react'
 
-//Material UI Components
-import { makeStyles, useTheme } from "@material-ui/core/styles"
-import MenuIcon from "@material-ui/icons/Menu"
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  CssBaseline,
-  Button,
-} from "@material-ui/core"
+// Material UI Components
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
     // backgroundColor: theme.pallete.secondary,
-  },
+  }
 }))
 
 const AddressDetail = props => {

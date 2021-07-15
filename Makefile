@@ -16,6 +16,12 @@ bootstrap:
 init:
 	npm install
 
+lint:
+	eslint ./
+
+lint-fix:
+	eslint ./ --fix
+
 dev:
 	npm start
 

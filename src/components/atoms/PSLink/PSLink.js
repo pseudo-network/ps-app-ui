@@ -1,28 +1,13 @@
-//React Components and Hooks
-import React, { useState, useRef, useEffect, withStyles } from "react"
-import { withRouter } from "react-router-dom"
+// React Components and Hooks
+import React from 'react'
 
-// Redux Components
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-
-//Material UI Components
-import { makeStyles, useTheme } from "@material-ui/core/styles"
-import MenuIcon from "@material-ui/icons/Menu"
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  CssBaseline,
-  Button,
-} from "@material-ui/core"
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    color: "white",
-    cursor: "pointer",
-  },
+    color: 'white',
+    cursor: 'pointer'
+  }
 }))
 
 const PSLink = props => {
