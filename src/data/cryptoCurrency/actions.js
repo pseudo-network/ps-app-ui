@@ -24,7 +24,7 @@ export function getTransactions(coinAddress, isLoading = true) {
     const safemoon = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // temporary
 
     return axios
-      .get(`${api_root}/currencies/${safemoon}/transactions`)
+      .get(`${api_root}/cryptos/${safemoon}/transactions`)
       .then((response) => {
         // Process Data
         /* response.data.map(item =>  {

@@ -17,7 +17,7 @@ export default {
 
   searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
     console.log("====Search Symbols running")
-    const url = `http://34.69.134.192:3444/currencies?search_query=${userInput.toLowerCase()}`
+    const url = `http://34.69.134.192:3444/cryptos?search_query=${userInput.toLowerCase()}`
 
     rp({
       url: `${url}`,

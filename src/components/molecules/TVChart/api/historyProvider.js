@@ -31,12 +31,12 @@ export default {
   history: history,
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
-    // {{base_url}}/currencies/:address/history?to=1623110400&resolution=1D&from=1623110300&base_currency=0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3
+    // {{base_url}}/cryptos/:address/history?to=1623110400&resolution=1D&from=1623110300&base_currency=0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3
     console.log("symbolInfo")
     console.log(symbolInfo)
     const safemoon = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // temporary
     const usdc = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c" // temporary
-    const url = `${api_root}/currencies/${symbolInfo.exchange}/history?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdc}`
+    const url = `${api_root}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdc}`
 
     return rp({
       url: `${url}`,
