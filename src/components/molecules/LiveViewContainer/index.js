@@ -8,7 +8,6 @@ import TableBody from "@material-ui/core/TableBody"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import { getRecentTransactions } from "../../../data/cryptos/actions"
 
 const styles = (theme) => ({
   flexContainer: {

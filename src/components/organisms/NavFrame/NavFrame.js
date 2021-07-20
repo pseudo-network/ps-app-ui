@@ -206,9 +206,4 @@ const NavFrame = (props) => {
   )
 }
 
-NavFrame.propTypes = {}
-
-function NavFrameState(state) {
-  return {}
-}
-export default connect(NavFrameState)(withRouter(NavFrame))
+export default withRouter(NavFrame)

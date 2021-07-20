@@ -1,6 +1,8 @@
 import * as React from "react"
 import { widget } from "../../../charting_library/charting_library"
 import Datafeed from "./api"
+import { useCrypto } from "../../../contexts/cryptoContext"
+
 export class TVChart extends React.Component {
   constructor(props) {
     super(props)

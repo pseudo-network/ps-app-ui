@@ -2,15 +2,20 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
-import { store } from "./configuration/store"
-import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
+import { ProvideCryptos } from "./contexts/cryptosContext"
+import { ProvideWallet } from "./contexts/walletContext"
+import { ProvideCrypto } from "./contexts/cryptoContext"
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <ProvideCryptos>
+    <ProvideCrypto>
+      <ProvideWallet>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ProvideWallet>
+    </ProvideCrypto>
+  </ProvideCryptos>,
   document.getElementById("root")
 )

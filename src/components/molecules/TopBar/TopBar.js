@@ -19,9 +19,10 @@ import PSDialog from "../PSDialog/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import PSLabel from "../../atoms/PSLabel/PSLabel"
 import SearchIcon from "@material-ui/icons/Search"
-import { get } from "../../../data/cryptos/actions"
 import PropTypes from "prop-types"
 import { useHistory } from "react-router-dom"
+import { useCryptos } from "../../../contexts/cryptosContext"
+import { useWallet } from "../../../contexts/walletContext"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,63 +99,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const TopBar = (props) => {
+export default function TopBar(props) {
   const classes = useStyles()
-  const [account, setAccount] = useState(null)
-  const [balance, setBalance] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [userInput, setUserInput] = useState("")
   const history = useHistory()
+  const cryptosContext = useCryptos()
+  const walletContext = useWallet()
 
   useEffect(() => {
     if (userInput != "") {
-      props.get(userInput)
+      // props.get(userInput)
       // console.log("callepd")
+      cryptosContext.setSearchQuery(userInput)
     }
   }, [userInput])
 
   const metamask = async () => {
     const accounts = await ethereum.request({ method: "eth_requestAccounts" })
-    const account = accounts[0]
-    setAccount(account)
-    getBalance(account)
+    const address = accounts[0]
+    walletContext.setAddress(address)
   }
 
   // todo: cleanup
-  const getBalance = (accountAddress) => {
-    const currencyAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7"
-    const qs = `{
-      ethereum {
-        address(address: {is: "${accountAddress}"}) {
-          balances(currency: {in: ["ETH", "${currencyAddress}"]}) {
-            currency {
-              symbol
-            }
-            value
-          }
-        }
-      }
-    }`
-
-    fetch("https://graphql.bitquery.io", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": "BQYug1u2azt1EzuPggXfnhdhzFObRW0g",
-      },
-      body: JSON.stringify({ query: qs }),
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res) {
-          const balance = String(
-            res?.data?.ethereum?.address[0]?.balances[0]?.value
-          )
-          const balanceShort = balance.substring(0, 6)
-          setBalance(balanceShort)
-        }
-      })
-  }
 
   const handleConnectWalletClick = () => {
     if (typeof window.ethereum !== "undefined") {
@@ -183,7 +150,7 @@ const TopBar = (props) => {
   }
 
   const copyAddressToClipboard = () => {
-    navigator.clipboard.writeText(account)
+    navigator.clipboard.writeText(walletContext.address)
   }
 
   const handleLogoutOnClick = () => {
@@ -194,11 +161,11 @@ const TopBar = (props) => {
   const ModalContent = () => {
     return (
       <>
-        <h3>{account}</h3>
+        <h3>{walletContext.address}</h3>
         <Box flexDirection="row">
           <PSLink
             text={"BscScan"}
-            url={"https://bscscan.com/address/" + account}
+            url={"https://bscscan.com/address/" + walletContext.address}
           ></PSLink>
           <div>
             <PSLink
@@ -237,7 +204,7 @@ const TopBar = (props) => {
             <Autocomplete
               id="combo-box-demo"
               defaultValue={props.address}
-              options={props.cryptos?.cryptos}
+              options={cryptosContext.cryptos}
               getOptionLabel={(option) => {
                 if (option && option.name) {
                   return option.name + ":" + option.address
@@ -257,21 +224,19 @@ const TopBar = (props) => {
               )}
             />
           </div>
-          {!account ? (
-            <>
-              <PSButton
-                onClick={handleConnectWalletClick}
-                text={"Connect Wallet"}
-              ></PSButton>
-            </>
-          ) : (
-            <>
-              <div className={classes.balance}>
-                <PSLabel text={balance} />
-              </div>
-              <PSButton onClick={handleOpenDialogClick} text={account} />
-            </>
-          )}
+          <div className={classes.balance}>
+            <PSLabel text={walletContext.balance} />
+          </div>
+          <PSButton
+            onClick={
+              walletContext.address
+                ? handleOpenDialogClick
+                : handleConnectWalletClick
+            }
+            text={
+              walletContext.address ? walletContext.address : "Connect Wallet"
+            }
+          />
         </Toolbar>
       </AppBar>
       <PSDialog
@@ -283,19 +248,3 @@ const TopBar = (props) => {
     </>
   )
 }
-
-// Component Properties
-TopBar.propTypes = {
-  user: PropTypes.object.isRequired,
-  cryptos: PropTypes.object.isRequired,
-  get: PropTypes.func.isRequired,
-}
-
-// Component State
-function TopBarState(state) {
-  return {
-    user: state.user,
-    cryptos: state.cryptos,
-  }
-}
-export default connect(TopBarState, { get })(withRouter(TopBar))
