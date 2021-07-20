@@ -28,6 +28,7 @@ const App = () => {
             <Route path="/dans-page" component={DansTestPage} />
             <Route path="/ant-page" component={AntTestPage} />
             <Route path="/ben-page" component={BenTestPage} />
+            <Route path="/:address" component={CryptoDetail} />
             <Route path="/" component={CryptoDetail} />
           </Switch>
         </Router>

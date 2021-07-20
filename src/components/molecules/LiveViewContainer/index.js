@@ -3,14 +3,12 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import TableCell from "@material-ui/core/TableCell"
 import Paper from "@material-ui/core/Paper"
-// import { AutoSizer, Column, Table } from 'react-virtualized';
-import { getTransactions } from "../../../data/cryptoCurrency/actions"
-
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
+import { getRecentTransactions } from "../../../data/cryptos/actions"
 
 const styles = (theme) => ({
   flexContainer: {
@@ -45,12 +43,12 @@ const styles = (theme) => ({
 const TransactionTable = (props) => {
   /* constructor(props) {
     super(props);
-    props.getTransactions();
+    props.getRecentTransactions();
   } */
 
   useEffect(() => {
-    if (!props.cryptoCurrencies.isLoading) {
-      props.getTransactions()
+    if (!props.cryptos.isLoading) {
+      props.getRecentTransactions()
     }
   }, [])
 
@@ -67,8 +65,8 @@ const TransactionTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {!props.cryptoCurrencies.isLoading &&
-            props.cryptoCurrencies.transactionData.map((transaction, index) => {
+          {!props.cryptos.isLoading &&
+            props.cryptos.transactions.map((transaction, index) => {
               return (
                 <TableRow key={index}>
                   <TableCell>{transaction.buyCurrency.symbol}</TableCell>
@@ -139,18 +137,18 @@ return (
 // Component Properties
 TransactionTable.propTypes = {
   user: PropTypes.object.isRequired,
-  cryptoCurrencies: PropTypes.object.isRequired,
-  getTransactions: PropTypes.func.isRequired,
+  cryptos: PropTypes.object.isRequired,
+  getRecentTransactions: PropTypes.func.isRequired,
 }
 
 // Component State
 function TransactionTableState(state) {
   return {
     user: state.user,
-    cryptoCurrencies: state.cryptoCurrencies,
+    cryptos: state.cryptos,
   }
 }
 
-export default connect(TransactionTableState, { getTransactions })(
+export default connect(TransactionTableState, { getRecentTransactions })(
   TransactionTable
 )

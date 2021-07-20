@@ -1,24 +1,32 @@
-// React Components and Hooks
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { withRouter } from "react-router-dom"
-
-// Redux Components
 import { connect } from "react-redux"
-
-// Material UI Components
 import { makeStyles } from "@material-ui/core/styles"
 import MenuIcon from "@material-ui/icons/Menu"
-import { AppBar, Toolbar, Typography, IconButton, Box } from "@material-ui/core"
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Box,
+  InputBase,
+  TextField,
+} from "@material-ui/core"
+import Autocomplete from "@material-ui/lab/Autocomplete"
 import PSButton from "../../atoms/PSButton/PSButton"
 import PSLink from "../../atoms/PSLink/PSLink"
 import PSDialog from "../PSDialog/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import PSLabel from "../../atoms/PSLabel/PSLabel"
+import SearchIcon from "@material-ui/icons/Search"
+import { get } from "../../../data/cryptos/actions"
+import PropTypes from "prop-types"
+import { useHistory } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -40,37 +48,79 @@ const useStyles = makeStyles((theme) => ({
   balance: {
     marginRight: 10,
   },
+  search: {
+    flexGrow: 1,
+
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+
+    // marginRight: theme.spacing(2),
+    marginRight: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      // marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }))
 
 const TopBar = (props) => {
+  const classes = useStyles()
   const [account, setAccount] = useState(null)
   const [balance, setBalance] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [userInput, setUserInput] = useState("")
+  const history = useHistory()
 
-  const classes = useStyles()
-
-  const handleConnectWalletClick = () => {
-    if (typeof window.ethereum !== "undefined") {
-      metamask()
+  useEffect(() => {
+    if (userInput != "") {
+      props.get(userInput)
+      // console.log("callepd")
     }
-  }
-
-  const handleOpenDialogClick = () => {
-    setDialogOpen(true)
-  }
-
-  const handleCloseDialogClick = () => {
-    setDialogOpen(false)
-  }
+  }, [userInput])
 
   const metamask = async () => {
     const accounts = await ethereum.request({ method: "eth_requestAccounts" })
     const account = accounts[0]
     setAccount(account)
     getBalance(account)
-    // todo: get balance
   }
 
+  // todo: cleanup
   const getBalance = (accountAddress) => {
     const currencyAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7"
     const qs = `{
@@ -104,6 +154,32 @@ const TopBar = (props) => {
           setBalance(balanceShort)
         }
       })
+  }
+
+  const handleConnectWalletClick = () => {
+    if (typeof window.ethereum !== "undefined") {
+      metamask()
+    }
+  }
+
+  const onFieldChange = (event) => {
+    setUserInput(event.target.value)
+  }
+
+  const handleSelectOptionClick = (event, value) => {
+    if (value && value.address) {
+      // history.push("/" + value.address)
+      setUserInput(value.address)
+      window.location.href = "/" + value.address // todo: unecessarily rerenders the whole page
+    }
+  }
+
+  const handleOpenDialogClick = () => {
+    setDialogOpen(true)
+  }
+
+  const handleCloseDialogClick = () => {
+    setDialogOpen(false)
   }
 
   const copyAddressToClipboard = () => {
@@ -157,6 +233,30 @@ const TopBar = (props) => {
           <Typography variant="h6" className={classes.title}>
             Pseudonetwork
           </Typography>
+          <div className={classes.search}>
+            <Autocomplete
+              id="combo-box-demo"
+              defaultValue={props.address}
+              options={props.cryptos?.cryptos}
+              getOptionLabel={(option) => {
+                if (option && option.name) {
+                  return option.name + ":" + option.address
+                } else {
+                  return props.address
+                }
+              }}
+              style={{ width: 500 }}
+              onChange={handleSelectOptionClick}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  onChange={onFieldChange}
+                  value={userInput}
+                />
+              )}
+            />
+          </div>
           {!account ? (
             <>
               <PSButton
@@ -185,10 +285,17 @@ const TopBar = (props) => {
 }
 
 // Component Properties
-TopBar.propTypes = {}
+TopBar.propTypes = {
+  user: PropTypes.object.isRequired,
+  cryptos: PropTypes.object.isRequired,
+  get: PropTypes.func.isRequired,
+}
 
 // Component State
 function TopBarState(state) {
-  return {}
+  return {
+    user: state.user,
+    cryptos: state.cryptos,
+  }
 }
-export default connect(TopBarState)(withRouter(TopBar))
+export default connect(TopBarState, { get })(withRouter(TopBar))

@@ -1,10 +1,7 @@
 import React from "react"
-
 import { connect } from "react-redux"
 import styled from "styled-components/macro"
-
 import { spacing } from "@material-ui/system"
-
 import {
   Grid,
   Breadcrumbs as MuiBreadcrumbs,
@@ -17,11 +14,8 @@ import LiveViewContainer from "../../components/molecules/LiveViewContainer"
 // import LiveViewData from "../../components/molecules/LiveViewContainer/api/transactionProvider.js"
 
 const Divider = styled(MuiDivider)(spacing)
-
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing)
-
 const Paper = styled(MuiPaper)(spacing)
-
 const Spacer = styled.div`
   flex: 1 1 100%;
 `

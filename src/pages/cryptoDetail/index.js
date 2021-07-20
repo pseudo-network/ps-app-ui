@@ -1,49 +1,41 @@
 import React from "react"
-
 import { connect } from "react-redux"
-
-import { TextField } from "@material-ui/core"
-
-import NavFrame from "../../components/organisms/NavFrame/NavFrame" // The top navigation bar and side navigation panel
+import NavFrame from "../../components/organisms/NavFrame/NavFrame"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
 import LiveViewContainer from "../../components/molecules/LiveViewContainer"
+import { useParams } from "react-router-dom"
+const rp = require("request-promise").defaults({ json: true })
 
 const CryptoDetail = (props) => {
-  const [currentChart, setChart] = React.useState(
-    "PancakeSwap Token:CAKE:0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"
-  )
-  const onFieldChange = (event) => {
-    console.log("event.target.value")
-    console.log(event.target.value)
-    setChart(event.target.value)
+  const [crypto, setCrypto] = React.useState(null)
+
+  // todo: cleanup
+  const { address } = props.match.params
+  if (!address || address == "") {
+    // todo: get psuedocoin as default
+    window.location.href = "/0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // todo: unecessarily rerenders the whole page
+  } else {
+    rp({
+      url: `http://api.pseudonetwork.net:3444/cryptos?search_query=${address}`,
+    })
+      .then((res) => {
+        if (res.length > 0) {
+          setCrypto(res[0])
+        } else {
+          alert("coin not found")
+        }
+      })
+      .catch((e) => {
+        // todo: handle error
+        // console.log(e)
+      })
   }
+
   return (
-    <NavFrame page={"CryptoDetail"}>
-      {/* <TextField
-        id="testjazz"
-        label="Chart"
-        type="text"
-        fullWidth
-        my={2}
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={onFieldChange}
-        name="Chart"
-      /> */}
-      {/* <Autocomplete
-        id="combo-box-demo"
-        options={top100Films}
-        getOptionLabel={option => option.title}
-        style={{ width: 300 }}
-        renderInput={params => (
-          <TextField {...params} label="Combo box" variant="outlined" />
-        )}
-      /> */}
-      <TVChartWithHeader symbol={currentChart} />
+    <NavFrame page={"CryptoDetail"} address={address}>
+      {crypto && <TVChartWithHeader crypto={crypto} />}
       <br />
-      <LiveViewContainer />
+      {/* <LiveViewContainer /> */}
     </NavFrame>
   )
 }
@@ -51,7 +43,10 @@ const CryptoDetail = (props) => {
 CryptoDetail.propTypes = {}
 
 // Component State
-function CryptoDetailState() {
-  return {}
+function CryptoDetailState(state) {
+  return {
+    user: state.user,
+    cryptos: state.cryptos,
+  }
 }
 export default connect(CryptoDetailState)(CryptoDetail)

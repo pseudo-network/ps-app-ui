@@ -1,12 +1,100 @@
-import historyProvider from "./historyProvider"
 import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
-
 const supportedResolutions = ["1", "3", "5", "15", "30", "60"]
+const math = require("mathjs")
 
 const config = {
   supported_resolutions: supportedResolutions,
   supports_search: false,
+}
+
+// todo: should come from .env
+const apiRoot = "http://api.pseudonetwork.net:3444"
+const safemoonAddress = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3"
+const usdcAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+const history = {}
+const outlier_threshold = 3
+
+function getSymbols(userInput) {
+  const url = `http://34.69.134.192:3444/cryptos?search_query=${userInput.toLowerCase()}`
+  return rp({
+    url: `${url}`,
+  })
+    .then((data) => {
+      return data
+    })
+    .catch((e) => {
+      console.log(e)
+      return []
+    })
+}
+
+function calcZ(x, mean, std) {
+  return (x - mean) / std
+}
+
+function findOutliersInArray(arr) {
+  const mean = math.mean(arr)
+  const std = math.std(arr)
+  const outlierIndexes = []
+  for (let i = 0; i < arr.length; i++) {
+    const a = arr[i]
+    const z = math.abs(calcZ(a, mean, std))
+    if (z > outlier_threshold) {
+      outlierIndexes.push(i)
+    }
+  }
+
+  return outlierIndexes
+}
+
+const historyProvider = {
+  history: history,
+
+  getBars: function (symbolInfo, resolution, from, to, first, limit) {
+    const url = `${apiRoot}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdcAddress}`
+
+    return rp({
+      url: `${url}`,
+    }).then((data) => {
+      console.log("transactions returned: ", data.length)
+      if (data.Response && data.Response === "Error") {
+        console.log("CryptoCompare API error:", data.Message)
+        return []
+      }
+      if (data && data.length > 0) {
+        const lows = data.map((d) => d.low)
+        const highs = data.map((d) => d.high)
+        const opens = data.map((d) => d.open)
+        const closes = data.map((d) => d.close)
+        const outlierIndexes = findOutliersInArray(lows).concat(
+          findOutliersInArray(highs),
+          findOutliersInArray(opens),
+          findOutliersInArray(closes)
+        )
+        data = data.filter(function (value, index) {
+          return outlierIndexes.indexOf(index) == -1
+        })
+        const bars = data.map((res) => {
+          return {
+            time: res.unixTimeMS,
+            low: res.low,
+            high: res.high,
+            open: res.open,
+            close: res.close,
+            volume: res.tradeAmount,
+          }
+        })
+        if (first) {
+          const lastBar = bars[bars.length - 1]
+          history[symbolInfo.name] = { lastBar: lastBar }
+        }
+        return bars
+      } else {
+        return []
+      }
+    })
+  },
 }
 
 export default {
@@ -17,16 +105,10 @@ export default {
 
   searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
     console.log("====Search Symbols running")
-    const url = `http://34.69.134.192:3444/cryptos?search_query=${userInput.toLowerCase()}`
-
-    rp({
-      url: `${url}`,
-    })
-      .then((data) => {
-        const results = []
-        data.map((item) => {
-          console.log("result", item)
-          const searchResult = {
+    getSymbols(userInput).then((res) => {
+      if (res && res.length > 0) {
+        const searchresults = res.map((item) => {
+          return {
             symbol: item.name,
             full_name: item.name,
             description: item.symbol,
@@ -34,14 +116,12 @@ export default {
             ticker: item.name + ":" + item.symbol + ":" + item.address, // a concatenated string of needed fields
             type: item.address,
           }
-          results.push(searchResult)
         })
-        onResultReadyCallback(results)
-      })
-      .catch((e) => {
-        console.log(e)
+        onResultReadyCallback(searchresults)
+      } else {
         onResultReadyCallback([])
-      })
+      }
+    })
   },
 
   resolveSymbol: (
@@ -108,9 +188,6 @@ export default {
         call.firstDataRequest
       )
       .then((bars) => {
-        console.log("=.=.=.=.=.=.")
-        console.log(bars)
-        console.log("=.=.=.=.=.=.")
         if (bars.length) {
           onHistoryCallback(bars, { noData: false })
         } else {

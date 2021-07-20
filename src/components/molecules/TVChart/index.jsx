@@ -8,7 +8,7 @@ export class TVChart extends React.Component {
       theme: props.theme || "Dark",
       symbol: props.symbol || "SAFEMOON/WBSC",
       interval: "15",
-      height: props.height || "calc(100vh - 80px)",
+      height: props.height || "calc(100vh - 333px)",
       containerId: props.chartName || "Coin-Chart",
       libraryPath: "/charting_library/",
       chartsStorageUrl: "https://saveload.tradingview.com",
