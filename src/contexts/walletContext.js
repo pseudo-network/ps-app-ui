@@ -66,6 +66,8 @@ function useProvideWallet() {
   useEffect(() => {
     if (address && address != "") {
       getBalance(address)
+    } else {
+      setBalance(null)
     }
   }, [address])
 

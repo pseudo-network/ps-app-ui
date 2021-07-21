@@ -1,56 +1,40 @@
 import * as React from "react"
 import { widget } from "../../../charting_library/charting_library"
 import Datafeed from "./api"
+import { useRef, useEffect } from "react"
 import { useCrypto } from "../../../contexts/cryptoContext"
 
-export class TVChart extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      theme: props.theme || "Dark",
-      symbol: props.symbol || "SAFEMOON/WBSC",
-      interval: "15",
-      height: props.height || "calc(100vh - 333px)",
-      containerId: props.chartName || "Coin-Chart",
-      libraryPath: "/charting_library/",
-      chartsStorageUrl: "https://saveload.tradingview.com",
-      chartsStorageApiVersion: "1.1",
-      clientId: "tradingview.com",
-      userId: "public_user_id",
-    }
+export default function TVChart(props) {
+  const cryptoContext = useCrypto()
+  const tv = useRef(null)
+
+  const widgetOptions = {
+    theme: props.theme || "Dark",
+    symbol: cryptoContext.tvSymbol || "UNKNOWN",
+    interval: "15",
+    height: props.height || "calc(100vh - 333px)",
+    container_id: props.chartName || "Coin-Chart",
+    library_path: "/charting_library/",
+    charts_storage_url: "https://saveload.tradingview.com",
+    charts_storage_api_version: "1.1",
+    client_id: "tradingview.com",
+    user_id: "public_user_id",
+    datafeed: Datafeed,
+    autosize: true,
   }
 
-  tvWidget = null
+  useEffect(() => {
+    if (tv.current) tv.current.remove()
 
-  componentDidMount() {
-    const widgetOptions = {
-      theme: this.state.theme,
-      symbol: this.state.symbol,
-      datafeed: Datafeed,
-      interval: this.state.interval,
-      container_id: this.state.containerId,
-      library_path: this.state.libraryPath,
-      locale: "en",
-      charts_storage_url: this.state.chartsStorageUrl,
-      charts_storage_api_version: this.state.chartsStorageApiVersion,
-      client_id: this.state.clientId,
-      user_id: this.state.userId,
-      autosize: true,
-      disabled_features: ["use_localstorage_for_settings"],
-    }
+    tv.current = new widget(widgetOptions)
+  }, [cryptoContext.tvSymbol])
 
-    const tvWidget = new widget(widgetOptions)
-    this.tvWidget = tvWidget
-  }
-
-  render() {
-    return (
-      <div
-        id={this.state.containerId}
-        style={{
-          height: this.state.height,
-        }}
-      />
-    )
-  }
+  return (
+    <div
+      style={{
+        height: widgetOptions.height,
+      }}
+      id={props.chartName || "Coin-Chart"}
+    />
+  )
 }

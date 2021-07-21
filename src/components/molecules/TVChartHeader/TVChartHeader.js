@@ -106,7 +106,7 @@ const Volume = (props) => {
   )
 }
 
-export default function CryptoDetailRow(props) {
+export default function TVChartHeader(props) {
   const classes = useStyles()
   const cryptoContext = useCrypto()
 
@@ -124,6 +124,8 @@ export default function CryptoDetailRow(props) {
           <Switch
             color="default"
             inputProps={{ "aria-label": "checkbox with default color" }}
+            checked={cryptoContext.usdc}
+            defaultChecked={cryptoContext.usdc}
             onClick={() => {
               cryptoContext.setUSDC(!cryptoContext.usdc)
             }}

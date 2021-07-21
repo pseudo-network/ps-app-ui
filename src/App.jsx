@@ -11,7 +11,7 @@ import {
 import AppThemeProvider from "./theme/main"
 
 // Page imports
-import CryptoDetail from "./pages/cryptoDetail"
+import CryptoDetail from "./pages/chart"
 import Dashboard from "./pages/dashboard"
 
 // NOTE: This is where new pages are added to the router
@@ -22,8 +22,8 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/:address" component={CryptoDetail} />
-            <Route path="/" component={CryptoDetail} />
+            <Route path="/chart/:address" component={CryptoDetail} />
+            <Route path="/chart" component={CryptoDetail} />
           </Switch>
         </Router>
       </AppThemeProvider>

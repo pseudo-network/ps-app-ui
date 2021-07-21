@@ -109,8 +109,6 @@ export default function TopBar(props) {
 
   useEffect(() => {
     if (userInput != "") {
-      // props.get(userInput)
-      // console.log("callepd")
       cryptosContext.setSearchQuery(userInput)
     }
   }, [userInput])
@@ -120,8 +118,6 @@ export default function TopBar(props) {
     const address = accounts[0]
     walletContext.setAddress(address)
   }
-
-  // todo: cleanup
 
   const handleConnectWalletClick = () => {
     if (typeof window.ethereum !== "undefined") {
@@ -135,9 +131,8 @@ export default function TopBar(props) {
 
   const handleSelectOptionClick = (event, value) => {
     if (value && value.address) {
-      // history.push("/" + value.address)
       setUserInput(value.address)
-      window.location.href = "/" + value.address // todo: unecessarily rerenders the whole page
+      history.push("/chart/" + value.address)
     }
   }
 
@@ -154,7 +149,7 @@ export default function TopBar(props) {
   }
 
   const handleLogoutOnClick = () => {
-    setAccount(null)
+    walletContext.setAddress(null)
     setDialogOpen(false)
   }
 
@@ -207,7 +202,7 @@ export default function TopBar(props) {
               options={cryptosContext.cryptos}
               getOptionLabel={(option) => {
                 if (option && option.name) {
-                  return option.name + ":" + option.address
+                  return option.name + " : " + option.address
                 } else {
                   return props.address
                 }

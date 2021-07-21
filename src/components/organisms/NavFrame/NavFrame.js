@@ -15,7 +15,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import TopBar from "../../molecules/TopBar/TopBar"
 import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
 import Watermark from "../../molecules/Watermark/Watermark"
-import { InsertChart } from "@material-ui/icons"
+import { AccountBalance, InsertChart, SwapHoriz } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 
 const drawerWidth = 300
@@ -84,7 +84,8 @@ const useStyles = makeStyles((theme) => ({
 const NavFrame = (props) => {
   const navItems = [
     ListItemObject("Chart", <InsertChart />, "/"),
-    ListItemObject("News", <InsertChart />, "/"),
+    ListItemObject("Swap", <SwapHoriz />, "/", true),
+    ListItemObject("Wallet", <AccountBalance />, "/", true),
   ]
 
   const parentNavItems = []
@@ -95,9 +96,9 @@ const NavFrame = (props) => {
     return (
       <>
         {navItem.isDisabled ? ( // if the nav list item is disabled:
-          <ListItem id={key} className={classes.listItem}>
+          <ListItem id={key} className={classes.listItem} disabled={true}>
             <ListItemIcon>{navItem.icon}</ListItemIcon>
-            <ListItemText primary={navItem.title} secondary={"Coming Soon!"} />
+            <ListItemText primary={navItem.title + " (Coming Soon)"} />
           </ListItem>
         ) : (
           <ListItem
@@ -166,7 +167,7 @@ const NavFrame = (props) => {
         <Toolbar className={classes.toolbar} />
         <div className={classes.drawerContainer}>
           <List>
-            <h4 className={classes.listHeader}>Pages</h4>
+            <h4 className={classes.listHeader}>Tools</h4>
             {navItems.map((item, key) => {
               // console.log("NavListItem" + key);
               return (

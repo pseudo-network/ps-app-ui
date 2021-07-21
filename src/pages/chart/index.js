@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import NavFrame from "../../components/organisms/NavFrame/NavFrame"
 import { useCrypto } from "../../contexts/cryptoContext"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
+import { CircularProgress } from "@material-ui/core"
 
 export default function CryptoDetail(props) {
   const cryptoContext = useCrypto()
@@ -10,7 +11,7 @@ export default function CryptoDetail(props) {
   useEffect(() => {
     if (!address || address == "") {
       // todo: get psuedocoin as default
-      window.location.href = "/0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // todo: unecessarily rerenders the whole page
+      window.location.href = "/chart/0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // todo: unecessarily rerenders the whole page
     } else {
       cryptoContext.setAddress(address)
     }
@@ -18,7 +19,12 @@ export default function CryptoDetail(props) {
 
   return (
     <NavFrame page={"CryptoDetail"} address={address}>
-      {cryptoContext.tvSymbol && <TVChartWithHeader />}
+      {cryptoContext.cryptoIsLoading ||
+        (cryptoContext.infoIsLoading ? (
+          <CircularProgress color="secondary" />
+        ) : (
+          <TVChartWithHeader />
+        ))}
       <br />
       {/* <LiveViewContainer /> */}
     </NavFrame>

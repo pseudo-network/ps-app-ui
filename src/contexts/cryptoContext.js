@@ -45,7 +45,6 @@ function getCryptoByAddress(address, usdc) {
 
 function getCryptoInfoByAddress(address, usdc) {
   let quoteCurrency = usdc ? USDC_ADDRESS : WBNB_ADDRESS
-
   return axios
     .get(
       `${API_BASE_URL}/cryptos/${address}/info?quote_currency=${quoteCurrency}`
@@ -76,28 +75,36 @@ function useProvideCrypto() {
   const [percentChange, setPercentChange] = useState(null)
   const [usdc, setUSDC] = useState(true)
 
+  const [cryptoIsLoading, setCryptoIsLoading] = useState(true)
+  const [infoIsLoading, setInfoIsLoading] = useState(true)
+
   useEffect(() => {
     if (address && address != "") {
+      setCryptoIsLoading(true)
       getCryptoByAddress(address, usdc).then((res) => {
+        setCryptoIsLoading(false)
+
+        if (!res) return
         setName(res.name)
         setSymbol(res.symbol)
         setAddress(res.address)
         setTVSymbol(formatTVSymbol(res.name, res.symbol, res.address))
       })
+
+      setInfoIsLoading(true)
       getCryptoInfoByAddress(address, usdc).then((res) => {
+        setInfoIsLoading(false)
+
+        if (!res) return
         setBeginningPrice(res.beginning_price)
         setCurrentPrice(res.current_price)
         setVolume(res.volume)
         setPercentChange(res.percent_change)
       })
-
-      // todo: rerender chart
     }
   }, [address, usdc])
 
   return {
-    // crypto: crypto,
-    // isValidating,
     address,
     setAddress,
     name,
@@ -109,5 +116,7 @@ function useProvideCrypto() {
     volume,
     setUSDC,
     usdc,
+    cryptoIsLoading,
+    infoIsLoading,
   }
 }
