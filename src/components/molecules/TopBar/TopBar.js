@@ -132,7 +132,7 @@ export default function TopBar(props) {
   const handleSelectOptionClick = (event, value) => {
     if (value && value.address) {
       setUserInput(value.address)
-      history.push("/chart/" + value.address)
+      history.push("/" + value.address)
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import TVChartHeader from "../../molecules/TVChartHeader/TVChartHeader"
-import TVChart from "../../molecules/TVChart"
+import TVChart from "../../molecules/TVChart/TVChart"
 import { useCrypto } from "../../../contexts/cryptoContext"
 
 export default function TVChartWithHeader(props) {

@@ -1,5 +1,5 @@
 service := ps-app-ui
-version := 0.0.24
+version := 0.0.25
 gcloud_proj_id := sylvan-bonbon-317613
 cluster := ps-dev
 gcr-image := gcr.io/${gcloud_proj_id}/${service}:${version}
