@@ -38,10 +38,15 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  titleContainer: {
     flexGrow: 1,
-    color: "#ACB0BB",
-    fontWeight: 600,
+    fontFamily: theme.typography.regular,
+    alignItems: "center",
+    alignContent: "center",
+    display: "flex",
+  },
+  title: {
+    marginLeft: 10,
   },
   link: {
     paddingLeft: 10,
@@ -185,16 +190,13 @@ export default function TopBar(props) {
     <>
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Pseudo Charts
-          </Typography>
+          <Box className={classes.titleContainer}>
+            <img src={"/imgs/ps-logo.png"} width={40} height={40} />
+            <Typography variant="h6" className={classes.title}>
+              PseudoCharts
+            </Typography>
+          </Box>
+
           <div className={classes.search}>
             <Autocomplete
               id="combo-box-demo"

@@ -98,7 +98,7 @@ const NavFrame = (props) => {
         {navItem.isDisabled ? ( // if the nav list item is disabled:
           <ListItem id={key} className={classes.listItem} disabled={true}>
             <ListItemIcon>{navItem.icon}</ListItemIcon>
-            <ListItemText primary={navItem.title + " (Coming Soon)"} />
+            <ListItemText primary={navItem.title + " (Soon)"} />
           </ListItem>
         ) : (
           <ListItem
