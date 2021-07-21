@@ -193,7 +193,7 @@ export default function TopBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Pseudonetwork
+            Pseudo Charts
           </Typography>
           <div className={classes.search}>
             <Autocomplete
