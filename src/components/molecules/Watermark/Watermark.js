@@ -17,7 +17,7 @@ const AddressDetail = (props) => {
   /*
     ON RENDER FUNCTION/ MOUNT COMPENENT
   */
-  return <Box>Version 0.0.1 - PSHHHHHH</Box>
+  return <Box>Version 0.0.2 - Pseudonetwork</Box>
 }
 
 export default AddressDetail

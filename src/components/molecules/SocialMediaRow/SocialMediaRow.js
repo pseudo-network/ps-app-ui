@@ -26,7 +26,7 @@ const AddressDetail = (props) => {
       <IconButton
         aria-label="menu"
         onClick={() => {
-          window.location.href = "https://twitter.com/CoinPseudo"
+          window.open("https://twitter.com/CoinPseudo", "_blank")
         }}
       >
         <Twitter />
@@ -34,8 +34,10 @@ const AddressDetail = (props) => {
       <IconButton
         aria-label="menu"
         onClick={() => {
-          window.location.href =
-            "https://www.reddit.com/search/?q=PseudoCoinOfficial"
+          window.open(
+            "https://www.reddit.com/search/?q=PseudoCoinOfficial",
+            "_blank"
+          )
         }}
       >
         <Reddit />
@@ -43,8 +45,10 @@ const AddressDetail = (props) => {
       <IconButton
         aria-label="menu"
         onClick={() => {
-          window.location.href =
-            "https://www.youtube.com/channel/UC3wTWqqyc-OlDMyMajvjyHg"
+          window.open(
+            "https://www.youtube.com/channel/UC3wTWqqyc-OlDMyMajvjyHg",
+            "_blank"
+          )
         }}
       >
         <YouTube />
@@ -52,7 +56,7 @@ const AddressDetail = (props) => {
       <IconButton
         aria-label="menu"
         onClick={() => {
-          window.location.href = "https://twitter.com/CoinPseudo"
+          window.open("https://twitter.com/CoinPseudo", "_blank")
         }}
       >
         <Facebook />

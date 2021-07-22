@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   title: {
-    marginLeft: 10,
+    marginLeft: 13,
   },
   link: {
     paddingLeft: 10,

@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import NavFrame from "../../components/organisms/NavFrame/NavFrame"
 import { useCrypto } from "../../contexts/cryptoContext"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
-import { CircularProgress } from "@material-ui/core"
+import { Box, CircularProgress, Typography } from "@material-ui/core"
 
 export default function Chart(props) {
   const cryptoContext = useCrypto()
@@ -17,16 +17,35 @@ export default function Chart(props) {
     }
   }, [address])
 
-  return (
-    <NavFrame page={"Chart"} address={address}>
-      {cryptoContext.cryptoIsLoading ||
-        (cryptoContext.infoIsLoading ? (
-          <CircularProgress color="secondary" />
-        ) : (
-          <TVChartWithHeader />
-        ))}
-      <br />
-      {/* <LiveViewContainer /> */}
-    </NavFrame>
-  )
+  if (cryptoContext.cryptoIsLoading) {
+    return (
+      <Box
+        display={"flex"}
+        style={{
+          backgroundColor: "#25272c",
+          color: "#fff",
+          width: "100vw",
+          height: "100vh",
+        }}
+        alignItems={"center"}
+        justifyContent={"center"}
+        flexDirection={"column"}
+      >
+        <div>
+          <img
+            height={333}
+            width={333}
+            src={"/gifs/ps.gif"}
+            alt={"loading gif"}
+          />
+        </div>
+      </Box>
+    )
+  } else {
+    return (
+      <NavFrame page={"Chart"} address={address}>
+        <TVChartWithHeader />
+      </NavFrame>
+    )
+  }
 }
