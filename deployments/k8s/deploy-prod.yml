@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ps-app-ui
-          image: gcr.io/sylvan-bonbon-317613/ps-app-ui:0.0.31
+          image: gcr.io/sylvan-bonbon-317613/ps-app-ui:0.0.32
           env:
             - name: ENV
               value: "prod"

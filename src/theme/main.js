@@ -24,7 +24,7 @@ const theme = createMuiTheme({
       disabledBackground: "#0D111B",
     },
     background: {
-      default: "#25272D",
+      default: "#151c2c",
       paper: "#0D111B",
     },
     typography: {
