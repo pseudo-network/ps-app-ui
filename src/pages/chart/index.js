@@ -32,12 +32,7 @@ export default function Chart(props) {
         flexDirection={"column"}
       >
         <div>
-          <img
-            height={333}
-            width={333}
-            src={"/gifs/ps.gif"}
-            alt={"loading gif"}
-          />
+          <img height={333} width={333} src={"/gifs/ps.gif"} />
         </div>
       </Box>
     )
