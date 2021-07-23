@@ -1,5 +1,4 @@
-const api_root = "http://api.pseudonetwork.net:3444"
-// const api_root = "http://localhost:3444"
+const api_root = "https://api.pseudocoin.app/v1"
 const transaction = {}
 
 export default {
