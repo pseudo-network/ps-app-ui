@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://api.pseudocoin.app/v1"
+export const API_BASE_URL = "https://api.pseudocoin.app/v1"
 
 // bitquery
 export const BITQUERY_BASE_URL = "https://graphql.bitquery.io"
