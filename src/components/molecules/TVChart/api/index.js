@@ -2,21 +2,22 @@ import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
 const supportedResolutions = ["1", "3", "5", "15", "30", "60"]
 const math = require("mathjs")
+import {
+  API_BASE_URL,
+  USDC_ADDRESS,
+  WBNB_ADDRESS,
+} from "../../../../core/environments"
 
 const config = {
   supported_resolutions: supportedResolutions,
   supports_search: false,
 }
 
-// todo: should come from .env
-const apiRoot = "http://api.pseudonetwork.net:3444"
-const safemoonAddress = "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3"
-const usdcAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
 const history = {}
-const outlier_threshold = 3
+const OUTLIER_THRESHOLD = 3
 
 function getSymbols(userInput) {
-  const url = `http://34.69.134.192:3444/cryptos?search_query=${userInput.toLowerCase()}`
+  const url = `${API_BASE_URL}?search_query=${userInput.toLowerCase()}`
   return rp({
     url: `${url}`,
   })
@@ -40,7 +41,7 @@ function findOutliersInArray(arr) {
   for (let i = 0; i < arr.length; i++) {
     const a = arr[i]
     const z = math.abs(calcZ(a, mean, std))
-    if (z > outlier_threshold) {
+    if (z > OUTLIER_THRESHOLD) {
       outlierIndexes.push(i)
     }
   }
@@ -52,7 +53,7 @@ const historyProvider = {
   history: history,
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
-    const url = `${apiRoot}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${usdcAddress}`
+    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${USDC_ADDRESS}`
 
     return rp({
       url: `${url}`,
