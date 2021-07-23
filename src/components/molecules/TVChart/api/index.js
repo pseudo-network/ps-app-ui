@@ -53,7 +53,7 @@ const historyProvider = {
   history: history,
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
-    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${USDC_ADDRESS}`
+    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${WBNB_ADDRESS}`
 
     return rp({
       url: `${url}`,
