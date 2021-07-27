@@ -15,6 +15,7 @@ export default function TVChartWithHeader(props) {
         volume={cryptoContext.volume}
         currentPrice={cryptoContext.currentPrice}
       />
+      <br />
       <TVChart symbol={cryptoContext.tvSymbol} />
     </>
   )

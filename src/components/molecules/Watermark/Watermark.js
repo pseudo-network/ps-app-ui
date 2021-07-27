@@ -4,6 +4,7 @@ import React from "react"
 // Material UI Components
 import { makeStyles } from "@material-ui/core/styles"
 import { Box } from "@material-ui/core"
+import { Copyright } from "@material-ui/icons"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +18,7 @@ const AddressDetail = (props) => {
   /*
     ON RENDER FUNCTION/ MOUNT COMPENENT
   */
-  return <Box>Version 0.0.2 - Pseudonetwork</Box>
+  return <Box>Version 0.0.2 - PseudoNetwork</Box>
 }
 
 export default AddressDetail

@@ -23,6 +23,8 @@ import PropTypes from "prop-types"
 import { useHistory } from "react-router-dom"
 import { useCryptos } from "../../../contexts/cryptosContext"
 import { useWallet } from "../../../contexts/walletContext"
+import { Link } from "react-router-dom"
+import { BASE_URL } from "../../../core/environments"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,6 +103,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+  },
+  logo: {
+    cursor: "pointer",
   },
 }))
 
@@ -191,7 +196,15 @@ export default function TopBar(props) {
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
           <Box className={classes.titleContainer}>
-            <img src={"/imgs/ps-logo.png"} width={40} height={40} />
+            <img
+              className={classes.logo}
+              src={"/imgs/ps-logo.png"}
+              width={40}
+              height={40}
+              onClick={() => {
+                window.location = BASE_URL
+              }}
+            />
             <Typography variant="h6" className={classes.title}>
               Charts
             </Typography>
@@ -221,9 +234,9 @@ export default function TopBar(props) {
               )}
             />
           </div>
-          <div className={classes.balance}>
+          {/* <div className={classes.balance}>
             <PSLabel text={walletContext.balance} />
-          </div>
+          </div> */}
           <PSButton
             onClick={
               walletContext.address

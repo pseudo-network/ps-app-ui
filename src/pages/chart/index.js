@@ -2,7 +2,8 @@ import React, { useEffect } from "react"
 import NavFrame from "../../components/organisms/NavFrame/NavFrame"
 import { useCrypto } from "../../contexts/cryptoContext"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
-import { Box, CircularProgress, Typography } from "@material-ui/core"
+import { Box, CircularProgress, Typography, Grid } from "@material-ui/core"
+import CryptoDetailCard from "../../components/molecules/CryptoDetailCard/CryptoDetailCard"
 
 export default function Chart(props) {
   const cryptoContext = useCrypto()
@@ -40,6 +41,15 @@ export default function Chart(props) {
     return (
       <NavFrame page={"Chart"} address={address}>
         <TVChartWithHeader />
+        {/* <br />
+        <Grid container spacing={3}>
+          <Grid container item xs={3}>
+            <CryptoDetailCard />
+          </Grid>
+          <Grid container item xs={9}>
+            <CryptoDetailCard />
+          </Grid>
+        </Grid> */}
       </NavFrame>
     )
   }

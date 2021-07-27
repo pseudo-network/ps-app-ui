@@ -22,7 +22,9 @@ const PSLink = (props) => {
         className={classes.root}
         color="inherit"
         href={props.url}
+        target={props.target ? props.target : "_blank"}
         onClick={props.onClick}
+        rel="noreferrer"
       >
         {props.text}
       </a>
