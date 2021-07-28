@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     display: "flex",
-    justifyContent: "center",
+    // justifyContent: "center",
     // backgroundColor: theme.pallete.secondary,
   },
 }))

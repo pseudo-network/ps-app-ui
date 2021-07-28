@@ -17,6 +17,7 @@ import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
 import Watermark from "../../molecules/Watermark/Watermark"
 import { AccountBalance, InsertChart, SwapHoriz } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
+import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
 
 const drawerWidth = 300
 
@@ -192,6 +193,7 @@ const NavFrame = (props) => {
           </List>
           <div className={classes.socialMediaRowParent}>
             {" "}
+            <ThemeToggle />
             <SocialMediaRow />
             <br />
             <Watermark />

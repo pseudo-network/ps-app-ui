@@ -2,15 +2,15 @@ import * as React from "react"
 import { widget } from "../../../charting_library/charting_library"
 import Datafeed from "./api"
 import { useRef, useEffect } from "react"
-import { useCrypto } from "../../../contexts/cryptoContext"
+import { useAppTheme } from "../../../contexts/appThemeContext"
 
 export default function TVChart(props) {
-  const cryptoContext = useCrypto()
   const tv = useRef(null)
+  const appThemeContext = useAppTheme()
 
   const widgetOptions = {
-    theme: props.theme || "Dark",
-    symbol: cryptoContext.tvSymbol || "UNKNOWN",
+    theme: appThemeContext.darkMode ? "Dark" : "Light",
+    symbol: props.symbol || "UNKNOWN",
     interval: "15",
     height: props.height || "calc(100vh - 333px)",
     container_id: props.chartName || "Coin-Chart",
@@ -25,9 +25,8 @@ export default function TVChart(props) {
 
   useEffect(() => {
     if (tv.current) tv.current.remove()
-
     tv.current = new widget(widgetOptions)
-  }, [cryptoContext.tvSymbol])
+  }, [props.symbol, appThemeContext.darkMode])
 
   return (
     <div

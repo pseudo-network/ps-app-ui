@@ -1,8 +1,6 @@
-import React from "react"
 import { createMuiTheme } from "@material-ui/core/styles"
-import { ThemeProvider } from "@material-ui/styles"
 
-const theme = createMuiTheme({
+const DarkTheme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
@@ -32,29 +30,7 @@ const theme = createMuiTheme({
       light: "Now-Bold, Arial",
       regular: "Poppins, Arial",
     },
-    // divider: {
-    //   // main:
-    // },
   },
-
-  // light
-  // palette: {
-  //   type: "light",
-  //   primary: {
-  //     main: "#fff",
-  //   },
-  //   secondary: {
-  //     main: "#070B15",
-  //   },
-  //   text: {
-  //   },
-  //   action: {
-  //     active: "#836AFF",
-  //     hover: "#14171F",
-  //   },
-  // },
 })
 
-export default function AppThemeProvider(props) {
-  return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-}
+export default DarkTheme
