@@ -3,8 +3,8 @@ import useSWR from "swr"
 import { fetcher } from "../utils/utils"
 import {
   API_BASE_URL,
-  USDC,
-  USDC_ADDRESS,
+  BUSD,
+  BUSD_ADDRESS,
   WBNB_ADDRESS,
 } from "../core/environments"
 import axios from "axios"
@@ -26,7 +26,7 @@ function formatTVSymbol(name, symbol, address, quoteCurrency) {
   return `${name}:${symbol}:${address}:${quoteCurrency}`
 }
 
-function getCryptoByAddress(address, usdc) {
+function getCryptoByAddress(address, busd) {
   return axios
     .get(`${API_BASE_URL}/cryptos?search_query=${address}`)
     .then((res) => {
@@ -43,8 +43,8 @@ function getCryptoByAddress(address, usdc) {
     })
 }
 
-function getCryptoInfoByAddress(address, usdc) {
-  let quoteCurrency = usdc ? USDC_ADDRESS : WBNB_ADDRESS
+function getCryptoInfoByAddress(address, busd) {
+  let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
       `${API_BASE_URL}/cryptos/${address}/info?quote_currency=${quoteCurrency}`
@@ -73,7 +73,7 @@ function useProvideCrypto() {
   const [currentPrice, setCurrentPrice] = useState(null)
   const [volume, setVolume] = useState(null)
   const [percentChange, setPercentChange] = useState(null)
-  const [usdc, setUSDC] = useState(true)
+  const [busd, setBUSD] = useState(false)
 
   const [cryptoIsLoading, setCryptoIsLoading] = useState(true)
   const [infoIsLoading, setInfoIsLoading] = useState(true)
@@ -81,18 +81,26 @@ function useProvideCrypto() {
   useEffect(() => {
     if (address && address != "") {
       setCryptoIsLoading(true)
-      getCryptoByAddress(address, usdc).then((res) => {
+      getCryptoByAddress(address, busd).then((res) => {
         setCryptoIsLoading(false)
 
         if (!res) return
         setName(res.name)
         setSymbol(res.symbol)
         setAddress(res.address)
-        setTVSymbol(formatTVSymbol(res.name, res.symbol, res.address))
+        let quoteCurrencyAddress = busd ? BUSD_ADDRESS : WBNB_ADDRESS
+        setTVSymbol(
+          formatTVSymbol(
+            res.name,
+            res.symbol,
+            res.address,
+            quoteCurrencyAddress
+          )
+        )
       })
 
       setInfoIsLoading(true)
-      getCryptoInfoByAddress(address, usdc).then((res) => {
+      getCryptoInfoByAddress(address, busd).then((res) => {
         setInfoIsLoading(false)
 
         if (!res) return
@@ -102,7 +110,7 @@ function useProvideCrypto() {
         setPercentChange(res.percent_change)
       })
     }
-  }, [address, usdc])
+  }, [address, busd])
 
   return {
     address,
@@ -114,8 +122,8 @@ function useProvideCrypto() {
     beginningPrice,
     currentPrice,
     volume,
-    setUSDC,
-    usdc,
+    setBUSD,
+    busd: busd,
     cryptoIsLoading,
     infoIsLoading,
   }

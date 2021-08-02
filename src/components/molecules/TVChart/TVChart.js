@@ -7,11 +7,11 @@ import { useAppTheme } from "../../../contexts/appThemeContext"
 export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
-
   const widgetOptions = {
+    debug: false,
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
-    interval: "15",
+    interval: "1",
     height: props.height || "calc(100vh - 333px)",
     container_id: props.chartName || "Coin-Chart",
     library_path: "/charting_library/",
@@ -21,6 +21,17 @@ export default function TVChart(props) {
     user_id: "public_user_id",
     datafeed: Datafeed,
     autosize: true,
+    studies_overrides: {},
+    overrides: {
+      "mainSeriesProperties.showCountdown": true,
+      "paneProperties.background": "#131722",
+      "paneProperties.vertGridProperties.color": "#363c4e",
+      "paneProperties.horzGridProperties.color": "#363c4e",
+      "symbolWatermarkProperties.transparency": 90,
+      "scalesProperties.textColor": "#AAA",
+      "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
+      "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
+    },
   }
 
   useEffect(() => {

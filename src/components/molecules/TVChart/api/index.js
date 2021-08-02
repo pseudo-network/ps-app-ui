@@ -4,7 +4,7 @@ const supportedResolutions = ["1", "3", "5", "15", "30", "60"]
 const math = require("mathjs")
 import {
   API_BASE_URL,
-  USDC_ADDRESS,
+  BUSD_ADDRESS,
   WBNB_ADDRESS,
 } from "../../../../core/environments"
 
@@ -53,48 +53,58 @@ const historyProvider = {
   history: history,
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
-    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${WBNB_ADDRESS}`
+    const splitData = symbolInfo.ticker.split(":")
+
+    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${splitData[3]}`
 
     return rp({
       url: `${url}`,
-    }).then((data) => {
-      console.log("transactions returned: ", data.length)
-      if (data.Response && data.Response === "Error") {
-        console.log("CryptoCompare API error:", data.Message)
-        return []
-      }
-      if (data && data.length > 0) {
-        const lows = data.map((d) => d.low)
-        const highs = data.map((d) => d.high)
-        const opens = data.map((d) => d.open)
-        const closes = data.map((d) => d.close)
-        const outlierIndexes = findOutliersInArray(lows).concat(
-          findOutliersInArray(highs),
-          findOutliersInArray(opens),
-          findOutliersInArray(closes)
-        )
-        data = data.filter(function (value, index) {
-          return outlierIndexes.indexOf(index) == -1
-        })
-        const bars = data.map((res) => {
-          return {
-            time: res.unixTimeMS,
-            low: res.low,
-            high: res.high,
-            open: res.open,
-            close: res.close,
-            volume: res.tradeAmount,
-          }
-        })
-        if (first) {
-          const lastBar = bars[bars.length - 1]
-          history[symbolInfo.name] = { lastBar: lastBar }
-        }
-        return bars
-      } else {
-        return []
-      }
     })
+      .then((data) => {
+        console.log("transactions returned: ", data.length)
+        if (data.Response && data.Response === "Error") {
+          console.log("CryptoCompare API error:", data.Message)
+          return []
+        }
+        console.log("=.=.==.=.=.=.==.=.=.=.=.==.=.=.=.==.=.=.=")
+        console.log(data)
+        console.log("=.=.==.=.=.=.==.=.=.=.=.==.=.=.=.==.=.=.=")
+        if (data && data.length > 0) {
+          const lows = data.map((d) => d.low)
+          const highs = data.map((d) => d.high)
+          const opens = data.map((d) => d.open)
+          const closes = data.map((d) => d.close)
+          const outlierIndexes = findOutliersInArray(lows).concat(
+            findOutliersInArray(highs),
+            findOutliersInArray(opens),
+            findOutliersInArray(closes)
+          )
+          data = data.filter(function (value, index) {
+            return outlierIndexes.indexOf(index) == -1
+          })
+          const bars = data.map((res) => {
+            return {
+              time: res.unixTimeMS,
+              low: res.low,
+              high: res.high,
+              open: res.open,
+              close: res.close,
+              volume: res.tradeAmount,
+            }
+          })
+          if (first) {
+            const lastBar = bars[bars.length - 1]
+            history[symbolInfo.name] = { lastBar: lastBar }
+          }
+          return bars
+        } else {
+          return []
+        }
+      })
+      .catch((e) => {
+        console.log("there was an error fetching bars:", e)
+        return []
+      })
   },
 }
 
@@ -133,16 +143,16 @@ export default {
     // expects a symbolInfo object in response
     console.log("======resolveSymbol running")
     console.log("resolveSymbol:", { symbolTicker })
-    const split_data = symbolTicker.split(":")
-    console.log(split_data)
-    const symbol_stub = {
-      name: split_data[0],
-      description: split_data[1],
+    const splitData = symbolTicker.split(":")
+    console.log(splitData)
+    const symbolStub = {
+      name: splitData[0],
+      description: splitData[1],
       type: "crypto",
       session: "24x7",
       timezone: "Etc/UTC",
       ticker: symbolTicker,
-      exchange: split_data[2],
+      exchange: splitData[2],
       // minmov: 1,
       pricescale: 10000000000,
       has_intraday: true,
@@ -156,8 +166,8 @@ export default {
     //   symbol_stub.pricescale = 100
     // }
     setTimeout(function () {
-      onSymbolResolvedCallback(symbol_stub)
-      console.log("Resolving that symbol....", symbol_stub)
+      onSymbolResolvedCallback(symbolStub)
+      console.log("Resolving that symbol....", symbolStub)
     }, 0)
 
     // onResolveErrorCallback('Not feeling it today')
