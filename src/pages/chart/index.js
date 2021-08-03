@@ -19,7 +19,7 @@ export default function Chart(props) {
     }
   }, [address])
 
-  if (cryptoContext.cryptoIsLoading) {
+  if (cryptoContext.infoIsLoading) {
     return (
       <Box
         display={"flex"}

@@ -26,12 +26,33 @@ function formatTVSymbol(name, symbol, address, quoteCurrency) {
   return `${name}:${symbol}:${address}:${quoteCurrency}`
 }
 
+// todo: need new endpoint for this
 function getCryptoByAddress(address) {
+  return axios
+    .get(
+      `${API_BASE_URL}/cryptos?search_query=${address}`
+    )
+    .then((res) => {
+      if (res.data) {
+        return res.data[0]
+      } else {
+        return null
+      }
+    })
+    .catch((e) => {
+      // console.log(e)
+      console.log("error", e)
+      return e
+      // todo: handle error
+    })
+}
+
+function getCryptoTransactionsByAddress(address) {
   return axios
     .get(`${API_BASE_URL}/cryptos/${address}/transactions`)
     .then((res) => {
       if (res.data.length > 0) {
-        return res.data[0]
+        return res.data
       } else {
         return null
       }
@@ -115,26 +136,26 @@ function useProvideCrypto() {
 
   useEffect(() => {
     if (address && address != "") {
-      setCryptoIsLoading(true)
-      getCryptoByAddress(address, busd).then((res) => {
-        setCryptoIsLoading(false)
+      // setCryptoIsLoading(true)
+      // getCryptoTransactionsByAddress(address, busd).then((res) => {
+      //   setCryptoIsLoading(false)
 
-        if (!res) return
-        setName(res.name)
-        setSymbol(res.symbol)
-        setAddress(res.address)
-        let quoteCurrencyAddress = busd ? BUSD_ADDRESS : WBNB_ADDRESS
-        setTVSymbol(
-          formatTVSymbol(
-            res.name,
-            res.symbol,
-            res.address,
-            quoteCurrencyAddress
-          )
-        )
-      })
+      //   if (!res) return
+      //   setName(res.name)
+      //   setSymbol(res.symbol)
+      //   setAddress(res.address)
+      //   let quoteCurrencyAddress = busd ? BUSD_ADDRESS : WBNB_ADDRESS
+      //   setTVSymbol(
+      //     formatTVSymbol(
+      //       res.name,
+      //       res.symbol,
+      //       res.address,
+      //       quoteCurrencyAddress
+      //     )
+      //   )
+      // })
       setInfoIsLoading(true)
-      getCryptoInfoByAddress(address, busd).then((res) => {
+      getCryptoByAddress(address).then((res) => {
         setInfoIsLoading(false)
 
         if (!res) return
@@ -142,6 +163,13 @@ function useProvideCrypto() {
         setCurrentPrice(res.current_price)
         setVolume(res.volume)
         setPercentChange(res.percent_change)
+                setTVSymbol(
+          formatTVSymbol(
+            res.name,
+            res.symbol,
+            res.address,
+            quoteCurrencyAddress
+          )
       })
     }
   }, [address, busd])

@@ -18,9 +18,6 @@ const useStyles = makeStyles((theme) => ({
 const AddressDetail = (props) => {
   const classes = useStyles()
 
-  /*
-    ON RENDER FUNCTION/ MOUNT COMPENENT
-  */
   return (
     <Box className={classes.root}>
       <IconButton
