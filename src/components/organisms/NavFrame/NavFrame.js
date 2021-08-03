@@ -14,6 +14,7 @@ import Divider from "@material-ui/core/Divider"
 import Toolbar from "@material-ui/core/Toolbar"
 import TopBar from "../../molecules/TopBar/TopBar"
 import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
+import ContactUsButtons from "../../molecules/ContactButtons/index"
 import Watermark from "../../molecules/Watermark/Watermark"
 import { AccountBalance, InsertChart, SwapHoriz } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
@@ -193,6 +194,7 @@ const NavFrame = (props) => {
           </List>
           <div className={classes.socialMediaRowParent}>
             {" "}
+            <ContactUsButtons/>
             <ThemeToggle />
             <SocialMediaRow />
             <br />

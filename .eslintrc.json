@@ -16,7 +16,8 @@
   "extends": ["prettier", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "no-undef":"off",
-    "prettier/prettier": "error",
+    // KYS this took me 25 minutes j to realize it was ya damn prettier plugin -Dan 
+    "prettier/prettier": "off",
     "no-unused-vars": "off",
     "react/prop-types": "off",
     "react/jsx-key":"off",
