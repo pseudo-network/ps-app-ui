@@ -92,7 +92,7 @@ const ContactUsButtons = (props) => {
         setBusinessDialogOpen(false);
         setBugReportContactForm(DEFAULT_BUG_REPORT);
         setBusinessContactForm(DEFAULT_BUSINESS_REPORT);
-        
+
         fetch(API_BASE_URL+"/message", {
           method: "POST",
           headers: {
@@ -190,7 +190,7 @@ const ContactUsButtons = (props) => {
             </div>
             <Grid container spacing={2}>
               <Grid item>
-                <PSButton text={"Submit Bug"} onClick={submitBusinessContactForm} />
+                <PSButton text={"Send Message"} onClick={submitBusinessContactForm} />
               </Grid>
               <Grid item>
                 <PSButton  text={"Cancel"} onClick={handleBusinessDialogClosing} />
