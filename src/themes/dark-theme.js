@@ -9,6 +9,12 @@ const DarkTheme = createMuiTheme({
     secondary: {
       main: "#070B15",
     },
+    success: {
+      main: "#51A39A",
+    },
+    danger: {
+      main: "#51A39A",
+    },
     text: {
       primary: "#ACB0BB",
       secondary: "#25272D",

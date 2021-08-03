@@ -54,6 +54,7 @@ const historyProvider = {
 
   getBars: function (symbolInfo, resolution, from, to, first, limit) {
     const splitData = symbolInfo.ticker.split(":")
+    console.log(symbolInfo)
 
     const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${splitData[3]}`
 

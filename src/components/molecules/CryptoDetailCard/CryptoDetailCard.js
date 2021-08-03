@@ -1,17 +1,7 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Card from "@material-ui/core/Card"
-import CardHeader from "@material-ui/core/CardHeader"
-import CardMedia from "@material-ui/core/CardMedia"
-import CardContent from "@material-ui/core/CardContent"
 import PSCard from "../PSCard/PSCard"
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  Typography,
-} from "@material-ui/core"
+import { List, ListItem, ListItemText } from "@material-ui/core"
 import PSLink from "../../atoms/PSLink/PSLink"
 import { Info, InfoOutlined } from "@material-ui/icons"
 import { useCrypto } from "../../../contexts/cryptoContext"
@@ -45,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CryptoDetailCard(props) {
   const classes = useStyles()
-  const cryptoContext = useCrypto();
+  const cryptoContext = useCrypto()
 
   return (
     <PSCard

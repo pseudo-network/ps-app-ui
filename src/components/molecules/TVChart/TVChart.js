@@ -12,7 +12,7 @@ export default function TVChart(props) {
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
     interval: "15",
-    height: props.height || "calc(100vh - 333px)",
+    height: props.height || "calc(100vh - 444px)",
     container_id: props.chartName || "Coin-Chart",
     library_path: "/charting_library/",
     charts_storage_url: "https://saveload.tradingview.com",

@@ -9,6 +9,12 @@ const LightTheme = createMuiTheme({
     secondary: {
       main: "#070B15",
     },
+    success: {
+      main: "#51A39A",
+    },
+    danger: {
+      main: "#51A39A",
+    },
     text: {
       primary: "#1d1d1f",
       secondary: "#25272D",

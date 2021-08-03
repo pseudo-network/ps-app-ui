@@ -16,7 +16,14 @@ import TopBar from "../../molecules/TopBar/TopBar"
 import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
 import ContactUsButtons from "../../molecules/ContactButtons/index"
 import Watermark from "../../molecules/Watermark/Watermark"
-import { AccountBalance, ArrowBack, ArrowLeft, InsertChart, SwapHoriz, Web } from "@material-ui/icons"
+import {
+  AccountBalance,
+  ArrowBack,
+  ArrowLeft,
+  InsertChart,
+  SwapHoriz,
+  Web,
+} from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
 import { APP_URL } from "../../../core/environments"
@@ -91,10 +98,8 @@ const NavFrame = (props) => {
     ListItemObject("Swap", <SwapHoriz />, "/", true),
   ]
 
-  const links = [
-    ListItemObject("Web App", <Web />, APP_URL, false, true),
-  ]
-  
+  const links = [ListItemObject("Web App", <Web />, APP_URL, false, true)]
+
   const parentNavItems = []
 
   const NavListItem = ({ navItem, key }) => {
@@ -168,7 +173,6 @@ const NavFrame = (props) => {
                 </div>
               )
             })}
-          
           </List>
           <div className={classes.socialMediaRowParent}>
             {" "}
