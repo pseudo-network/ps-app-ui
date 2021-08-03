@@ -26,9 +26,9 @@ function formatTVSymbol(name, symbol, address, quoteCurrency) {
   return `${name}:${symbol}:${address}:${quoteCurrency}`
 }
 
-function getCryptoByAddress(address, busd) {
+function getCryptoByAddress(address) {
   return axios
-    .get(`${API_BASE_URL}/cryptos?search_query=${address}`)
+    .get(`${API_BASE_URL}/cryptos/${address}/transactions`)
     .then((res) => {
       if (res.data.length > 0) {
         return res.data[0]
@@ -64,6 +64,27 @@ function getCryptoInfoByAddress(address, busd) {
     })
 }
 
+function getRecentTransactions(address, busd) {
+  let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
+  return axios
+    .get(
+      `${API_BASE_URL}/cryptos/${address}/info?quote_currency=${quoteCurrency}`
+    )
+    .then((res) => {
+      if (res.data) {
+        return res.data
+      } else {
+        return null
+      }
+    })
+    .catch((e) => {
+      // console.log(e)
+      console.log("error", e)
+      return e
+      // todo: handle error
+    })
+}
+
 function useProvideCrypto() {
   const [address, setAddress] = useState(null)
   const [name, setName] = useState(null)
@@ -77,6 +98,20 @@ function useProvideCrypto() {
 
   const [cryptoIsLoading, setCryptoIsLoading] = useState(true)
   const [infoIsLoading, setInfoIsLoading] = useState(true)
+  
+  const [transactions, setTransactions] = useState([])
+
+  function loadTransactionData() {
+    try {
+      getRecentTransactions(address).then((res) => {
+        setTransactions(res);
+      });
+   } catch (e) {
+       console.log(e);
+   }
+   const interval = setInterval(() => loadTransactionData(), 2000);
+   clearInterval(interval);
+ }
 
   useEffect(() => {
     if (address && address != "") {
@@ -98,7 +133,6 @@ function useProvideCrypto() {
           )
         )
       })
-
       setInfoIsLoading(true)
       getCryptoInfoByAddress(address, busd).then((res) => {
         setInfoIsLoading(false)
@@ -124,6 +158,7 @@ function useProvideCrypto() {
     volume,
     setBUSD,
     busd: busd,
+    transactions,
     cryptoIsLoading,
     infoIsLoading,
   }

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CryptoDetailCard(props) {
   const classes = useStyles()
-  const cryptoContext = useCrypto()
+  const cryptoContext = useCrypto();
 
   return (
     <PSCard

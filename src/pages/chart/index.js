@@ -4,6 +4,7 @@ import { useCrypto } from "../../contexts/cryptoContext"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVChartWithHeader"
 import { Box, CircularProgress, Typography, Grid } from "@material-ui/core"
 import CryptoDetailCard from "../../components/molecules/CryptoDetailCard/CryptoDetailCard"
+import TransactionTable from "../../components/molecules/LiveViewContainer"
 
 export default function Chart(props) {
   const cryptoContext = useCrypto()
@@ -40,16 +41,13 @@ export default function Chart(props) {
   } else {
     return (
       <NavFrame page={"Chart"} address={address}>
-        <TVChartWithHeader />
-        {/* <br />
+      <TVChartWithHeader width={"100%"}/>
+      <br />
         <Grid container spacing={3}>
-          <Grid container item xs={3}>
-            <CryptoDetailCard />
+          <Grid container item xs={12}>
+            <TransactionTable/>
           </Grid>
-          <Grid container item xs={9}>
-            <CryptoDetailCard />
-          </Grid>
-        </Grid> */}
+        </Grid>
       </NavFrame>
     )
   }
