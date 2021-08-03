@@ -36,25 +36,20 @@ import {
   } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    display: "flex",
     // justifyContent: "center",
     // backgroundColor: theme.pallete.secondary,
   },
   buttonStyling: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
     color: theme.palette.secondary,
-    fontWeight: 600,
     textTransform: "none",
     backgroundColor: theme.palette.primary,
-    border: "1px solid #836AFF",
-    padding: ".66em",
   },
   textboxStyling: {
     color: theme.palette.secondary,
     borderColor: theme.palette.secondary,
+  },
+  buttonsContainer: {
+    display:"flex", 
   }
 }))
 
@@ -297,7 +292,7 @@ const ContactUsButtons = (props) => {
     ON RENDER FUNCTION/ MOUNT COMPENENT
   */
   return (
-    <Grid container xs={12} spacing={2}>
+    <Box container xs={12}>
         <Grid item xs={12}>
             <Button className={classes.buttonStyling} onClick={businessContactButtonClick} fullWidth> Business Inquisitions </Button>
         </Grid>
@@ -316,7 +311,7 @@ const ContactUsButtons = (props) => {
         title={"Web App Bug Report"}
         content={<BugReportContactModalContent />}
       />
-    </Grid>
+    </Box>
   )
 }
 

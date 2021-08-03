@@ -24,7 +24,7 @@ import { useHistory } from "react-router-dom"
 import { useCryptos } from "../../../contexts/cryptosContext"
 import { useWallet } from "../../../contexts/walletContext"
 import { Link } from "react-router-dom"
-import { BASE_URL } from "../../../core/environments"
+import { BASE_URL, LANDING_PAGE_URL } from "../../../core/environments"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -202,7 +202,7 @@ export default function TopBar(props) {
               width={40}
               height={40}
               onClick={() => {
-                window.location = BASE_URL
+                window.location = LANDING_PAGE_URL
               }}
             />
             <Typography variant="h6" className={classes.title}>

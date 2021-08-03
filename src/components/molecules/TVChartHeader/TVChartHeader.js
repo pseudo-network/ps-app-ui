@@ -120,7 +120,7 @@ export default function TVChartHeader(props) {
         />
         <Volume volume={props.volume} />
         <Box className={classes.flex}>
-          <Typography>BNB</Typography>
+          {/* <Typography>BNB</Typography> */}
           {/* <Switch
             color="default"
             inputProps={{ "aria-label": "checkbox with default color" }}
@@ -130,7 +130,7 @@ export default function TVChartHeader(props) {
               cryptoContext.setBUSD(!cryptoContext.busd)
             }}
           /> */}
-          <Typography>BUSD</Typography>
+          {/* <Typography>BUSD</Typography> */}
         </Box>
       </Box>
     </>

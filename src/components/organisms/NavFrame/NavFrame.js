@@ -16,18 +16,20 @@ import TopBar from "../../molecules/TopBar/TopBar"
 import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
 import ContactUsButtons from "../../molecules/ContactButtons/index"
 import Watermark from "../../molecules/Watermark/Watermark"
-import { AccountBalance, InsertChart, SwapHoriz } from "@material-ui/icons"
+import { AccountBalance, ArrowBack, ArrowLeft, InsertChart, SwapHoriz, Web } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
+import { APP_URL } from "../../../core/environments"
 
 const drawerWidth = 300
 
-function ListItemObject(Title, IconName, Location, isDisabled = false) {
+function ListItemObject(title, icon, path, isDisabled = false, newTab = false) {
   return {
-    title: Title,
-    icon: IconName,
-    path: Location,
+    title: title,
+    icon: icon,
+    path: path,
     isDisabled: isDisabled,
+    newTab: newTab,
   }
 }
 
@@ -84,17 +86,25 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NavFrame = (props) => {
-  const navItems = [
+  const pages = [
     ListItemObject("Chart", <InsertChart />, "/"),
     ListItemObject("Swap", <SwapHoriz />, "/", true),
-    ListItemObject("Wallet", <AccountBalance />, "/", true),
   ]
 
+  const links = [
+    ListItemObject("Web App", <Web />, APP_URL, false, true),
+  ]
+  
   const parentNavItems = []
 
   const NavListItem = ({ navItem, key }) => {
     const classes = useStyles()
     const isSelected = navItem.path == props.location.pathname
+
+    const navigate = (path, newTab) => {
+      newTab ? window.open(path, "_blank") : props.history.push(`${path}`)
+    }
+
     return (
       <>
         {navItem.isDisabled ? ( // if the nav list item is disabled:
@@ -105,7 +115,7 @@ const NavFrame = (props) => {
         ) : (
           <ListItem
             button
-            onClick={(e) => props.history.push(`${navItem.path}`)}
+            onClick={() => navigate(navItem.path, navItem.newTab)}
             id={key}
             selected={isSelected}
             className={classes.listItem}
@@ -114,41 +124,6 @@ const NavFrame = (props) => {
             <ListItemText primary={navItem.title} />
           </ListItem>
         )}
-      </>
-    )
-  }
-
-  const ChildNavListItem = ({ navItem, key }) => {
-    const isSelected = navItem.path == props.location.pathname
-    return (
-      <ListItem
-        button
-        onClick={(e) => props.history.push(`${navItem.path}`)}
-        id={navItem.path + "NavListChildItem" + key}
-        selected={isSelected}
-        className={classes.nested}
-      >
-        <ListItemText primary={navItem.title} />
-      </ListItem>
-    )
-  }
-
-  const ParentNavListItems = ({ navItem, key }) => {
-    const isSelected = navItem.path == props.location.pathname
-    return (
-      <>
-        <ListItem button onClick={navItem.clickMethod}>
-          <ListItemIcon>{navItem.icon}</ListItemIcon>
-          <ListItemText primary={navItem.title} />
-          {navItem.isOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={navItem.isOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {navItem.children.map((item, index) => (
-              <ChildNavListItem button navItem={item} key={index} />
-            ))}
-          </List>
-        </Collapse>
       </>
     )
   }
@@ -170,7 +145,7 @@ const NavFrame = (props) => {
         <div className={classes.drawerContainer}>
           <List>
             <h4 className={classes.listHeader}>Tools</h4>
-            {navItems.map((item, key) => {
+            {pages.map((item, key) => {
               // console.log("NavListItem" + key);
               return (
                 <div key={key} className={classes.listItemParent}>
@@ -181,20 +156,23 @@ const NavFrame = (props) => {
                 </div>
               )
             })}
-            {parentNavItems.map((item, key) => {
-              // console.log("NavListParentItem" + key);
+            <h4 className={classes.listHeader}>Links</h4>
+            {links.map((item, key) => {
+              // console.log("NavListItem" + key);
               return (
-                <ParentNavListItems
-                  button
-                  navItem={item}
-                  id={item.path + "NavListParentItem" + key}
-                />
+                <div key={key} className={classes.listItemParent}>
+                  <NavListItem
+                    navItem={item}
+                    id={item.path + "NavListItem" + key}
+                  />
+                </div>
               )
             })}
+          
           </List>
           <div className={classes.socialMediaRowParent}>
             {" "}
-            <ContactUsButtons/>
+            {/* <ContactUsButtons/> */}
             <ThemeToggle />
             <SocialMediaRow />
             <br />

@@ -11,7 +11,7 @@ export default function TVChart(props) {
     debug: false,
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
-    interval: "1",
+    interval: "15",
     height: props.height || "calc(100vh - 333px)",
     container_id: props.chartName || "Coin-Chart",
     library_path: "/charting_library/",
