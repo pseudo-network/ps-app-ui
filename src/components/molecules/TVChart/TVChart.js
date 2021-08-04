@@ -31,7 +31,7 @@ export default function TVChart(props) {
       "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
     },
     debug: true,
-    interval: "60",
+    interval: "180",
     time_frames: [
       { text: "1D", resolution: "1", description: "1 day" },
     ],

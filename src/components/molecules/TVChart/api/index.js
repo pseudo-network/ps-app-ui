@@ -67,18 +67,18 @@ const historyProvider = {
           return []
         }
         if (data && data.length > 0) {
-          // const lows = data.map((d) => d.low)
-          // const highs = data.map((d) => d.high)
-          // const opens = data.map((d) => d.open)
-          // const closes = data.map((d) => d.close)
-          // const outlierIndexes = findOutliersInArray(lows).concat(
-          //   findOutliersInArray(highs),
-          //   findOutliersInArray(opens),
-          //   findOutliersInArray(closes)
-          // )
-          // data = data.filter(function (value, index) {
-          //   return outlierIndexes.indexOf(index) == -1
-          // })
+          const lows = data.map((d) => d.low)
+          const highs = data.map((d) => d.high)
+          const opens = data.map((d) => d.open)
+          const closes = data.map((d) => d.close)
+          const outlierIndexes = findOutliersInArray(lows).concat(
+            findOutliersInArray(highs),
+            findOutliersInArray(opens),
+            findOutliersInArray(closes)
+          )
+          data = data.filter(function (value, index) {
+            return outlierIndexes.indexOf(index) == -1
+          })
           if (first) {
             const lastBar = data[data.length - 1]
             history[symbolInfo.name] = { lastBar: lastBar }
@@ -139,7 +139,7 @@ export default {
       exchange: splitData[2],
       pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ['60'],
+      intraday_multipliers: ['180'],
       supported_resolution: supportedResolutions,
       // new
       volume_precision: 1,
