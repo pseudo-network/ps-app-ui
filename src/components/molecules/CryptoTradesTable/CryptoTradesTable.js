@@ -70,7 +70,7 @@ const TransactionTable = (props) => {
               return (
                 <TableRow key={index}>
                   <TableCell align="center">
-                    {transaction.buyCurrency.symbol == cryptoContext.symbol ? (
+                    {transaction.sellCurrency.symbol == cryptoContext.symbol ? (
                       <Chip
                         label="BUY"
                         style={{

@@ -111,7 +111,7 @@ function useProvideCrypto() {
   useEffect(() => {
     if (transactionsData && !transactionsValidating) {
       console.log(transactionsData)
-      setTransactions((arr) => [...arr, ...transactionsData])
+      setTransactions(transactionsData)
     }
   }, [transactionsData, address])
 
