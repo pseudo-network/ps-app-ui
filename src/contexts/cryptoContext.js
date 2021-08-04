@@ -105,7 +105,7 @@ function useProvideCrypto() {
   const { data: transactionsData, transactionsValidating } = useSWR(
     `${API_BASE_URL}/cryptos/${address}/transactions`,
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 10000 }
   )
 
   useEffect(() => {
