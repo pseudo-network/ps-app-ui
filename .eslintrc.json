@@ -12,17 +12,24 @@
       "modules": true
     }
   },
-  "plugins": ["prettier", "react"],
-  "extends": ["prettier", "eslint:recommended", "plugin:react/recommended"],
+  "plugins": [
+    "prettier",
+    "react"
+  ],
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "rules": {
-    "no-undef":"off",
+    "no-undef": "off",
     // KYS this took me 25 minutes j to realize it was ya damn prettier plugin -Dan 
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "no-unused-vars": "off",
     "react/prop-types": "off",
-    "react/jsx-key":"off",
-    "no-case-declarations":"off",
-    "no-constant-condition":"off"
+    "react/jsx-key": "off",
+    "no-case-declarations": "off",
+    "no-constant-condition": "off"
   },
   "settings": {
     "react": {

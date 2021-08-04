@@ -17,16 +17,18 @@ import axios from "axios"
  */
 export function convertExponentialToDecimal(exponentialNumber) {
   // sanity check - is it exponential number
-  const str = exponentialNumber.toString()
-  if (str.indexOf("e") !== -1) {
-    const exponent = parseInt(str.split("-")[1], 10)
-    // Unfortunately I can not return 1e-8 as 0.00000001, because even if I call parseFloat() on it,
-    // it will still return the exponential representation
-    // So I have to use .toFixed()
-    const result = exponentialNumber.toFixed(exponent + 2)
-    return result
-  } else {
-    return exponentialNumber
+  if (exponentialNumber) {
+    const str = exponentialNumber.toString()
+    if (str.indexOf("e") !== -1) {
+      const exponent = parseInt(str.split("-")[1], 10)
+      // Unfortunately I can not return 1e-8 as 0.00000001, because even if I call parseFloat() on it,
+      // it will still return the exponential representation
+      // So I have to use .toFixed()
+      const result = exponentialNumber.toFixed(exponent + 2)
+      return result
+    } else {
+      return exponentialNumber
+    }
   }
 }
 
@@ -103,7 +105,7 @@ function useProvideCrypto() {
   const { data: transactionsData, transactionsValidating } = useSWR(
     `${API_BASE_URL}/cryptos/${address}/transactions`,
     fetcher,
-    { refreshInterval: 1000 }
+    { refreshInterval: 5000 }
   )
 
   useEffect(() => {
