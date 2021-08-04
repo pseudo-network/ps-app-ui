@@ -36,7 +36,7 @@ const TransactionTable = (props) => {
   const cryptoContext = useCrypto()
   const classes = useStyles()
 
-  useEffect(() => { }, [])
+  useEffect(() => {}, [])
 
   function toBSCScan(hash) {
     window.open("https://bscscan.com/tx/" + hash)
@@ -46,7 +46,7 @@ const TransactionTable = (props) => {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     return parts.join(".")
   }
-  var timezoneOffset = moment().utcOffset();
+  var timezoneOffset = moment().utcOffset()
   return (
     <TableContainer className={classes.table} component={Paper}>
       <Table stickyHeader size="small">
@@ -107,7 +107,10 @@ const TransactionTable = (props) => {
                     })}
                   </TableCell>
                   <TableCell style={{ fontSize: "102%" }}>
-                    {moment.utc(transaction.timeInterval.second).local().format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                    {moment
+                      .utc(transaction.timeInterval.second)
+                      .local()
+                      .format("dddd, MMMM Do YYYY, h:mm:ss a")}
                   </TableCell>
                   <TableCell align="center">
                     <PSLink
