@@ -139,7 +139,7 @@ export default {
       exchange: splitData[2],
       pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ['1', '5', '15', '30', '60'],
+      intraday_multipliers: ['60'],
       supported_resolution: supportedResolutions,
       // new
       volume_precision: 1,
@@ -147,6 +147,10 @@ export default {
       has_empty_bars: true,
       has_weekly_and_monthly: false,
       minmov: 1,
+      resolution:60,
+      //newer
+      disable_resolution_rebuild:false,
+      has_daily: false
     }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)

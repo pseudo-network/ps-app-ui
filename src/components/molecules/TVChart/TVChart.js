@@ -30,10 +30,13 @@ export default function TVChart(props) {
       "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
       "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
     },
-    //new
     debug: true,
-    timeFrame: "1D",
-    interval: "5",
+    interval: "60",
+    time_frames: [
+      { text: "1D", resolution: "1", description: "1 day" },
+    ],
+    // new
+    time_frame: "1D"
   }
 
   useEffect(() => {
