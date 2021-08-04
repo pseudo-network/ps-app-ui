@@ -1,6 +1,6 @@
 import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ["1", "3", "5", "15", "30", "60"]
+const supportedResolutions = ['1','5','15','30', '60','1D', '1W', '1M']
 const math = require("mathjs")
 import {
   API_BASE_URL,
@@ -62,42 +62,28 @@ const historyProvider = {
       url: `${url}`,
     })
       .then((data) => {
-        console.log("transactions returned: ", data.length)
         if (data.Response && data.Response === "Error") {
           console.log("CryptoCompare API error:", data.Message)
           return []
         }
-        console.log("=.=.==.=.=.=.==.=.=.=.=.==.=.=.=.==.=.=.=")
-        console.log(data)
-        console.log("=.=.==.=.=.=.==.=.=.=.=.==.=.=.=.==.=.=.=")
         if (data && data.length > 0) {
-          const lows = data.map((d) => d.low)
-          const highs = data.map((d) => d.high)
-          const opens = data.map((d) => d.open)
-          const closes = data.map((d) => d.close)
-          const outlierIndexes = findOutliersInArray(lows).concat(
-            findOutliersInArray(highs),
-            findOutliersInArray(opens),
-            findOutliersInArray(closes)
-          )
-          data = data.filter(function (value, index) {
-            return outlierIndexes.indexOf(index) == -1
-          })
-          const bars = data.map((res) => {
-            return {
-              time: res.unixTimeMS,
-              low: res.low,
-              high: res.high,
-              open: res.open,
-              close: res.close,
-              volume: res.tradeAmount,
-            }
-          })
+          // const lows = data.map((d) => d.low)
+          // const highs = data.map((d) => d.high)
+          // const opens = data.map((d) => d.open)
+          // const closes = data.map((d) => d.close)
+          // const outlierIndexes = findOutliersInArray(lows).concat(
+          //   findOutliersInArray(highs),
+          //   findOutliersInArray(opens),
+          //   findOutliersInArray(closes)
+          // )
+          // data = data.filter(function (value, index) {
+          //   return outlierIndexes.indexOf(index) == -1
+          // })
           if (first) {
-            const lastBar = bars[bars.length - 1]
+            const lastBar = data[data.length - 1]
             history[symbolInfo.name] = { lastBar: lastBar }
           }
-          return bars
+          return data
         } else {
           return []
         }
@@ -142,10 +128,7 @@ export default {
     onResolveErrorCallback
   ) => {
     // expects a symbolInfo object in response
-    console.log("======resolveSymbol running")
-    console.log("resolveSymbol:", { symbolTicker })
     const splitData = symbolTicker.split(":")
-    console.log(splitData)
     const symbolStub = {
       name: splitData[0],
       description: splitData[1],
@@ -154,24 +137,20 @@ export default {
       timezone: "Etc/UTC",
       ticker: symbolTicker,
       exchange: splitData[2],
-      // minmov: 1,
-      pricescale: 10000000000,
+      pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ["1", "60"],
+      intraday_multipliers: ['1', '5', '15', '30', '60'],
       supported_resolution: supportedResolutions,
-      volume_precision: 8,
+      // new
+      volume_precision: 1,
       data_status: "streaming",
+      has_empty_bars: true,
+      has_weekly_and_monthly: false,
+      minmov: 1,
     }
-
-    // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-    //   symbol_stub.pricescale = 100
-    // }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)
-      console.log("Resolving that symbol....", symbolStub)
     }, 0)
-
-    // onResolveErrorCallback('Not feeling it today')
   },
   getBars: function (
     symbolInfo,
@@ -180,17 +159,7 @@ export default {
     onHistoryCallback,
     onErrorCallback
   ) {
-    console.log("call.from")
-    console.log(call.from)
-    console.log("call.to")
-    console.log(call.to)
-    console.log("=====getBars running")
-    console.log("function args", arguments)
-    console.log(
-      `Requesting bars between ${new Date(
-        call.from * 1000
-      ).toISOString()} and ${new Date(call.to * 1000).toISOString()}`
-    )
+    console.log(`get bars from ${call.from} to ${call.to}`)
     historyProvider
       .getBars(
         symbolInfo,
@@ -200,7 +169,7 @@ export default {
         call.firstDataRequest
       )
       .then((bars) => {
-        if (bars.length) {
+        if (bars.length > 0) {
           onHistoryCallback(bars, { noData: false })
         } else {
           onHistoryCallback(bars, { noData: true })
@@ -208,7 +177,6 @@ export default {
       })
       .catch((err) => {
         console.log({ err })
-        // onErrorCallback(err);
       })
   },
   subscribeBars: (
@@ -218,48 +186,15 @@ export default {
     subscribeUID,
     onResetCacheNeededCallback
   ) => {
-    console.log("=====subscribeBars runnning")
-    stream.subscribeBars(
-      symbolInfo,
-      resolution,
-      onRealtimeCallback,
-      subscribeUID,
-      onResetCacheNeededCallback
-    )
+    // stream.subscribeBars(
+    //   symbolInfo,
+    //   resolution,
+    //   onRealtimeCallback,
+    //   subscribeUID,
+    //   onResetCacheNeededCallback
+    // )
   },
   unsubscribeBars: (subscriberUID) => {
-    console.log("=====unsubscribeBars running")
-
-    stream.unsubscribeBars(subscriberUID)
-  },
-  calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
-    // optional
-    console.log("=====calculateHistoryDepth running")
-    // while optional, this makes sure we request 24 hours of minute data at a time
-    // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-    return resolution < 60
-      ? { resolutionBack: "D", intervalBack: "1" }
-      : undefined
-  },
-  getMarks: (symbolInfo, startDate, endDate, onDataCallback, resolution) => {
-    // optional
-    console.log("=====getMarks running")
-  },
-  getTimeScaleMarks: (
-    symbolInfo,
-    startDate,
-    endDate,
-    onDataCallback,
-    resolution
-  ) => {
-    // optional
-    console.log("startDate")
-    console.log(startDate)
-    console.log("endDate")
-    console.log(endDate)
-    console.log("=====getTimeScaleMarks running")
-  },
-  getServerTime: (cb) => {
-    console.log("=====getServerTime running")
+    // stream.unsubscribeBars(subscriberUID)
   },
 }
