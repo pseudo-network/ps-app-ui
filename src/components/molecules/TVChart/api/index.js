@@ -139,15 +139,13 @@ export default {
       exchange: splitData[2],
       pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ['180'],
+      intraday_multipliers: ['120'],
       supported_resolution: supportedResolutions,
       // new
       volume_precision: 1,
       data_status: "streaming",
       has_empty_bars: true,
       has_weekly_and_monthly: false,
-      minmov: 1,
-      resolution:60,
       //newer
       disable_resolution_rebuild:false,
       has_daily: false
