@@ -8,10 +8,8 @@ export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
   const widgetOptions = {
-    debug: false,
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
-    interval: "15",
     height: props.height || "calc(100vh - 444px)",
     container_id: props.chartName || "Coin-Chart",
     library_path: "/charting_library/",
@@ -32,6 +30,11 @@ export default function TVChart(props) {
       "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
       "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
     },
+    debug: false,
+    interval: "120",
+    time_frames: [{ text: "1D", resolution: "1", description: "1 day" }],
+    // new
+    time_frame: "1D",
   }
 
   useEffect(() => {
