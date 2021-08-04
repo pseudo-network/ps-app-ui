@@ -1,6 +1,6 @@
 import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ['1','5','15','30', '60','1D', '1W', '1M']
+const supportedResolutions = ["1", "5", "15", "30", "60", "1D", "1W", "1M"]
 const math = require("mathjs")
 import {
   API_BASE_URL,
@@ -139,7 +139,7 @@ export default {
       exchange: splitData[2],
       pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ['120'],
+      intraday_multipliers: ["120"],
       supported_resolution: supportedResolutions,
       // new
       volume_precision: 1,
@@ -147,8 +147,8 @@ export default {
       has_empty_bars: true,
       has_weekly_and_monthly: false,
       //newer
-      disable_resolution_rebuild:false,
-      has_daily: false
+      disable_resolution_rebuild: false,
+      has_daily: false,
     }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)

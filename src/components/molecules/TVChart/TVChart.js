@@ -32,11 +32,9 @@ export default function TVChart(props) {
     },
     debug: false,
     interval: "120",
-    time_frames: [
-      { text: "1D", resolution: "1", description: "1 day" },
-    ],
+    time_frames: [{ text: "1D", resolution: "1", description: "1 day" }],
     // new
-    time_frame: "1D"
+    time_frame: "1D",
   }
 
   useEffect(() => {
