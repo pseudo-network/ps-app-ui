@@ -340,7 +340,7 @@ const ContactUsButtons = (props) => {
           onClick={webAppBugContactButtonClick}
         >
           {" "}
-          Web App Blunders{" "}
+          App Blunders{" "}
         </Button>
       </Grid>
       <PSDialog

@@ -23,6 +23,7 @@ import {
   InsertChart,
   SwapHoriz,
   Web,
+  GridOn,
 } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
@@ -98,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 const NavFrame = (props) => {
   const pages = [
     ListItemObject("Chart", <InsertChart />, "/"),
-    ListItemObject("Swap", <SwapHoriz />, "/", true),
+    ListItemObject("MultiChart", <GridOn />, "/", true),
   ]
 
   const links = [ListItemObject("Web App", <Web />, APP_URL, false, true)]
