@@ -27,7 +27,7 @@ import {
 } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
-import { APP_URL } from "../../../core/environments"
+import { APP_URL, PSEUDOCOIN_ADDRESS } from "../../../core/environments"
 
 const drawerWidth = 300
 
@@ -102,7 +102,16 @@ const NavFrame = (props) => {
     ListItemObject("MultiChart", <GridOn />, "/", true),
   ]
 
-  const links = [ListItemObject("Web App", <Web />, APP_URL, false, true)]
+  const links = [
+    ListItemObject("Web App", <Web />, APP_URL, false, true),
+    ListItemObject(
+      "Buy PseudoCoin",
+      <img src={"/imgs/ps-logo.png"} width={30} height={30} />,
+      `https://pancakeswap.finance/swap?outputCurrency=${PSEUDOCOIN_ADDRESS}`,
+      false,
+      true
+    ),
+  ]
 
   const parentNavItems = []
 
