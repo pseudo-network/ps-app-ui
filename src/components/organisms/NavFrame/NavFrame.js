@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     justifyContent: "center",
   },
+  buttonContainer: {
+    paddingTop: "11em",
+  },
 }))
 
 const NavFrame = (props) => {
@@ -174,10 +177,13 @@ const NavFrame = (props) => {
               )
             })}
           </List>
+          <div className={classes.buttonContainer}>
+            <ContactUsButtons />
+          </div>
           <div className={classes.socialMediaRowParent}>
             {" "}
-            {/* <ContactUsButtons/> */}
             <ThemeToggle />
+            <br />
             <SocialMediaRow />
             <br />
             <Watermark />

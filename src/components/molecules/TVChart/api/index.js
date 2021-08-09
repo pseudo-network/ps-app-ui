@@ -1,9 +1,9 @@
 import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ["1", "5", "15", "30", "60", "1D", "1W", "1M"]
+const supportedResolutions = ["120"]
 const math = require("mathjs")
 import {
-  API_BASE_URL,
+  CHARTDATA_BASE_URL,
   BUSD_ADDRESS,
   WBNB_ADDRESS,
 } from "../../../../core/environments"
@@ -17,7 +17,7 @@ const history = {}
 const OUTLIER_THRESHOLD = 3
 
 function getSymbols(userInput) {
-  const url = `${API_BASE_URL}?search_query=${userInput.toLowerCase()}`
+  const url = `${CHARTDATA_BASE_URL}?search_query=${userInput.toLowerCase()}`
   return rp({
     url: `${url}`,
   })
@@ -56,7 +56,7 @@ const historyProvider = {
     const splitData = symbolInfo.ticker.split(":")
     console.log(symbolInfo)
 
-    const url = `${API_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${splitData[3]}`
+    const url = `${CHARTDATA_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${splitData[3]}`
 
     return rp({
       url: `${url}`,

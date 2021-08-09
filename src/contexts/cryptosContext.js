@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState, useEffect } from "react"
 import useSWR from "swr"
 import { fetcher } from "../utils/utils"
-import { API_BASE_URL } from "../core/environments"
+import { CHARTDATA_BASE_URL } from "../core/environments"
 
 const cryptosContext = createContext()
 
@@ -23,7 +23,7 @@ function useProvideCryptos() {
   const [searchQuery, setSearchQuery] = useState("")
 
   const { data: cryptosData, isValidating } = useSWR(
-    `${API_BASE_URL}/cryptos?search_query=${searchQuery}`,
+    `${CHARTDATA_BASE_URL}/cryptos?search_query=${searchQuery}`,
     fetcher
   )
 

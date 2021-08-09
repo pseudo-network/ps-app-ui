@@ -81,7 +81,8 @@ const Price = (props) => {
       <span className={classes.infoLabel}>{props.name}</span>
       <div className={classes.flex}>
         <div className={classes.flex}>
-          <AttachMoney></AttachMoney>
+          {/* <AttachMoney></AttachMoney> */}
+          <Typography bold>BNB</Typography>
           <h4 className={classes.infoValue}>{price}</h4>
         </div>
         {parseFloat(percentChange) < 0 ? (

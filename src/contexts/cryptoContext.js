@@ -2,7 +2,7 @@ import React, { useContext, createContext, useState, useEffect } from "react"
 import useSWR from "swr"
 import { fetcher } from "../utils/utils"
 import {
-  API_BASE_URL,
+  CHARTDATA_BASE_URL,
   BUSD,
   BUSD_ADDRESS,
   WBNB_ADDRESS,
@@ -51,7 +51,7 @@ function formatTVSymbol(name, symbol, address, quoteCurrency) {
 
 function getCryptoByAddress(address, busd) {
   return axios
-    .get(`${API_BASE_URL}/cryptos?search_query=${address}`)
+    .get(`${CHARTDATA_BASE_URL}/cryptos?search_query=${address}`)
     .then((res) => {
       if (res.data.length > 0) {
         return res.data[0]
@@ -70,7 +70,7 @@ function getCryptoInfoByAddress(address, busd) {
   let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
-      `${API_BASE_URL}/cryptos/${address}/info?quote_currency=${WBNB_ADDRESS}`
+      `${CHARTDATA_BASE_URL}/cryptos/${address}/info?quote_currency=${WBNB_ADDRESS}`
     )
     .then((res) => {
       if (res.data) {
@@ -103,7 +103,7 @@ function useProvideCrypto() {
   const [infoIsLoading, setInfoIsLoading] = useState(true)
 
   const { data: transactionsData, transactionsValidating } = useSWR(
-    `${API_BASE_URL}/cryptos/${address}/transactions`,
+    `${CHARTDATA_BASE_URL}/cryptos/${address}/transactions`,
     fetcher,
     { refreshInterval: 10000 }
   )

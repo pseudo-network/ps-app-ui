@@ -1,7 +1,7 @@
 // React Components and Hooks
 import React from "react"
 
-import { API_BASE_URL } from "../../../core/environments"
+import { CHARTDATA_BASE_URL, EMAILER_BASE_URL } from "../../../core/environments"
 // Material UI Components
 import { makeStyles } from "@material-ui/core/styles"
 import styled from "styled-components/macro"
@@ -31,7 +31,9 @@ import {
   DialogTitle,
   Slide,
   FormControl,
+  Typography,
 } from "@material-ui/core"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     // justifyContent: "center",
@@ -92,7 +94,7 @@ const ContactUsButtons = (props) => {
       setBugReportContactForm(DEFAULT_BUG_REPORT)
       setBusinessContactForm(DEFAULT_BUSINESS_REPORT)
 
-      fetch(API_BASE_URL + "/message", {
+      fetch(EMAILER_BASE_URL + "/message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +130,9 @@ const ContactUsButtons = (props) => {
   const BusinessContactModalContent = () => {
     return (
       <>
-        <h3>Direct Email to the Pseudo Coin Team</h3>
+        <Typography paragraph>
+          Wanna work with us? Shoot us a message directly here:
+        </Typography>
         <Box flexDirection="row">
           <FormControl
             className={classes.root}
@@ -160,7 +164,7 @@ const ContactUsButtons = (props) => {
                 fullWidth
                 type="text"
                 id="email"
-                label="Email"
+                label="Email Address"
                 defaultValue={businessContactForm.email}
                 onChange={OnChangeBusinessContactForm}
                 variant="outlined"
@@ -195,10 +199,7 @@ const ContactUsButtons = (props) => {
             </div>
             <Grid container spacing={2}>
               <Grid item>
-                <PSButton
-                  text={"Send Message"}
-                  onClick={submitBusinessContactForm}
-                />
+                <PSButton text={"Send"} onClick={submitBusinessContactForm} />
               </Grid>
               <Grid item>
                 <PSButton
@@ -216,10 +217,7 @@ const ContactUsButtons = (props) => {
   const BugReportContactModalContent = () => {
     return (
       <>
-        <h3>
-          Thanks immencely with your help with finding bugs in our application!
-          All insite is appreciated insite!
-        </h3>
+        <Typography paragraph>See a bug? Report it here:</Typography>
         <Box flexDirection="row">
           <FormControl
             className={classes.root}
@@ -251,7 +249,7 @@ const ContactUsButtons = (props) => {
                 fullWidth
                 type="text"
                 id="email"
-                label="Email"
+                label="Email Address"
                 defaultValue={bugReportContactForm.email}
                 onChange={OnChangeBugReportContactForm}
                 variant="outlined"
@@ -322,26 +320,21 @@ const ContactUsButtons = (props) => {
     setBugReportDialogOpen(false)
   }
 
-  /*
-    ON RENDER FUNCTION/ MOUNT COMPENENT
-  */
   return (
     <Box container xs={12}>
-      <Grid item xs={12}>
+      <Grid container item xs={12} justify={"center"}>
         <Button
           className={classes.buttonStyling}
           onClick={businessContactButtonClick}
-          fullWidth
         >
           {" "}
           Business Inquisitions{" "}
         </Button>
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item xs={12} justify={"center"}>
         <Button
           className={classes.buttonStyling}
           onClick={webAppBugContactButtonClick}
-          fullWidth
         >
           {" "}
           Web App Blunders{" "}
@@ -350,13 +343,13 @@ const ContactUsButtons = (props) => {
       <PSDialog
         open={businessDialogOpen}
         handleClose={handleBusinessDialogClosing}
-        title={"Business Propositions"}
+        title={"Business Inquiries"}
         content={<BusinessContactModalContent />}
       />
       <PSDialog
         open={bugReportDialogOpen}
         handleClose={handleBugReportDialogClosing}
-        title={"Web App Bug Report"}
+        title={"Bug Report"}
         content={<BugReportContactModalContent />}
       />
     </Box>

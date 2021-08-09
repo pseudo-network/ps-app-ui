@@ -1,8 +1,9 @@
 export const LANDING_PAGE_URL = "https://pseudocoin.io"
 export const APP_URL = "https://app.pseudocoin.io"
 export const BASE_URL = "https://charts.pseudocoin.io"
-export const API_BASE_URL = "https://api.pseudocoin.io/v1"
-// export const API_BASE_URL = "http://localhost:3444"
+export const CHARTDATA_BASE_URL = "https://api.pseudocoin.io/v1/chartdata"
+export const EMAILER_BASE_URL = "https://api.pseudocoin.io/v1/emailer"
+// export const CHARTDATA_BASE_URL = "http://localhost:3444"
 
 // bitquery
 export const BITQUERY_BASE_URL = "https://graphql.bitquery.io"
