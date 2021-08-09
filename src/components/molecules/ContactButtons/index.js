@@ -91,13 +91,10 @@ const ContactUsButtons = (props) => {
     if (form.name == "" || form.email == "" || form.message == "") {
       setSubmissionAttempt(true)
     } else {
-      setSubmissionAttempt(false)
       setBugReportDialogOpen(false)
       setBusinessDialogOpen(false)
-      setBugReportContactForm(DEFAULT_BUG_REPORT)
-      setBusinessContactForm(DEFAULT_BUSINESS_REPORT)
 
-      fetch(EMAILER_BASE_URL + "/message", {
+      fetch(EMAILER_BASE_URL + "/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,6 +106,9 @@ const ContactUsButtons = (props) => {
           if (res) {
             console.log(response)
           }
+          setSubmissionAttempt(false)
+          setBugReportContactForm(DEFAULT_BUG_REPORT)
+          setBusinessContactForm(DEFAULT_BUSINESS_REPORT)
         })
         .catch((e) => {
           // todo: handle err
