@@ -1,7 +1,10 @@
 // React Components and Hooks
 import React from "react"
 
-import { CHARTDATA_BASE_URL, EMAILER_BASE_URL } from "../../../core/environments"
+import {
+  CHARTDATA_BASE_URL,
+  EMAILER_BASE_URL,
+} from "../../../core/environments"
 // Material UI Components
 import { makeStyles } from "@material-ui/core/styles"
 import styled from "styled-components/macro"
