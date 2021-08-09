@@ -31,10 +31,14 @@ export default function TVChart(props) {
       "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
     },
     debug: false,
-    interval: "120",
-    time_frames: [{ text: "2h", resolution: "120", description: "2h" }],
+    interval: "60",
+    time_frames: [
+      { text: "1h", resolution: "60", description: "1h" },
+      { text: "2h", resolution: "120", description: "2h" },
+      { text: "3h", resolution: "180", description: "3h" },
+    ],
     // new
-    time_frame: "2h",
+    time_frame: "1h",
   }
 
   useEffect(() => {

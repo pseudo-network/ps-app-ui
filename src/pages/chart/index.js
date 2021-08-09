@@ -5,6 +5,7 @@ import TVChartWithHeader from "../../components/organisms/TVChartWithHeader/TVCh
 import { Box, CircularProgress, Typography, Grid } from "@material-ui/core"
 import CryptoDetailCard from "../../components/molecules/CryptoDetailCard/CryptoDetailCard"
 import CryptoTradesTable from "../../components/molecules/CryptoTradesTable/CryptoTradesTable"
+import { PSEUDOCOIN_ADDRESS } from "../../core/environments"
 
 export default function Chart(props) {
   const cryptoContext = useCrypto()
@@ -12,8 +13,7 @@ export default function Chart(props) {
 
   useEffect(() => {
     if (!address || address == "") {
-      // todo: get psuedocoin as default
-      window.location.href = "/0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3" // todo: unecessarily rerenders the whole page
+      window.location.href = `/${PSEUDOCOIN_ADDRESS}`
     } else {
       cryptoContext.setAddress(address)
     }
