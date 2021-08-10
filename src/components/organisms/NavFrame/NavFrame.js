@@ -27,7 +27,7 @@ import {
 } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
 import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
-import { APP_URL, PSEUDOCOIN_ADDRESS } from "../../../core/environments"
+import { WEB_APP_URL, PSEUDOCOIN_ADDRESS } from "../../../core/environments"
 
 const drawerWidth = 300
 
@@ -103,7 +103,7 @@ const NavFrame = (props) => {
   ]
 
   const links = [
-    ListItemObject("Web App", <Web />, APP_URL, false, true),
+    ListItemObject("Web App", <Web />, WEB_APP_URL, false, true),
     ListItemObject(
       "Buy PseudoCoin",
       <img src={"/imgs/ps-logo.png"} width={30} height={30} />,
