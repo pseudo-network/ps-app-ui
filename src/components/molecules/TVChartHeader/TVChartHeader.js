@@ -85,11 +85,11 @@ const Price = (props) => {
           <Typography bold>BNB</Typography>
           <h4 className={classes.infoValue}>{price}</h4>
         </div>
-        {parseFloat(percentChange) < 0 ? (
+        {/* {parseFloat(percentChange) < 0 ? (
           <h4 className={classes.percentChangeNegative}>{percentChange}</h4>
         ) : (
           <h4 className={classes.percentChangePositive}>{percentChange}</h4>
-        )}
+        )} */}
       </div>
     </Box>
   )
