@@ -77,7 +77,7 @@ const TransactionTable = (props) => {
                           borderRadius: "0.5rem",
                           color: "white",
                           backgroundColor: "rgb(38, 166, 154)",
-                          width: "150px",
+                          width: "100px",
                         }}
                       />
                     ) : (
@@ -87,7 +87,7 @@ const TransactionTable = (props) => {
                           borderRadius: "0.5rem",
                           color: "white",
                           backgroundColor: "rgb(239, 83, 80)",
-                          width: "150px",
+                          width: "100px",
                         }}
                       />
                     )}
@@ -96,7 +96,7 @@ const TransactionTable = (props) => {
                     {transaction.buyCurrency.symbol == cryptoContext.symbol
                       ? numberWithCommas(transaction.buyAmount)
                       : numberWithCommas(transaction.sellAmount)}
-                    {" - "}
+                    <br />
                     {transaction.buyCurrency.symbol == cryptoContext.symbol
                       ? transaction.buyCurrency.symbol
                       : transaction.sellCurrency.symbol}
@@ -106,11 +106,11 @@ const TransactionTable = (props) => {
                       code: "USD",
                     })}
                   </TableCell>
-                  <TableCell style={{ fontSize: "102%" }}>
+                  <TableCell>
                     {moment
                       .utc(transaction.timeInterval.second)
                       .local()
-                      .format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                      .format()}
                   </TableCell>
                   <TableCell align="center">
                     <PSLink
