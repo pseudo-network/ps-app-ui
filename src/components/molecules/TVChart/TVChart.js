@@ -33,9 +33,9 @@ export default function TVChart(props) {
     debug: false,
     interval: "60",
     time_frames: [
-      { text: "1h", resolution: "60", description: "1h" },
-      { text: "2h", resolution: "120", description: "2h" },
-      { text: "3h", resolution: "180", description: "3h" },
+      { text: "1d", resolution: "1d", description: "1 day" },
+      { text: "1w", resolution: "1w", description: "1 week" },
+      { text: "1M", resolution: "1M", description: "1 month" },
     ],
     // new
     time_frame: "1h",
