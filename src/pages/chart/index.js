@@ -44,10 +44,10 @@ export default function Chart(props) {
         <TVChartWithHeader width={"100%"} />
         <br />
         <Grid container spacing={3}>
-          <Grid container item xs={9}>
+          <Grid container item sm={12} md={9}>
             <CryptoTradesTable />
           </Grid>
-          <Grid container item xs={3}>
+          <Grid container item sm={12} md={3}>
             <CryptoDetailCard />
           </Grid>
         </Grid>

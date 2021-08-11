@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import ListItem from "@material-ui/core/ListItem"
@@ -148,58 +148,66 @@ const NavFrame = (props) => {
 
   const classes = useStyles()
 
+  const [open, setOpen] = useState(false)
+
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TopBar address={props.address} />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar className={classes.toolbar} />
-        <div className={classes.drawerContainer}>
-          <List>
-            <h4 className={classes.listHeader}>Tools</h4>
-            {pages.map((item, key) => {
-              // console.log("NavListItem" + key);
-              return (
-                <div key={key} className={classes.listItemParent}>
-                  <NavListItem
-                    navItem={item}
-                    id={item.path + "NavListItem" + key}
-                  />
-                </div>
-              )
-            })}
-            <h4 className={classes.listHeader}>Links</h4>
-            {links.map((item, key) => {
-              // console.log("NavListItem" + key);
-              return (
-                <div key={key} className={classes.listItemParent}>
-                  <NavListItem
-                    navItem={item}
-                    id={item.path + "NavListItem" + key}
-                  />
-                </div>
-              )
-            })}
-          </List>
-          <div className={classes.buttonContainer}>
-            <ContactUsButtons />
+      <TopBar address={props.address} open={open} setOpen={setOpen} />
+      {open ? (
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          open={open}
+        >
+          <Toolbar className={classes.toolbar} />
+          <div className={classes.drawerContainer}>
+            <List>
+              <h4 className={classes.listHeader}>Tools</h4>
+              {pages.map((item, key) => {
+                // console.log("NavListItem" + key);
+                return (
+                  <div key={key} className={classes.listItemParent}>
+                    <NavListItem
+                      navItem={item}
+                      id={item.path + "NavListItem" + key}
+                    />
+                  </div>
+                )
+              })}
+              <h4 className={classes.listHeader}>Links</h4>
+              {links.map((item, key) => {
+                // console.log("NavListItem" + key);
+                return (
+                  <div key={key} className={classes.listItemParent}>
+                    <NavListItem
+                      navItem={item}
+                      id={item.path + "NavListItem" + key}
+                    />
+                  </div>
+                )
+              })}
+            </List>
+            {/* <div className={classes.buttonContainer}>
+              <ContactUsButtons />
+            </div> */}
+            <div className={classes.socialMediaRowParent}>
+              {" "}
+              <ThemeToggle />
+              <br />
+              <SocialMediaRow />
+              <br />
+              <Watermark />
+            </div>
           </div>
-          <div className={classes.socialMediaRowParent}>
-            {" "}
-            <ThemeToggle />
-            <br />
-            <SocialMediaRow />
-            <br />
-            <Watermark />
-          </div>
-        </div>
-      </Drawer>
+        </Drawer>
+      ) : (
+        <></>
+      )}
+
       <Divider />
       <main className={classes.content}>
         <Toolbar className={classes.toolbar} />

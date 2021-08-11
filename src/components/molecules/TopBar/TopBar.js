@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: ".01px solid #545761",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    margin: theme.spacing(2),
   },
   titleContainer: {
     flexGrow: 1,
@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     alignContent: "center",
     display: "flex",
+    marginLeft: "1.2em",
   },
   title: {
     marginLeft: 13,
@@ -237,10 +238,20 @@ export default function TopBar(props) {
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
 
+  const handleSideNavButtonClick = () => {
+    props.setOpen(!props.open)
+  }
+
   return (
     <>
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
+          <div>
+            <MenuIcon
+              style={{ cursor: "pointer" }}
+              onClick={handleSideNavButtonClick}
+            />
+          </div>
           <Box className={classes.titleContainer}>
             <img
               className={classes.logo}
