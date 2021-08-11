@@ -148,7 +148,7 @@ const NavFrame = (props) => {
 
   const classes = useStyles()
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <div className={classes.root}>
