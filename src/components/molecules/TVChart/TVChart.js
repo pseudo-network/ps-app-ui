@@ -51,13 +51,12 @@ export default function TVChart(props) {
       "scales_context_menu",
       "border_around_the_chart",
       "header_undo_redo",
+      "go_to_date",
+      "timezone_menu",
     ],
     enabled_features: [
       "hide_left_toolbar_by_default",
-      "pricescale_unit",
       "pricescale_currency",
-      "chart_property_page_right_margin_editor",
-      "low_density_bars",
       "no_min_chart_width",
     ],
   }

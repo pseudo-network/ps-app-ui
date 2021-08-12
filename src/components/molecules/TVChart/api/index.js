@@ -141,14 +141,16 @@ export default {
       has_intraday: true,
       intraday_multipliers: ["1", "3", "60", "120", "180", "1D", "3D", "1M"],
       supported_resolution: supportedResolutions,
-      // new
       volume_precision: 1,
       data_status: "streaming",
       has_empty_bars: true,
       has_weekly_and_monthly: false,
-      //newer
       disable_resolution_rebuild: true,
       has_daily: false,
+      //currencies
+      currency_code: "USD",
+      original_currency_code: "USD",
+      currency_codes: ["USD", "BNB"],
     }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)
