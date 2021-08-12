@@ -1,6 +1,6 @@
 import stream from "./stream"
 const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ["1", "3", "60", "180", "1D", "3D", "1M"]
+const supportedResolutions = ["1", "3", "60", "120", "180", "1D", "3D", "1M"]
 const math = require("mathjs")
 import {
   CHARTDATA_BASE_URL,
@@ -139,7 +139,7 @@ export default {
       exchange: splitData[2],
       pricescale: 1000000000000,
       has_intraday: true,
-      intraday_multipliers: ["1", "3", "60", "180", "1D", "3D", "1M"],
+      intraday_multipliers: ["1", "3", "60", "120", "180", "1D", "3D", "1M"],
       supported_resolution: supportedResolutions,
       // new
       volume_precision: 1,
@@ -147,7 +147,7 @@ export default {
       has_empty_bars: true,
       has_weekly_and_monthly: false,
       //newer
-      disable_resolution_rebuild: false,
+      disable_resolution_rebuild: true,
       has_daily: false,
     }
     setTimeout(function () {
