@@ -39,6 +39,26 @@ export default function TVChart(props) {
     ],
     // new
     time_frame: "1h",
+    disabled_features: [
+      "header_symbol_search",
+      "popup_hints",
+      "header_saveload",
+      "display_market_status",
+      "save_shortcut",
+      "show_object_tree",
+      "symbol_info",
+      "main_series_scale_menu",
+      "scales_context_menu",
+      "border_around_the_chart",
+      "header_undo_redo",
+      "go_to_date",
+      "timezone_menu",
+    ],
+    enabled_features: [
+      "hide_left_toolbar_by_default",
+      "pricescale_currency",
+      "no_min_chart_width",
+    ],
   }
 
   useEffect(() => {
