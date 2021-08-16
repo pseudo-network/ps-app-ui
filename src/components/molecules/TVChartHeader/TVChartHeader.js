@@ -81,8 +81,8 @@ const Price = (props) => {
       <span className={classes.infoLabel}>{props.name}</span>
       <div className={classes.flex}>
         <div className={classes.flex}>
-          {/* <AttachMoney></AttachMoney> */}
-          <Typography bold>BNB</Typography>
+          <AttachMoney></AttachMoney>
+          <Typography bold>USD</Typography>
           <h4 className={classes.infoValue}>{price}</h4>
         </div>
         {/* {parseFloat(percentChange) < 0 ? (
@@ -120,12 +120,12 @@ export default function TVChartHeader(props) {
           price={props.currentPrice}
         />
         <Volume volume={props.volume} />
-        <Box className={classes.infoBox} style={{ marginLeft: "auto" }}>
+        {/* <Box className={classes.infoBox} style={{ marginLeft: "auto" }}>
           <span className={classes.infoLabel}>
             WEBTRAFFIC OVERLOAD, MAY ENCOUNTER TECH DIFFICULTIES
           </span>
           <p>Thanks for bearing with us :)</p>
-        </Box>
+        </Box> */}
       </Box>
     </>
   )

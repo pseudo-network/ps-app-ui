@@ -140,14 +140,14 @@ function useProvideCrypto() {
         setInfoIsLoading(false)
 
         if (!res) return
-        setBeginningPrice(res.beginning_price)
-        setCurrentPrice(convertExponentialToDecimal(res.current_price))
-        setVolume(res.volume)
+        setBeginningPrice(res.beginning_price_usd)
+        setCurrentPrice(convertExponentialToDecimal(res.current_price_usd))
+        setVolume(res.volume_usd)
         setPercentChange(res.percent_change)
 
         console.log(
           "currentPrice",
-          convertExponentialToDecimal(res.current_price)
+          convertExponentialToDecimal(res.current_price_usd)
         )
       })
     }
