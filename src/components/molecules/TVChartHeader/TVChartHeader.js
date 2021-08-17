@@ -82,7 +82,7 @@ const Price = (props) => {
       <div className={classes.flex}>
         <div className={classes.flex}>
           <AttachMoney></AttachMoney>
-          <h4 className={classes.infoValue}>{price}</h4>
+          <h4 className={classes.infoValue}>{price ? price : "N/A"}</h4>
         </div>
         {/* {parseFloat(percentChange) < 0 ? (
           <h4 className={classes.percentChangeNegative}>{percentChange}</h4>
@@ -103,7 +103,7 @@ const Volume = (props) => {
       <span className={classes.infoLabel}>Day Volume</span>
       <div className={classes.flex}>
         <AttachMoney></AttachMoney>
-        <h4 className={classes.infoValue}>{volume}</h4>
+        <h4 className={classes.infoValue}>{volume ? volume : "N/A"}</h4>
       </div>
     </Box>
   )
