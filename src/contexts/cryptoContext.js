@@ -67,10 +67,10 @@ function getCryptoByAddress(address, busd) {
 }
 
 function getCryptoInfoByAddress(address, busd) {
-  let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
+  // let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
-      `${CHARTDATA_BASE_URL}/cryptos/${address}/info?quote_currency=${WBNB_ADDRESS}`
+      `${CHARTDATA_BASE_URL}/cryptos/${address}/day-summary?quote_currency=${WBNB_ADDRESS}`
     )
     .then((res) => {
       if (res.data) {
@@ -96,6 +96,9 @@ function useProvideCrypto() {
   const [currentPrice, setCurrentPrice] = useState(null)
   const [volume, setVolume] = useState(null)
   const [percentChange, setPercentChange] = useState(null)
+  const [supply, setSupply] = useState(null)
+  const [burned, setBurned] = useState(null)
+  const [uniqueWalletsCount, setUniqueWalletsCount] = useState(null)
   const [busd, setBUSD] = useState(false)
   const [transactions, setTransactions] = useState([])
 
@@ -140,10 +143,11 @@ function useProvideCrypto() {
         setInfoIsLoading(false)
 
         if (!res) return
-        setBeginningPrice(res.beginning_price_usd)
         setCurrentPrice(convertExponentialToDecimal(res.current_price_usd))
-        setVolume(res.volume_usd)
-        setPercentChange(res.percent_change)
+        setVolume(res.trade_amount_usd)
+        setSupply(res.minted_count)
+        setUniqueWalletsCount(res.unique_wallets_count)
+        setBurned(res.burned_count)
 
         console.log(
           "currentPrice",
@@ -178,5 +182,8 @@ function useProvideCrypto() {
     cryptoIsLoading,
     infoIsLoading,
     transactions,
+    uniqueWalletsCount,
+    supply,
+    burned,
   }
 }
