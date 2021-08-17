@@ -110,7 +110,7 @@ const TransactionTable = (props) => {
                     {moment
                       .utc(transaction.timeInterval.second)
                       .local()
-                      .format()}
+                      .format("dddd, MMMM Do YYYY, h:mm:ss a")}
                   </TableCell>
                   <TableCell align="center">
                     <PSLink
