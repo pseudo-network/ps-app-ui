@@ -13,6 +13,8 @@ import {
   TextField,
   Popover,
   Grid,
+  ListItem,
+  ListItemText,
 } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import PSButton from "../../atoms/PSButton/PSButton"
@@ -38,6 +40,7 @@ import {
   LibraryBooks,
   Web,
 } from "@material-ui/icons"
+import { List } from "react-virtualized"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -225,6 +228,69 @@ export default function TopBar(props) {
       </>
     )
   }
+  const handleSideNavButtonClick = () => {
+    props.setOpen(!props.open)
+  }
+
+  // nav popover
+  const AppSelectionGrid = () => {
+    return (
+      <Grid container className={classes.popover}>
+        <Grid item xs={4}>
+          <Box
+            className={classes.appSelection}
+            onClick={() => {
+              window.location = LANDING_URL
+            }}
+          >
+            <div className={classes.appSelectionLogo}>
+              <CallToAction fontSize="large" />
+            </div>
+            <p className={classes.appSelectionText}> Landing </p>
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box
+            className={classes.appSelection}
+            onClick={() => {
+              window.location = WEB_APP_URL
+            }}
+          >
+            <div className={classes.appSelectionLogo}>
+              <Web fontSize="large" />
+            </div>
+            <p className={classes.appSelectionText}> Web App </p>
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box
+            className={classes.appSelection}
+            onClick={() => {
+              window.location = CHART_URL
+            }}
+          >
+            <div className={classes.appSelectionLogo}>
+              <InsertChart fontSize="large" />
+            </div>
+            <p className={classes.appSelectionText}> Charts </p>
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box
+            className={classes.appSelection}
+            onClick={() => {
+              window.location = BLOG_URL
+            }}
+          >
+            <div className={classes.appSelectionLogo}>
+              <LibraryBooks fontSize="large" />
+            </div>
+            <p className={classes.appSelectionText}> Blog </p>
+          </Box>
+        </Grid>
+      </Grid>
+    )
+  }
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -237,10 +303,44 @@ export default function TopBar(props) {
   }
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
+  // nav popover END
 
-  const handleSideNavButtonClick = () => {
-    props.setOpen(!props.open)
+  // wallet popover
+  const Balances = () => {
+    return (
+      <Grid container className={classes.popover}>
+        <List dense={true}>
+          {walletContext.balances.length > 0 && walletContext.balances.length}
+          {walletContext.balances.length > 0 &&
+            walletContext.balances.map((res, index) => {
+              console.log("=.==.=.=.==.=.=.=.=.")
+              return "test"
+            })}
+          {/* {walletContext.balances.length > 0 &&
+            walletContext.balances.map((res) => {
+              return (
+                <ListItem>
+                  <ListItemText primary={res.value} />
+                </ListItem>
+              )
+            })} */}
+        </List>
+      </Grid>
+    )
   }
+
+  const [anchorElWallet, setAnchorElWallet] = React.useState(null)
+
+  const handleWalletClick = (event) => {
+    setAnchorElWallet(event.currentTarget)
+  }
+
+  const handleWalletClose = () => {
+    setAnchorElWallet(null)
+  }
+  const walletOpen = Boolean(anchorElWallet)
+  const walletID = walletOpen ? "simple-popover" : undefined
+  // wallet popover END
 
   return (
     <>
@@ -274,60 +374,7 @@ export default function TopBar(props) {
                 horizontal: "center",
               }}
             >
-              <Grid container className={classes.popover}>
-                <Grid item xs={4}>
-                  <Box
-                    className={classes.appSelection}
-                    onClick={() => {
-                      window.location = LANDING_URL
-                    }}
-                  >
-                    <div className={classes.appSelectionLogo}>
-                      <CallToAction fontSize="large" />
-                    </div>
-                    <p className={classes.appSelectionText}> Landing </p>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box
-                    className={classes.appSelection}
-                    onClick={() => {
-                      window.location = WEB_APP_URL
-                    }}
-                  >
-                    <div className={classes.appSelectionLogo}>
-                      <Web fontSize="large" />
-                    </div>
-                    <p className={classes.appSelectionText}> Web App </p>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box
-                    className={classes.appSelection}
-                    onClick={() => {
-                      window.location = CHART_URL
-                    }}
-                  >
-                    <div className={classes.appSelectionLogo}>
-                      <InsertChart fontSize="large" />
-                    </div>
-                    <p className={classes.appSelectionText}> Charts </p>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box
-                    className={classes.appSelection}
-                    onClick={() => {
-                      window.location = BLOG_URL
-                    }}
-                  >
-                    <div className={classes.appSelectionLogo}>
-                      <LibraryBooks fontSize="large" />
-                    </div>
-                    <p className={classes.appSelectionText}> Blog </p>
-                  </Box>
-                </Grid>
-              </Grid>
+              <AppSelectionGrid />
             </Popover>
             <Typography variant="h6" className={classes.title}>
               Charts
@@ -364,13 +411,29 @@ export default function TopBar(props) {
           <PSButton
             onClick={
               walletContext.address
-                ? handleOpenDialogClick
+                ? handleWalletClick
                 : handleConnectWalletClick
             }
             text={
               walletContext.address ? walletContext.address : "Connect Wallet"
             }
           />
+          <Popover
+            id={walletID}
+            open={walletOpen}
+            anchorEl={anchorElWallet}
+            onClose={handleWalletClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <Balances />
+          </Popover>
         </Toolbar>
       </AppBar>
       <PSDialog

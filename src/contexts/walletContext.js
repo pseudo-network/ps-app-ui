@@ -4,6 +4,7 @@ import { fetcher } from "../utils/utils"
 import {
   BITQUERY_API_KEY,
   BITQUERY_BASE_URL,
+  CHARTDATA_BASE_URL,
   ETHEREUM_ADDRESS,
 } from "../core/environments"
 
@@ -21,59 +22,25 @@ export function ProvideWallet({ children }) {
 }
 
 function useProvideWallet() {
-  const [balance, setBalance] = useState(null)
+  const [balances, setBalances] = useState([])
   const [address, setAddress] = useState("")
 
-  // todo: cleanup
-  const getBalance = (accountAddress) => {
-    const currencyAddress = ETHEREUM_ADDRESS
-    const qs = `{
-      ethereum {
-        address(address: {is: "${accountAddress}"}) {
-          balances(currency: {in: ["ETH", "${currencyAddress}"]}) {
-            currency {
-              symbol
-            }
-            value
-          }
-        }
-      }
-    }`
-
-    fetch(BITQUERY_BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": BITQUERY_API_KEY,
-      },
-      body: JSON.stringify({ query: qs }),
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res) {
-          const balance = String(
-            res?.data?.ethereum?.address[0]?.balances[0]?.value
-          )
-          setBalance(balance.substring(0, 6))
-        }
-      })
-      .catch((e) => {
-        // todo: handle err
-        setBalance(null)
-      })
-  }
+  const { data: balancesData, isValidating } = useSWR(
+    `${CHARTDATA_BASE_URL}/wallets/${address}/balances`,
+    fetcher,
+    1000
+  )
 
   useEffect(() => {
-    if (address && address != "") {
-      getBalance(address)
-    } else {
-      setBalance(null)
+    if (balancesData && balancesData.length > 0 && !isValidating) {
+      console.log(balancesData)
+      setBalances(balancesData)
     }
-  }, [address])
+  }, [balancesData])
 
   return {
     setAddress,
-    balance,
+    balances,
     address,
   }
 }
