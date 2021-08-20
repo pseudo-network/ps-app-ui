@@ -31,13 +31,12 @@ export default function TVChart(props) {
       "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
     },
     debug: false,
-    interval: "60",
+    interval: "15",
     time_frames: [
-      { text: "1d", resolution: "1d", description: "1 day" },
-      { text: "1w", resolution: "1w", description: "1 week" },
-      { text: "1M", resolution: "1M", description: "1 month" },
+      { text: "1d", resolution: "120", description: "1 day" },
+      { text: "1w", resolution: "120", description: "1 week" },
+      { text: "1M", resolution: "120", description: "1 month" },
     ],
-    // new
     time_frame: "1h",
     disabled_features: [
       "header_symbol_search",
@@ -59,6 +58,7 @@ export default function TVChart(props) {
       "pricescale_currency",
       "no_min_chart_width",
     ],
+    minmov: 0.25,
   }
 
   useEffect(() => {

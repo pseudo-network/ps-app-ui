@@ -1,12 +1,15 @@
 import stream from "./stream"
-const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ["1", "3", "60", "120", "180", "1D", "3D", "1M"]
-const math = require("mathjs")
+import * as Bitquery from "./bitquery"
+import axios from "axios"
 import {
   CHARTDATA_BASE_URL,
   BUSD_ADDRESS,
   WBNB_ADDRESS,
 } from "../../../../core/environments"
+
+const rp = require("request-promise").defaults({ json: true })
+const supportedResolutions = ["1", "5", "15", "30", "60", "1D", "1W", "1M"]
+const math = require("mathjs")
 
 const config = {
   supported_resolutions: supportedResolutions,
@@ -14,7 +17,7 @@ const config = {
 }
 
 const history = {}
-const OUTLIER_THRESHOLD = 3
+const OUTLIER_THRESHOLD = 2
 
 function getSymbols(userInput) {
   const url = `${CHARTDATA_BASE_URL}?search_query=${userInput.toLowerCase()}`
@@ -52,46 +55,86 @@ function findOutliersInArray(arr) {
 const historyProvider = {
   history: history,
 
-  getBars: function (symbolInfo, resolution, from, to, first, limit) {
+  getBars: async (symbolInfo, resolution, from, to, first, limit) => {
     const splitData = symbolInfo.ticker.split(":")
     console.log(symbolInfo)
 
     const url = `${CHARTDATA_BASE_URL}/cryptos/${symbolInfo.exchange}/bars?from=${from}&to=${to}&resolution=${resolution}&quote_currency=${splitData[3]}`
 
-    return rp({
-      url: `${url}`,
-    })
-      .then((data) => {
-        if (data.Response && data.Response === "Error") {
-          console.log("CryptoCompare API error:", data.Message)
-          return []
-        }
-        if (data && data.length > 0) {
-          const lows = data.map((d) => d.low)
-          const highs = data.map((d) => d.high)
-          const opens = data.map((d) => d.open)
-          const closes = data.map((d) => d.close)
-          const outlierIndexes = findOutliersInArray(lows).concat(
-            findOutliersInArray(highs),
-            findOutliersInArray(opens),
-            findOutliersInArray(closes)
-          )
-          data = data.filter(function (value, index) {
-            return outlierIndexes.indexOf(index) == -1
-          })
-          if (first) {
-            const lastBar = data[data.length - 1]
-            history[symbolInfo.name] = { lastBar: lastBar }
-          }
-          return data
-        } else {
-          return []
-        }
+    try {
+      if (resolution === "1D") {
+        resolution = 1440
+      }
+      const response2 = await axios.post(Bitquery.endpoint, {
+        query: Bitquery.GET_COIN_BARS,
+        variables: {
+          from: new Date("2021-06-20T07:23:21.000Z").toISOString(),
+          to: new Date("2021-06-23T15:23:21.000Z").toISOString(),
+          interval: Number(resolution),
+          tokenAddress: symbolInfo.exchange,
+        },
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "BQYug1u2azt1EzuPggXfnhdhzFObRW0g",
+        },
       })
-      .catch((e) => {
-        console.log("there was an error fetching bars:", e)
-        return []
-      })
+
+      console.log(response2.data.data.ethereum.dexTrades[0].high)
+
+      const bars = response2.data.data.ethereum.dexTrades.map((el) => ({
+        time: new Date(el.timeInterval.minute).getTime(), // date string in api response
+        low: el.low,
+        high: el.high,
+        open: Number(el.open),
+        close: Number(el.close),
+        volume: el.volume,
+      }))
+
+      if (bars.length) {
+        onHistoryCallback(bars, { noData: false })
+      } else {
+        onHistoryCallback(bars, { noData: true })
+      }
+    } catch (err) {
+      console.log({ err })
+      // onErrorCallback(err)
+    }
+
+    // return rp({
+    //   url: `${url}`,
+    // })
+    //   .then((data) => {
+    //     if (data.Response && data.Response === "Error") {
+    //       console.log("CryptoCompare API error:", data.Message)
+    //       return []
+    //     }
+    //     if (data && data.length > 0) {
+    //       const lows = data.map((d) => d.low)
+    //       const highs = data.map((d) => d.high)
+    //       const opens = data.map((d) => d.open)
+    //       const closes = data.map((d) => d.close)
+    //       const outlierIndexes = findOutliersInArray(lows).concat(
+    //         findOutliersInArray(highs),
+    //         findOutliersInArray(opens),
+    //         findOutliersInArray(closes)
+    //       )
+    //       data = data.filter(function (value, index) {
+    //         return outlierIndexes.indexOf(index) == -1
+    //       })
+    //       if (first) {
+    //         const lastBar = data[data.length - 1]
+    //         history[symbolInfo.name] = { lastBar: lastBar }
+    //       }
+    //       return data
+    //     } else {
+    //       return []
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log("there was an error fetching bars:", e)
+    //     return []
+    //   })
   },
 }
 
@@ -133,55 +176,74 @@ export default {
       name: splitData[0],
       description: splitData[1],
       type: "crypto",
-      session: "24x7",
-      timezone: "Etc/UTC",
-      ticker: symbolTicker,
-      exchange: splitData[2],
-      pricescale: 1000000000000,
-      has_intraday: true,
-      intraday_multipliers: ["1", "3", "60", "120", "180", "1D", "3D", "1M"],
       supported_resolution: supportedResolutions,
-      volume_precision: 1,
-      data_status: "streaming",
-      has_empty_bars: true,
-      has_weekly_and_monthly: false,
-      disable_resolution_rebuild: true,
-      has_daily: false,
-      //currencies
       currency_code: "USD",
       original_currency_code: "USD",
       currency_codes: ["USD", "BNB"],
+      // potentially new
+      ticker: symbolTicker,
+      session: "24x7",
+      timezone: "Etc/UTC",
+      minmov: 1,
+      pricescale: 1000000000,
+      has_intraday: true,
+      intraday_multipliers: ["1", "5", "15", "30", "60"],
+      // has_empty_bars: true,
+      has_weekly_and_monthly: false,
+      volume_precision: 1,
+      data_status: "streaming",
+      // has_empty_bars: true,
     }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)
     }, 0)
   },
-  getBars: function (
+  getBars: async (
     symbolInfo,
     resolution,
     call,
     onHistoryCallback,
     onErrorCallback
-  ) {
-    console.log(`get bars from ${call.from} to ${call.to}`)
-    historyProvider
-      .getBars(
-        symbolInfo,
-        resolution,
-        call.from,
-        call.to,
-        call.firstDataRequest
-      )
-      .then((bars) => {
-        if (bars.length > 0) {
-          onHistoryCallback(bars, { noData: false })
-        } else {
-          onHistoryCallback(bars, { noData: true })
-        }
+  ) => {
+    var bars = []
+    try {
+      if (resolution === "1D") {
+        resolution = 1440
+      }
+      const response2 = await axios.post(Bitquery.endpoint, {
+        query: Bitquery.GET_COIN_BARS,
+        variables: {
+          from: new Date(call.from).toISOString(),
+          to: new Date(call.to).toISOString(),
+          interval: Number(resolution),
+          address: "0x503b9bd8d0259e569e1ffdc7ced2e3a26198c0ff",
+        },
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "BQYug1u2azt1EzuPggXfnhdhzFObRW0g",
+        },
       })
-      .catch((err) => {
-        console.log({ err })
-      })
+
+      bars = response2.data.data.ethereum.dexTrades.map((el) => ({
+        time: new Date(el.timeInterval.minute).getTime(),
+        low: el.low,
+        high: el.high,
+        open: Number(el.open),
+        close: Number(el.close),
+        volume: el.volume,
+      }))
+
+      if (bars.length) {
+        onHistoryCallback(bars, { noData: false })
+      } else {
+        onHistoryCallback(bars, { noData: true })
+      }
+    } catch (err) {
+      console.log({ err })
+      // onErrorCallback(err)
+      onHistoryCallback(bars, { noData: true })
+    }
   },
   subscribeBars: (
     symbolInfo,
