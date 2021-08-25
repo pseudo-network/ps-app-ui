@@ -59,76 +59,47 @@ export default {
     const splitData = symbolInfo.ticker.split(":")
     const baseCurrency = splitData[2]
     const quoteCurrency = splitData[3]
-    const { from, to, countBack, firstDataRequest } = periodParams
-
-    var url
-
-    console.log("FROM, TO", from, to)
+    var { from, to, countBack, firstDataRequest } = periodParams
+    var limit = 10000
 
     if (resolution === "1D") {
       resolution = 1440
     }
 
+    console.log("FIRST REQUEST", firstDataRequest)
+
     if (firstDataRequest) {
-      console.log("FIRST REQUEST")
-      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${null}&till=${null}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${5000}`
+      limit = 5000
+      from = null
+      to = null
     } else {
-      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${10000}`
+      limit = 10000
     }
 
-    console.log("countback", countBack)
+    var url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${limit}`
 
-    var bars = []
+    let bars = []
+
     try {
-      // const response2 = await axios.post(Bitquery.endpoint, {
-      //   query: Bitquery.GET_COIN_BARS,
-      //   variables: {
-      //     from: new Date(call.from).toISOString(),
-      //     to: new Date(call.to).toISOString(),
-      //     interval: Number(resolution),
-      //     address: baseCurrency,
-      //   },
-      //   mode: "cors",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "X-API-KEY": "BQYug1u2azt1EzuPggXfnhdhzFObRW0g",
-      //   },
-      // })
-
-      // console.log(since)
-      // console.log(till)
-      // console.log(response2)
-
-      // bars = response2.data.data.ethereum.dexTrades.map((el) => ({
-      //   time: new Date(el.timeInterval.minute).getTime(),
-      //   low: el.low,
-      //   high: el.high,
-      //   open: Number(el.open),
-      //   close: Number(el.close),
-      //   volume: el.volume,
-      // }))
-
-      // if (bars) {
-      //   onHistoryCallback(bars, { noData: false })
-      // } else {
-      //   onHistoryCallback(bars, { noData: true })
-      // }
-
       const response = await axios.get(url)
-
-      console.log(response)
-
-      if (response.data.length) {
-        console.log("RECEIVED BARS", response.data.length)
-
-        bars = response.data.reverse()
-        onHistoryCallback(bars, { noData: false })
+      if (response.data.length > 0) {
+        bars = response.data.reverse() // this is necessary because bitquery returns bars descending
       } else {
-        onHistoryCallback([], { noData: true })
+        bars = []
       }
     } catch (err) {
-      onErrorCallback("err")
+      bars = []
     }
+
+    // IMPORTANT: this prevents the chart from overloading our backend in the instance
+    // of a request loop
+    setTimeout(() => {
+      if (bars.length > 0) {
+        onHistoryCallback(bars, { noData: false, nextTime: bars[0].time })
+      } else {
+        onHistoryCallback(bars, { noData: true })
+      }
+    }, 5000) // we should lower this interval at some point
   },
 
   subscribeBars: (

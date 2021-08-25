@@ -22,9 +22,9 @@ export default function TVChart(props) {
     autosize: true,
     studies_overrides: {},
     debug: false,
-    interval: "1",
+    interval: "5",
     time_frames: [
-      { text: "1d", resolution: "120", description: "1 day" },
+      { text: "1d", resolution: "60", description: "1 day" },
       { text: "1w", resolution: "120", description: "1 week" },
       { text: "1M", resolution: "120", description: "1 month" },
     ],
@@ -47,6 +47,79 @@ export default function TVChart(props) {
     ],
     enabled_features: ["hide_left_toolbar_by_default", "pricescale_currency"],
     minmov: 0.25,
+    overrides: {
+      "mainSeriesProperties.style": 1,
+      "mainSeriesProperties.showPrevClosePriceLine": true,
+
+      // Candles styles
+      // "mainSeriesProperties.candleStyle.upColor": upColor,
+      // "mainSeriesProperties.candleStyle.downColor": downColor,
+      "mainSeriesProperties.candleStyle.drawWick": true,
+      "mainSeriesProperties.candleStyle.drawBorder": true,
+      "mainSeriesProperties.candleStyle.borderColor": "none",
+      // "mainSeriesProperties.candleStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.candleStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.candleStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.candleStyle.wickDownColor": downColor,
+      "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+
+      // Hollow Candles styles
+      // "mainSeriesProperties.hollowCandleStyle.upColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.downColor": downColor,
+      "mainSeriesProperties.hollowCandleStyle.drawWick": true,
+      "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
+      "mainSeriesProperties.hollowCandleStyle.borderColor": "none",
+      // "mainSeriesProperties.hollowCandleStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.hollowCandleStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.wickDownColor": downColor,
+
+      // Heikin Ashi styles
+      // "mainSeriesProperties.haStyle.upColor": upColor,
+      // "mainSeriesProperties.haStyle.downColor": downColor,
+      "mainSeriesProperties.haStyle.drawWick": true,
+      "mainSeriesProperties.haStyle.drawBorder": true,
+      "mainSeriesProperties.haStyle.borderColor": "none",
+      // "mainSeriesProperties.haStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.haStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.haStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.haStyle.wickDownColor": downColor,
+      "mainSeriesProperties.haStyle.barColorsOnPrevClose": false,
+
+      // Bar styles
+      // "mainSeriesProperties.barStyle.upColor": upColor,
+      // "mainSeriesProperties.barStyle.downColor": downColor,
+      "mainSeriesProperties.barStyle.barColorsOnPrevClose": false,
+      "mainSeriesProperties.barStyle.dontDrawOpen": false,
+
+      // Line styles
+      // "mainSeriesProperties.lineStyle.color": lineColor,
+      "mainSeriesProperties.lineStyle.linestyle": 0,
+      "mainSeriesProperties.lineStyle.linewidth": 2,
+      "mainSeriesProperties.lineStyle.priceSource": "close",
+
+      // // Area styles
+      // "mainSeriesProperties.areaStyle.color1": areaColor,
+      // "mainSeriesProperties.areaStyle.color2": lineColor,
+      // "mainSeriesProperties.areaStyle.linecolor": lineColor,
+      "mainSeriesProperties.areaStyle.linestyle": 0,
+      "mainSeriesProperties.areaStyle.linewidth": 2,
+      "mainSeriesProperties.areaStyle.priceSource": "close",
+
+      // Baseline styles
+      "mainSeriesProperties.baselineStyle.baselineColor": "rgb(117,134,150)",
+      // "mainSeriesProperties.baselineStyle.topFillColor1": upColor,
+      // "mainSeriesProperties.baselineStyle.topFillColor2": descendingColor,
+      // "mainSeriesProperties.baselineStyle.bottomFillColor1": ascendingColor,
+      // "mainSeriesProperties.baselineStyle.bottomFillColor2": downColor,
+      // "mainSeriesProperties.baselineStyle.topLineColor": upColor,
+      // "mainSeriesProperties.baselineStyle.bottomLineColor": downColor,
+      "mainSeriesProperties.baselineStyle.topLineWidth": 2,
+      "mainSeriesProperties.baselineStyle.bottomLineWidth": 2,
+      "mainSeriesProperties.baselineStyle.priceSource": "close",
+      "mainSeriesProperties.baselineStyle.transparency": 50,
+      "mainSeriesProperties.baselineStyle.baseLevelPercentage": 50,
+    },
   }
 
   useEffect(() => {
