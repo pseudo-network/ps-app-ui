@@ -73,7 +73,8 @@ export default {
       from = null
       to = null
     } else {
-      limit = 10000
+      limit = countBack
+      from = null
     }
 
     var url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${limit}`
@@ -99,7 +100,7 @@ export default {
       } else {
         onHistoryCallback(bars, { noData: true })
       }
-    }, 5000) // we should lower this interval at some point
+    }, 1000) // we should lower this interval at some point
   },
 
   subscribeBars: (
