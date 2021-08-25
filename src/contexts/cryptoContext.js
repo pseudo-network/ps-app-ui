@@ -113,7 +113,7 @@ function useProvideCrypto() {
 
   useEffect(() => {
     if (transactionsData && !transactionsValidating) {
-      console.log(transactionsData)
+      // console.log(transactionsData)
       setTransactions(transactionsData)
     }
   }, [transactionsData, address])
@@ -149,10 +149,10 @@ function useProvideCrypto() {
         setUniqueWalletsCount(res.unique_wallets_count)
         setBurned(res.burned_count)
 
-        console.log(
-          "currentPrice",
-          convertExponentialToDecimal(res.current_price_usd)
-        )
+        // console.log(
+        //   "currentPrice",
+        //   convertExponentialToDecimal(res.current_price_usd)
+        // )
       })
     }
   }, [address, busd])

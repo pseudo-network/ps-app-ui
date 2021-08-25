@@ -1,14 +1,14 @@
 export const LANDING_URL = "https://pseudocoin.io"
 export const WEB_APP_URL = "https://app.pseudocoin.io"
 export const CHART_URL = "https://charts.pseudocoin.io"
-export const CHARTDATA_BASE_URL = "https://api.pseudocoin.io/v1/chartdata"
-// export const CHARTDATA_BASE_URL = "http://localhost:3444"
+// export const CHARTDATA_BASE_URL = "https://api.pseudocoin.io/v1/chartdata"
+export const CHARTDATA_BASE_URL = "http://localhost:3444"
 export const EMAILER_BASE_URL = "https://api.pseudocoin.io/v1/emailer"
 export const BLOG_URL = "https://blog.pseudocoin.io"
 
 // bitquery
 export const BITQUERY_BASE_URL = "https://graphql.bitquery.io"
-export const BITQUERY_API_KEY = "BQYug1u2azt1EzuPggXfnhdhzFObRW0g" //should come from consul
+export const BITQUERY_API_KEY = "BQYN053jRiC569Nbx6tQQHuncgO6rgQo" //should come from consul
 
 //coins
 export const ETHEREUM_ADDRESS = "0xdac17f958d2ee523a2206206994597c13d831ec7"

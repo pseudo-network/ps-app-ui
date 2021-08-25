@@ -7,6 +7,7 @@ import { useAppTheme } from "../../../contexts/appThemeContext"
 export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
+
   const widgetOptions = {
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
@@ -20,25 +21,15 @@ export default function TVChart(props) {
     datafeed: Datafeed,
     autosize: true,
     studies_overrides: {},
-    overrides: {
-      "mainSeriesProperties.showCountdown": true,
-      "paneProperties.background": "#131722",
-      "paneProperties.vertGridProperties.color": "#363c4e",
-      "paneProperties.horzGridProperties.color": "#363c4e",
-      "symbolWatermarkProperties.transparency": 90,
-      "scalesProperties.textColor": "#AAA",
-      "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-      "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
-    },
     debug: false,
-    interval: "60",
+    interval: "5",
     time_frames: [
-      { text: "1d", resolution: "1d", description: "1 day" },
-      { text: "1w", resolution: "1w", description: "1 week" },
-      { text: "1M", resolution: "1M", description: "1 month" },
+      { text: "1d", resolution: "60", description: "1 day" },
+      { text: "1w", resolution: "120", description: "1 week" },
+      { text: "1M", resolution: "120", description: "1 month" },
     ],
-    // new
-    time_frame: "1h",
+    time_frame: "1D",
+    disable_resolution_rebuild: true,
     disabled_features: [
       "header_symbol_search",
       "popup_hints",
@@ -52,13 +43,83 @@ export default function TVChart(props) {
       "border_around_the_chart",
       "header_undo_redo",
       "go_to_date",
-      "timezone_menu",
+      "disable_resolution_rebuild",
     ],
-    enabled_features: [
-      "hide_left_toolbar_by_default",
-      "pricescale_currency",
-      "no_min_chart_width",
-    ],
+    enabled_features: ["hide_left_toolbar_by_default", "pricescale_currency"],
+    minmov: 0.25,
+    overrides: {
+      "mainSeriesProperties.style": 1,
+      "mainSeriesProperties.showPrevClosePriceLine": true,
+
+      // Candles styles
+      // "mainSeriesProperties.candleStyle.upColor": upColor,
+      // "mainSeriesProperties.candleStyle.downColor": downColor,
+      "mainSeriesProperties.candleStyle.drawWick": true,
+      "mainSeriesProperties.candleStyle.drawBorder": true,
+      "mainSeriesProperties.candleStyle.borderColor": "none",
+      // "mainSeriesProperties.candleStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.candleStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.candleStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.candleStyle.wickDownColor": downColor,
+      "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+
+      // Hollow Candles styles
+      // "mainSeriesProperties.hollowCandleStyle.upColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.downColor": downColor,
+      "mainSeriesProperties.hollowCandleStyle.drawWick": true,
+      "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
+      "mainSeriesProperties.hollowCandleStyle.borderColor": "none",
+      // "mainSeriesProperties.hollowCandleStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.hollowCandleStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.hollowCandleStyle.wickDownColor": downColor,
+
+      // Heikin Ashi styles
+      // "mainSeriesProperties.haStyle.upColor": upColor,
+      // "mainSeriesProperties.haStyle.downColor": downColor,
+      "mainSeriesProperties.haStyle.drawWick": true,
+      "mainSeriesProperties.haStyle.drawBorder": true,
+      "mainSeriesProperties.haStyle.borderColor": "none",
+      // "mainSeriesProperties.haStyle.borderUpColor": upColor,
+      // "mainSeriesProperties.haStyle.borderDownColor": downColor,
+      // "mainSeriesProperties.haStyle.wickUpColor": upColor,
+      // "mainSeriesProperties.haStyle.wickDownColor": downColor,
+      "mainSeriesProperties.haStyle.barColorsOnPrevClose": false,
+
+      // Bar styles
+      // "mainSeriesProperties.barStyle.upColor": upColor,
+      // "mainSeriesProperties.barStyle.downColor": downColor,
+      "mainSeriesProperties.barStyle.barColorsOnPrevClose": false,
+      "mainSeriesProperties.barStyle.dontDrawOpen": false,
+
+      // Line styles
+      // "mainSeriesProperties.lineStyle.color": lineColor,
+      "mainSeriesProperties.lineStyle.linestyle": 0,
+      "mainSeriesProperties.lineStyle.linewidth": 2,
+      "mainSeriesProperties.lineStyle.priceSource": "close",
+
+      // // Area styles
+      // "mainSeriesProperties.areaStyle.color1": areaColor,
+      // "mainSeriesProperties.areaStyle.color2": lineColor,
+      // "mainSeriesProperties.areaStyle.linecolor": lineColor,
+      "mainSeriesProperties.areaStyle.linestyle": 0,
+      "mainSeriesProperties.areaStyle.linewidth": 2,
+      "mainSeriesProperties.areaStyle.priceSource": "close",
+
+      // Baseline styles
+      "mainSeriesProperties.baselineStyle.baselineColor": "rgb(117,134,150)",
+      // "mainSeriesProperties.baselineStyle.topFillColor1": upColor,
+      // "mainSeriesProperties.baselineStyle.topFillColor2": descendingColor,
+      // "mainSeriesProperties.baselineStyle.bottomFillColor1": ascendingColor,
+      // "mainSeriesProperties.baselineStyle.bottomFillColor2": downColor,
+      // "mainSeriesProperties.baselineStyle.topLineColor": upColor,
+      // "mainSeriesProperties.baselineStyle.bottomLineColor": downColor,
+      "mainSeriesProperties.baselineStyle.topLineWidth": 2,
+      "mainSeriesProperties.baselineStyle.bottomLineWidth": 2,
+      "mainSeriesProperties.baselineStyle.priceSource": "close",
+      "mainSeriesProperties.baselineStyle.transparency": 50,
+      "mainSeriesProperties.baselineStyle.baseLevelPercentage": 50,
+    },
   }
 
   useEffect(() => {
