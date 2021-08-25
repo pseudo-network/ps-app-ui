@@ -7,6 +7,7 @@ import { useAppTheme } from "../../../contexts/appThemeContext"
 export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
+
   const widgetOptions = {
     theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
@@ -20,24 +21,15 @@ export default function TVChart(props) {
     datafeed: Datafeed,
     autosize: true,
     studies_overrides: {},
-    overrides: {
-      "mainSeriesProperties.showCountdown": true,
-      "paneProperties.background": "#131722",
-      "paneProperties.vertGridProperties.color": "#363c4e",
-      "paneProperties.horzGridProperties.color": "#363c4e",
-      "symbolWatermarkProperties.transparency": 90,
-      "scalesProperties.textColor": "#AAA",
-      "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-      "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
-    },
     debug: false,
-    interval: "15",
+    interval: "1",
     time_frames: [
       { text: "1d", resolution: "120", description: "1 day" },
       { text: "1w", resolution: "120", description: "1 week" },
       { text: "1M", resolution: "120", description: "1 month" },
     ],
-    time_frame: "1h",
+    time_frame: "1D",
+    disable_resolution_rebuild: true,
     disabled_features: [
       "header_symbol_search",
       "popup_hints",
@@ -51,7 +43,7 @@ export default function TVChart(props) {
       "border_around_the_chart",
       "header_undo_redo",
       "go_to_date",
-      "timezone_menu",
+      "disable_resolution_rebuild",
     ],
     enabled_features: [
       "hide_left_toolbar_by_default",

@@ -8,7 +8,7 @@ export const BLOG_URL = "https://blog.pseudocoin.io"
 
 // bitquery
 export const BITQUERY_BASE_URL = "https://graphql.bitquery.io"
-export const BITQUERY_API_KEY = "BQYug1u2azt1EzuPggXfnhdhzFObRW0g" //should come from consul
+export const BITQUERY_API_KEY = "BQYN053jRiC569Nbx6tQQHuncgO6rgQo" //should come from consul
 
 //coins
 export const ETHEREUM_ADDRESS = "0xdac17f958d2ee523a2206206994597c13d831ec7"
