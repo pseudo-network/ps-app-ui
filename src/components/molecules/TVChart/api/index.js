@@ -59,14 +59,17 @@ export default {
     const splitData = symbolInfo.ticker.split(":")
     const baseCurrency = splitData[2]
     const quoteCurrency = splitData[3]
-    const { since, till, countBack, firstDataRequest } = periodParams
+    const { from, to, countBack, firstDataRequest } = periodParams
 
     var url
 
+    console.log("FROM, TO", from, to)
+
     if (firstDataRequest) {
-      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${null}&till=${null}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${null}`
+      console.log("FIRST REQUEST")
+      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${null}&till=${null}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${5000}`
     } else {
-      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${since}&till=${till}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${null}`
+      url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${10000}`
     }
 
     console.log("countback", countBack)
@@ -118,20 +121,20 @@ export default {
       if (response.data.length) {
         console.log("RECEIVED BARS", response.data.length)
 
-        bars = response.data
+        bars = response.data.reverse()
         onHistoryCallback(bars, { noData: false })
       } else {
         // throwError
         // console.log("=.==.=.==.=.=.== no bars =.==.=.==.=.=.==.")
         // bars = { s: "error", errmsg: "no bars" }
-        onHistoryCallback(bars, { noData: true })
+        onHistoryCallback([], { noData: true })
         // onErrorCallback("")
       }
     } catch (err) {
       // alert("err")
       // console.log({ err })
       // onErrorCallback(err)
-      onHistoryCallback(bars, { noData: true })
+      onHistoryCallback([], { noData: true })
     }
   },
 
