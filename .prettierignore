@@ -1,0 +1,5 @@
+# dependencies
+/node_modules
+/build
+/src/charting_library
+/public
