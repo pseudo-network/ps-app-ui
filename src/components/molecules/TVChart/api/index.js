@@ -42,7 +42,7 @@ export default {
       has_weekly_and_monthly: false,
       volume_precision: 1,
       data_status: "streaming",
-      has_empty_bars: true,
+      // has_empty_bars: true,
     }
     setTimeout(function () {
       onSymbolResolvedCallback(symbolStub)
@@ -65,6 +65,10 @@ export default {
 
     console.log("FROM, TO", from, to)
 
+    if (resolution === "1D") {
+      resolution = 1440
+    }
+
     if (firstDataRequest) {
       console.log("FIRST REQUEST")
       url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${null}&till=${null}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${5000}`
@@ -76,10 +80,6 @@ export default {
 
     var bars = []
     try {
-      // if (resolution === "1D") {
-      //   resolution = 1440
-      // }
-
       // const response2 = await axios.post(Bitquery.endpoint, {
       //   query: Bitquery.GET_COIN_BARS,
       //   variables: {
@@ -124,17 +124,10 @@ export default {
         bars = response.data.reverse()
         onHistoryCallback(bars, { noData: false })
       } else {
-        // throwError
-        // console.log("=.==.=.==.=.=.== no bars =.==.=.==.=.=.==.")
-        // bars = { s: "error", errmsg: "no bars" }
         onHistoryCallback([], { noData: true })
-        // onErrorCallback("")
       }
     } catch (err) {
-      // alert("err")
-      // console.log({ err })
-      // onErrorCallback(err)
-      onHistoryCallback([], { noData: true })
+      onErrorCallback("err")
     }
   },
 

@@ -45,11 +45,7 @@ export default function TVChart(props) {
       "go_to_date",
       "disable_resolution_rebuild",
     ],
-    enabled_features: [
-      "hide_left_toolbar_by_default",
-      "pricescale_currency",
-      "no_min_chart_width",
-    ],
+    enabled_features: ["hide_left_toolbar_by_default", "pricescale_currency"],
     minmov: 0.25,
   }
 
