@@ -6,6 +6,7 @@ import { Box, CircularProgress, Typography, Grid } from "@material-ui/core"
 import CryptoDetailCard from "../../components/molecules/CryptoDetailCard/CryptoDetailCard"
 import CryptoTradesTable from "../../components/molecules/CryptoTradesTable/CryptoTradesTable"
 import { PSEUDOCOIN_ADDRESS } from "../../core/environments"
+import { binance } from "../../utils/supportedNetworks"
 
 export default function Chart(props) {
   const cryptoContext = useCrypto()
@@ -13,7 +14,7 @@ export default function Chart(props) {
 
   useEffect(() => {
     if (!address || address == "") {
-      window.location.href = `/${PSEUDOCOIN_ADDRESS}`
+      window.location.href = `/${binance.route}/${PSEUDOCOIN_ADDRESS}`
     } else {
       cryptoContext.setAddress(address)
     }

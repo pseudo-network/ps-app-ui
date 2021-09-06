@@ -32,8 +32,7 @@ const App = () => {
             <ThemeProvider theme={theme.darkMode ? DarkTheme : LightTheme}>
               <Router>
                 <Switch>
-                  <Route path="/dashboard" component={Dashboard} />
-                  <Route path="/:address" component={Chart} />
+                  <Route path="/:network/:address" component={Chart} />
                   <Route path="/" component={Chart} />
                 </Switch>
               </Router>

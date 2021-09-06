@@ -13,6 +13,13 @@ import {
   TextField,
   Popover,
   Grid,
+  Button,
+  Popper,
+  Grow,
+  ClickAwayListener,
+  MenuList,
+  Paper,
+  MenuItem,
 } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import PSButton from "../../atoms/PSButton/PSButton"
@@ -36,8 +43,11 @@ import {
   CallToAction,
   InsertChart,
   LibraryBooks,
+  MenuOpen,
   Web,
 } from "@material-ui/icons"
+import { useCrypto } from "../../../contexts/cryptoContext"
+import { supportedNetworks } from "../../../utils/supportedNetworks"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
   titleContainer: {
-    flexGrow: 1,
     fontFamily: theme.typography.regular,
     alignItems: "center",
     alignContent: "center",
@@ -70,12 +79,16 @@ const useStyles = makeStyles((theme) => ({
   balance: {
     marginRight: 10,
   },
-  search: {
+  networkSelectContainer: {
+    display: "flex",
+    margin: "auto",
     flexGrow: 1,
-
+    justifyContent: "center",
+  },
+  searchContainer: {
+    flexGrow: 1,
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-
     // marginRight: theme.spacing(2),
     marginRight: 0,
     width: "100%",
@@ -150,6 +163,7 @@ export default function TopBar(props) {
   const [userInput, setUserInput] = useState("")
   const history = useHistory()
   const cryptosContext = useCryptos()
+  const cryptoContext = useCrypto()
   const walletContext = useWallet()
 
   useEffect(() => {
@@ -218,6 +232,7 @@ export default function TopBar(props) {
               onClick={copyAddressToClipboard}
             ></PSLink>
           </div>
+          <br />
           <div>
             <PSButton text={"logout"} onClick={handleLogoutOnClick} />
           </div>
@@ -226,6 +241,7 @@ export default function TopBar(props) {
     )
   }
 
+  // side nav
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleAppMenuClick = (event) => {
@@ -241,6 +257,33 @@ export default function TopBar(props) {
   const handleSideNavButtonClick = () => {
     props.setOpen(!props.open)
   }
+
+  // network select
+  const [networkSelectOpen, setNetworkSelectOpen] = React.useState(false)
+  const networkSelectAnchorRef = React.useRef(null)
+
+  const handleToggleNetworkPopover = () => {
+    setNetworkSelectOpen((prevOpen) => !prevOpen)
+  }
+
+  const handleCloseNetworkPopover = () => {
+    setNetworkSelectOpen(false)
+  }
+
+  const handleSelectNetworkClick = (network) => {
+    cryptoContext.setNetwork(network)
+    handleCloseNetworkPopover()
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(networkSelectOpen)
+  React.useEffect(() => {
+    if (prevOpen.current === true && networkSelectOpen === false) {
+      networkSelectAnchorRef.current.focus()
+    }
+
+    prevOpen.current = networkSelectOpen
+  }, [networkSelectOpen])
 
   return (
     <>
@@ -334,7 +377,55 @@ export default function TopBar(props) {
             </Typography>
           </Box>
 
-          <div className={classes.search}>
+          <div className={classes.networkSelectContainer}>
+            <Button
+              ref={networkSelectAnchorRef}
+              aria-controls={networkSelectOpen ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggleNetworkPopover}
+            >
+              {cryptoContext.network.label}
+            </Button>
+            <Popper
+              open={networkSelectOpen}
+              anchorEl={networkSelectAnchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloseNetworkPopover}>
+                      <MenuList
+                        autoFocusItem={networkSelectOpen}
+                        id="menu-list-grow"
+                      >
+                        {supportedNetworks.map((n) => (
+                          <MenuItem
+                            disabled={!n.enabled}
+                            onClick={() => {
+                              handleSelectNetworkClick(n)
+                            }}
+                          >
+                            {n.enabled ? n.label : n.label}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </div>
+
+          <div className={classes.searchContainer}>
             <Autocomplete
               id="combo-box-demo"
               defaultValue={props.address}

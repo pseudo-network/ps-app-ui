@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from "react"
 import useSWR from "swr"
-import { fetcher } from "../utils/utils"
+import { convertExponentialToDecimal, fetcher } from "../utils/utils"
 import {
   CHARTDATA_BASE_URL,
   BUSD,
@@ -8,29 +8,7 @@ import {
   WBNB_ADDRESS,
 } from "../core/environments"
 import axios from "axios"
-
-/**
- * Checks if number is in exponential format (eg: 1e-8 for 0.00000001).
- * If it does not, original number is returned.
- * If it does it converts it to string representation of that number
- * which forces it to format 0.00000001
- */
-export function convertExponentialToDecimal(exponentialNumber) {
-  // sanity check - is it exponential number
-  if (exponentialNumber) {
-    const str = exponentialNumber.toString()
-    if (str.indexOf("e") !== -1) {
-      const exponent = parseInt(str.split("-")[1], 10)
-      // Unfortunately I can not return 1e-8 as 0.00000001, because even if I call parseFloat() on it,
-      // it will still return the exponential representation
-      // So I have to use .toFixed()
-      const result = exponentialNumber.toFixed(exponent + 2)
-      return result
-    } else {
-      return exponentialNumber
-    }
-  }
-}
+import { binance } from "../utils/supportedNetworks"
 
 const cryptoContext = createContext()
 
@@ -88,6 +66,7 @@ function getCryptoInfoByAddress(address, busd) {
 }
 
 function useProvideCrypto() {
+  const [network, setNetwork] = useState(binance) // binance is default network
   const [address, setAddress] = useState(null)
   const [name, setName] = useState(null)
   const [symbol, setSymbol] = useState(null)
@@ -168,6 +147,8 @@ function useProvideCrypto() {
   // clearInterval(interval);
 
   return {
+    network,
+    setNetwork,
     address,
     setAddress,
     name,

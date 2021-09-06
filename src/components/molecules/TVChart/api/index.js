@@ -11,6 +11,10 @@ const config = {
   supports_search: false,
 }
 
+function stuffArray(arr, numberOfRepetitions) {
+  return arr.flatMap((i) => Array.from({ length: numberOfRepetitions }).fill(i))
+}
+
 export default {
   onReady: (cb) => {
     // console.log("=====onReady running")
@@ -64,6 +68,8 @@ export default {
 
     if (resolution === "1D") {
       resolution = 1440
+    } else if (resolution == "60") {
+      resolution = 1
     }
 
     console.log("FIRST REQUEST", firstDataRequest)
@@ -84,7 +90,8 @@ export default {
     try {
       const response = await axios.get(url)
       if (response.data.length > 0) {
-        bars = response.data.reverse() // this is necessary because bitquery returns bars descending
+        bars = response.data.sort((a, b) => (a.time > b.time ? 1 : -1))
+        // bars = stuffArray(bars, 10)
       } else {
         bars = []
       }
@@ -100,7 +107,7 @@ export default {
       } else {
         onHistoryCallback(bars, { noData: true })
       }
-    }, 1000) // we should lower this interval at some point
+    }, 2500) // we should lower this interval at some point
   },
 
   subscribeBars: (
