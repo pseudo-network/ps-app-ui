@@ -79,6 +79,11 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  holdingsList: {
+    marginTop: 13,
+    maxHeight: 333,
+    overflowY: "scroll",
+  },
 }))
 
 export default function Wallet(props) {
@@ -207,6 +212,10 @@ export default function Wallet(props) {
                           }
                         />
                       </ListItem>
+                    </ul>
+                  </li>
+                  <li>
+                    <ul style={{ padding: 0 }}>
                       <ListSubheader className={classes.subheader}>
                         Holdings
                         <br />
@@ -218,40 +227,42 @@ export default function Wallet(props) {
                       >
                         (balances may be inaccurate)
                       </Typography>
-                      {walletContext.balances &&
-                      walletContext.balances.length > 0 ? (
-                        walletContext.balances.map((b) => (
-                          <ListItem
-                            className={classes.balance}
-                            onClick={() => {
-                              handleSelectOptionClick(b.currency.address)
-                            }}
-                          >
-                            <ListItemText
+                      <div className={classes.holdingsList}>
+                        {walletContext.balances &&
+                        walletContext.balances.length > 0 ? (
+                          walletContext.balances.map((b) => (
+                            <ListItem
+                              className={classes.balance}
                               onClick={() => {
                                 handleSelectOptionClick(b.currency.address)
                               }}
-                              primary={
-                                <a className={classes.balanceSymbol}>
-                                  {b.currency.symbol}
-                                </a>
-                              }
-                              secondary={
-                                <a className={classes.balanceAddress}>
-                                  {abbreviateAddress(b.currency.address)}
-                                </a>
-                              }
-                            />
-                            <a className={classes.balanceValue}>
-                              {abbreviateBalance(b.value.toString())}
-                            </a>
+                            >
+                              <ListItemText
+                                onClick={() => {
+                                  handleSelectOptionClick(b.currency.address)
+                                }}
+                                primary={
+                                  <a className={classes.balanceSymbol}>
+                                    {b.currency.symbol}
+                                  </a>
+                                }
+                                secondary={
+                                  <a className={classes.balanceAddress}>
+                                    {abbreviateAddress(b.currency.address)}
+                                  </a>
+                                }
+                              />
+                              <a className={classes.balanceValue}>
+                                {abbreviateBalance(b.value.toString())}
+                              </a>
+                            </ListItem>
+                          ))
+                        ) : (
+                          <ListItem>
+                            <ListItemText primary={<a>No holdings found</a>} />
                           </ListItem>
-                        ))
-                      ) : (
-                        <ListItem>
-                          <ListItemText primary={<a>No holdings found</a>} />
-                        </ListItem>
-                      )}
+                        )}
+                      </div>
                     </ul>
                   </li>
                 </List>
