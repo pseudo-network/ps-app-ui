@@ -4,8 +4,10 @@ import { fetcher } from "../utils/utils"
 import {
   BITQUERY_API_KEY,
   BITQUERY_BASE_URL,
+  CHARTDATA_BASE_URL,
   ETHEREUM_ADDRESS,
 } from "../core/environments"
+import axios from "axios"
 
 const walletContext = createContext()
 
@@ -21,59 +23,41 @@ export function ProvideWallet({ children }) {
 }
 
 function useProvideWallet() {
-  const [balance, setBalance] = useState(null)
+  const [balances, setBalances] = useState([])
   const [address, setAddress] = useState("")
 
-  // todo: cleanup
-  const getBalance = (accountAddress) => {
-    const currencyAddress = ETHEREUM_ADDRESS
-    const qs = `{
-      ethereum {
-        address(address: {is: "${accountAddress}"}) {
-          balances(currency: {in: ["ETH", "${currencyAddress}"]}) {
-            currency {
-              symbol
-            }
-            value
-          }
-        }
-      }
-    }`
-
-    fetch(BITQUERY_BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": BITQUERY_API_KEY,
-      },
-      body: JSON.stringify({ query: qs }),
-    })
-      .then((response) => response.json())
+  function getBalances(address) {
+    return axios
+      .get(`${CHARTDATA_BASE_URL}/wallets/${address}/balances`)
       .then((res) => {
-        if (res) {
-          const balance = String(
-            res?.data?.ethereum?.address[0]?.balances[0]?.value
-          )
-          setBalance(balance.substring(0, 6))
+        if (res.data) {
+          return res.data
+        } else {
+          return null
         }
       })
       .catch((e) => {
-        // todo: handle err
-        setBalance(null)
+        // console.log(e)
+        console.log("error", e)
+        return e
+        // todo: handle error
       })
   }
 
   useEffect(() => {
     if (address && address != "") {
-      getBalance(address)
+      getBalances(address).then((balances) => {
+        console.log(balances)
+        setBalances(balances)
+      })
     } else {
-      setBalance(null)
+      setBalances(null)
     }
   }, [address])
 
   return {
     setAddress,
-    balance,
+    balances,
     address,
   }
 }

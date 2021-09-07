@@ -155,6 +155,36 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     margin: ".6em",
   },
+  balancesButton: {
+    backgroundColor: "rgba(131, 106, 255, 0.25)",
+    border: "1px solid #836AFF",
+    padding: ".66em",
+  },
+  balancesButtonText: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "16ch",
+    color: "#A694FE",
+    fontWeight: 600,
+    textTransform: "none",
+  },
+  balanceSymbol: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "20ch",
+    color: "#A694FE",
+    fontWeight: 600,
+    textTransform: "none",
+  },
+  balanceAddress: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "10ch",
+    textTransform: "none",
+  },
 }))
 
 export default function TopBar(props) {
@@ -191,10 +221,11 @@ export default function TopBar(props) {
   const handleSelectOptionClick = (event, value) => {
     if (value && value.address) {
       setUserInput(value.address)
-      history.push("/" + value.address)
+      history.push(`/${cryptoContext.network.route}/${value.address}`)
     }
   }
 
+  // tbd
   const handleOpenDialogClick = () => {
     setDialogOpen(true)
   }
@@ -284,6 +315,23 @@ export default function TopBar(props) {
 
     prevOpen.current = networkSelectOpen
   }, [networkSelectOpen])
+
+  // balances
+  const [balancesOpen, setBalancesOpen] = React.useState(false)
+  const balancesAnchorRef = React.useRef(null)
+
+  const handleToggleBalancesPopover = () => {
+    setBalancesOpen((prevOpen) => !prevOpen)
+  }
+
+  const handleCloseBalancesPopover = () => {
+    setBalancesOpen(false)
+  }
+
+  // const handleSelectNetworkClick = (network) => {
+  //   cryptoContext.setNetwork(network)
+  //   handleCloseNetworkPopover()
+  // }
 
   return (
     <>
@@ -452,7 +500,82 @@ export default function TopBar(props) {
           {/* <div className={classes.balance}>
             <PSLabel text={walletContext.balance} />
           </div> */}
-          <PSButton
+
+          <div>
+            <Button
+              className={classes.balancesButton}
+              ref={balancesAnchorRef}
+              aria-controls={balancesOpen ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={
+                walletContext.address
+                  ? handleToggleBalancesPopover
+                  : handleConnectWalletClick
+              }
+            >
+              <a className={classes.balancesButtonText}>
+                {walletContext.address
+                  ? walletContext.address
+                  : "Connect Wallet"}
+              </a>
+            </Button>
+
+            <Popper
+              open={balancesOpen}
+              anchorEl={balancesAnchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloseBalancesPopover}>
+                      {/* todo: search bar */}
+
+                      <MenuList
+                        autoFocusItem={networkSelectOpen}
+                        id="menu-list-grow"
+                      >
+                        {walletContext.balances.map((b) => (
+                          <MenuItem
+                            onClick={() => {
+                              // handleSelectNetworkClick(n)
+                            }}
+                          >
+                            <Grid>
+                              <Grid container item>
+                                <span className={classes.balanceSymbol}>
+                                  {b.currency.symbol}
+                                </span>
+                              </Grid>
+                              <Grid container item>
+                                <span className={classes.balanceAddress}>
+                                  {" "}
+                                  {b.currency.address}
+                                </span>
+                              </Grid>
+                              {/* <span className={classes.balanceSymbol}>
+                                {b.currency.symbol}
+                              </span>
+                              <span className={classes.balanceAddress}></span> */}
+                            </Grid>
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </div>
+          {/* <PSButton
             onClick={
               walletContext.address
                 ? handleOpenDialogClick
@@ -461,7 +584,7 @@ export default function TopBar(props) {
             text={
               walletContext.address ? walletContext.address : "Connect Wallet"
             }
-          />
+          /> */}
         </Toolbar>
       </AppBar>
       <PSDialog
