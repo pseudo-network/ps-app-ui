@@ -70,12 +70,12 @@ export default function TopBar(props) {
     <>
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
-          <div>
+          {/* <div>
             <MenuIcon
               style={{ cursor: "pointer" }}
               onClick={handleSideNavButtonClick}
             />
-          </div>
+          </div> */}
           <div className={classes.titleContainer}>
             <AppSelect />
           </div>
