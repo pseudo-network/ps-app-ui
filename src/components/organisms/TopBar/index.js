@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     alignContent: "center",
     display: "flex",
-    marginLeft: "1.2em",
   },
   networkSelectContainer: {
     display: "flex",
