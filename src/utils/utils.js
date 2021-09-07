@@ -24,3 +24,9 @@ export function convertExponentialToDecimal(exponentialNumber) {
     }
   }
 }
+
+export function abbreviateAddress(address) {
+  let beg = address.slice(0, 5)
+  let end = address.slice(address.length - 5, address.length)
+  return beg + "..." + end
+}
