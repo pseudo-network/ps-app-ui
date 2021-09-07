@@ -5,6 +5,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     color: "#ACB0BB",
     cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    "&:hover": {
+      textDecorationLine: "underline",
+    },
+  },
+  icon: {
+    marginLeft: "3px",
   },
 }))
 
@@ -19,9 +27,10 @@ const PSLink = (props) => {
         target={props.target ? props.target : "_blank"}
         onClick={props.onClick}
         rel="noreferrer"
-        style={{ color: props.color }}
+        style={{ color: props.color, display: "flex", alignItems: "center" }}
       >
         {props.text}
+        <div className={classes.icon}>{props.icon ?? props.icon}</div>
       </a>
     </>
   )

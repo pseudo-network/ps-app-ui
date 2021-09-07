@@ -21,7 +21,7 @@ export default function TVChart(props) {
     datafeed: Datafeed,
     autosize: true,
     studies_overrides: {},
-    debug: true,
+    debug: false,
     interval: "5",
     time_frames: [
       { text: "1d", resolution: "60", description: "1 day" },
@@ -42,6 +42,7 @@ export default function TVChart(props) {
       "border_around_the_chart",
       "header_undo_redo",
       "go_to_date",
+      "header_compare",
     ],
     enabled_features: [
       "hide_left_toolbar_by_default",

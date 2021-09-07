@@ -30,3 +30,8 @@ export function abbreviateAddress(address) {
   let end = address.slice(address.length - 5, address.length)
   return beg + "..." + end
 }
+
+export function abbreviateBalance(address) {
+  let beg = address.slice(0, 12)
+  return beg
+}
