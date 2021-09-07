@@ -24,9 +24,9 @@ export default function TVChart(props) {
     debug: false,
     interval: "5",
     time_frames: [
-      { text: "1d", resolution: "60", description: "1 day" },
-      { text: "1w", resolution: "120", description: "1 week" },
-      { text: "1M", resolution: "120", description: "1 month" },
+      { text: "1d", resolution: "1", description: "1 day" },
+      { text: "1w", resolution: "15", description: "1 week" },
+      { text: "1m", resolution: "120", description: "1 month" },
     ],
     timeframe: "1M",
     disabled_features: [
