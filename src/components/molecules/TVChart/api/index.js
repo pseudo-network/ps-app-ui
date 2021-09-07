@@ -3,7 +3,18 @@ import axios from "axios"
 import { CHARTDATA_BASE_URL, WBNB_ADDRESS } from "../../../../core/environments"
 
 const rp = require("request-promise").defaults({ json: true })
-const supportedResolutions = ["1", "5", "15", "30", "60", "1D", "1W", "1M"]
+const supportedResolutions = [
+  "1",
+  "5",
+  "15",
+  "30",
+  "60",
+  "120",
+  "180",
+  "1D",
+  "1W",
+  "1M",
+]
 const UNIX_TIME_ERROR_YEAR = "1970"
 
 const config = {
@@ -73,7 +84,7 @@ export default {
       minmov: 1,
       pricescale: 1000000000,
       has_intraday: true,
-      intraday_multipliers: ["1", "5", "15", "30", "60", "1440"],
+      intraday_multipliers: ["1", "5", "15", "30", "60", "120", "180", "1440"],
       has_weekly_and_monthly: false,
       volume_precision: 1,
       data_status: "streaming",
