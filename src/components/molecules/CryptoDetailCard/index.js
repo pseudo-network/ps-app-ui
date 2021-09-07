@@ -7,32 +7,7 @@ import { CheckBox, Info, InfoOutlined, ListAlt } from "@material-ui/icons"
 import { useCrypto } from "../../../contexts/cryptoContext"
 import { Typography } from "@material-ui/core"
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    minHeight: 233,
-  },
-  media: {
-    width: "100%",
-    height: "100%",
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: "#836AFF",
-  },
-  title: {
-    color: "#fff",
-  },
-}))
+const useStyles = makeStyles((theme) => ({}))
 
 export default function CryptoDetailCard(props) {
   const classes = useStyles()

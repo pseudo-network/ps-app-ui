@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     minHeight: 233,
+    color: "white",
   },
   media: {
     width: "100%",

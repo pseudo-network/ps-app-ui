@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     cursor: "pointer",
+    "&:hover": {
+      opacity: 0.7,
+    },
   },
   popover: {
     width: 299,
@@ -61,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color: "#836AFF",
     fontSize: "15px",
+    "&:hover": {
+      opacity: 0.7,
+    },
   },
   appSelectionText: {
     display: "flex",

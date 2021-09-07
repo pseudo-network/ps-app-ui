@@ -10,13 +10,18 @@ import {
   ListItem,
   ListItemText,
   List,
+  Typography,
 } from "@material-ui/core"
 import { useHistory } from "react-router-dom"
 import { useCryptos } from "../../../contexts/cryptosContext"
 import { useWallet } from "../../../contexts/walletContext"
 import { useCrypto } from "../../../contexts/cryptoContext"
-import { abbreviateAddress } from "../../../utils/utils"
+import { abbreviateAddress, abbreviateBalance } from "../../../utils/utils"
 import PSLink from "../../atoms/PSLink"
+import PSTextButton from "../../atoms/PSTextButton"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import FileCopyIcon from "@material-ui/icons/FileCopy"
+import { Close } from "@material-ui/icons"
 
 const useStyles = makeStyles((theme) => ({
   balancesButton: {
@@ -50,17 +55,29 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     color: "#ACB0BB",
   },
+  balanceValue: {
+    textAlign: "right",
+  },
   balance: {
     cursor: "pointer",
+    "&:hover": {
+      opacity: 0.7,
+    },
+    display: "flex",
   },
   popover: {
-    width: 200,
+    width: 250,
   },
   subheader: {
     color: "white",
+    width: "100%",
   },
   link: {
     color: "#ACB0BB",
+  },
+  caption: {
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 }))
 
@@ -96,8 +113,7 @@ export default function Wallet(props) {
 
   const handleDisconnectClick = () => {
     walletContext.setAddress(null)
-    setDialogOpen(false)
-    handleToggleBalancesPopover()
+    setBalancesOpen(false)
   }
 
   const [balancesOpen, setBalancesOpen] = React.useState(false)
@@ -159,8 +175,30 @@ export default function Wallet(props) {
                       <ListItem>
                         <ListItemText
                           primary={
+                            <PSTextButton
+                              text="Copy Address"
+                              icon={<FileCopyIcon fontSize="small" />}
+                              onClick={copyAddressToClipboard}
+                            />
+                          }
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary={
+                            <PSTextButton
+                              text={"Disconnect Wallet"}
+                              icon={<Close fontSize="small" />}
+                              onClick={handleDisconnectClick}
+                            />
+                          }
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary={
                             <PSLink
-                              text={"BscScan"}
+                              text={"View on BscScan"}
                               url={
                                 "https://bscscan.com/address/" +
                                 walletContext.address
@@ -169,22 +207,26 @@ export default function Wallet(props) {
                           }
                         />
                       </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary={
-                            <PSLink
-                              text={"Disconnect"}
-                              onClick={handleDisconnectClick}
-                            ></PSLink>
-                          }
-                        />
-                      </ListItem>
                       <ListSubheader className={classes.subheader}>
                         Holdings
+                        <br />
                       </ListSubheader>
+                      <Typography
+                        className={classes.caption}
+                        variant="caption"
+                        component="p"
+                      >
+                        (balances may be inaccurate)
+                      </Typography>
                       {walletContext.balances &&
+                      walletContext.balances.length > 0 ? (
                         walletContext.balances.map((b) => (
-                          <ListItem className={classes.balance}>
+                          <ListItem
+                            className={classes.balance}
+                            onClick={() => {
+                              handleSelectOptionClick(b.currency.address)
+                            }}
+                          >
                             <ListItemText
                               onClick={() => {
                                 handleSelectOptionClick(b.currency.address)
@@ -200,8 +242,16 @@ export default function Wallet(props) {
                                 </a>
                               }
                             />
+                            <a className={classes.balanceValue}>
+                              {abbreviateBalance(b.value.toString())}
+                            </a>
                           </ListItem>
-                        ))}
+                        ))
+                      ) : (
+                        <ListItem>
+                          <ListItemText primary={<a>No holdings found</a>} />
+                        </ListItem>
+                      )}
                     </ul>
                   </li>
                 </List>
