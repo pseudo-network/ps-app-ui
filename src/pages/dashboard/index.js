@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import NavFrame from "../../components/organisms/NavFrame/NavFrame"
+import NavFrame from "../../components/templates/NavFrame"
 
 const Dashboard = (props) => {
   return <NavFrame page={"Dashboard"}>YO!</NavFrame>

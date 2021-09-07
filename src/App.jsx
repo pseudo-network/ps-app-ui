@@ -19,7 +19,6 @@ import {
 import DarkTheme from "./themes/dark-theme"
 import LightTheme from "./themes/light-theme"
 import Chart from "./pages/chart"
-import Dashboard from "./pages/dashboard"
 import { ThemeProvider } from "@material-ui/core/styles"
 
 // NOTE: This is where new pages are added to the router

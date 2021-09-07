@@ -16,7 +16,7 @@ import Chip from "@material-ui/core/Chip"
 import { Paper, rgbToHex, Button, Grid, IconButton } from "@material-ui/core"
 import moment from "moment"
 import SearchIcon from "@material-ui/icons/Search"
-import PSLink from "../../atoms/PSLink/PSLink"
+import PSLink from "../../atoms/PSLink"
 var currencyFormatter = require("currency-formatter")
 
 const useStyles = makeStyles((theme) => ({

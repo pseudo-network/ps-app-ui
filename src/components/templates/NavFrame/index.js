@@ -12,10 +12,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import List from "@material-ui/core/List"
 import Divider from "@material-ui/core/Divider"
 import Toolbar from "@material-ui/core/Toolbar"
-import TopBar from "../../molecules/TopBar/TopBar"
-import SocialMediaRow from "../../molecules/SocialMediaRow/SocialMediaRow"
-import ContactUsButtons from "../../molecules/ContactButtons/index"
-import Watermark from "../../molecules/Watermark/Watermark"
+import TopBar from "../../organisms/TopBar"
+import SocialMediaRow from "../../molecules/SocialMediaRow"
+import ContactUsButtons from "../../molecules/ContactButtons"
+import Watermark from "../../molecules/Watermark"
 import {
   AccountBalance,
   ArrowBack,
@@ -26,7 +26,7 @@ import {
   GridOn,
 } from "@material-ui/icons"
 import { alpha, makeStyles } from "@material-ui/core/styles"
-import ThemeToggle from "../../molecules/ThemeToggle/ThemeToggle"
+import ThemeToggle from "../../molecules/ThemeToggle"
 import { WEB_APP_URL, PSEUDOCOIN_ADDRESS } from "../../../core/environments"
 
 const drawerWidth = 300

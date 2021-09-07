@@ -7,26 +7,17 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  IconButton,
   Box,
-  InputBase,
   TextField,
   Popover,
   Grid,
-  Button,
-  Popper,
-  Grow,
-  ClickAwayListener,
-  MenuList,
-  Paper,
-  MenuItem,
 } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
-import PSButton from "../../atoms/PSButton/PSButton"
-import PSLink from "../../atoms/PSLink/PSLink"
-import PSDialog from "../PSDialog/PSDialog"
+import PSButton from "../../atoms/PSButton"
+import PSLink from "../../atoms/PSLink"
+import PSDialog from "../../molecules/PSDialog"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
-import PSLabel from "../../atoms/PSLabel/PSLabel"
+import PSLabel from "../../atoms/PSLabel"
 import SearchIcon from "@material-ui/icons/Search"
 import PropTypes from "prop-types"
 import { useHistory } from "react-router-dom"
@@ -48,6 +39,8 @@ import {
 } from "@material-ui/icons"
 import { useCrypto } from "../../../contexts/cryptoContext"
 import { supportedNetworks } from "../../../utils/supportedNetworks"
+import Wallet from "../../molecules/Wallet"
+import NetworkSelect from "../../molecules/NetworkSelect"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -155,36 +148,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     margin: ".6em",
   },
-  balancesButton: {
-    backgroundColor: "rgba(131, 106, 255, 0.25)",
-    border: "1px solid #836AFF",
-    padding: ".66em",
-  },
-  balancesButtonText: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "16ch",
-    color: "#A694FE",
-    fontWeight: 600,
-    textTransform: "none",
-  },
-  balanceSymbol: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "20ch",
-    color: "#A694FE",
-    fontWeight: 600,
-    textTransform: "none",
-  },
-  balanceAddress: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "10ch",
-    textTransform: "none",
-  },
 }))
 
 export default function TopBar(props) {
@@ -289,50 +252,6 @@ export default function TopBar(props) {
     props.setOpen(!props.open)
   }
 
-  // network select
-  const [networkSelectOpen, setNetworkSelectOpen] = React.useState(false)
-  const networkSelectAnchorRef = React.useRef(null)
-
-  const handleToggleNetworkPopover = () => {
-    setNetworkSelectOpen((prevOpen) => !prevOpen)
-  }
-
-  const handleCloseNetworkPopover = () => {
-    setNetworkSelectOpen(false)
-  }
-
-  const handleSelectNetworkClick = (network) => {
-    cryptoContext.setNetwork(network)
-    handleCloseNetworkPopover()
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(networkSelectOpen)
-  React.useEffect(() => {
-    if (prevOpen.current === true && networkSelectOpen === false) {
-      networkSelectAnchorRef.current.focus()
-    }
-
-    prevOpen.current = networkSelectOpen
-  }, [networkSelectOpen])
-
-  // balances
-  const [balancesOpen, setBalancesOpen] = React.useState(false)
-  const balancesAnchorRef = React.useRef(null)
-
-  const handleToggleBalancesPopover = () => {
-    setBalancesOpen((prevOpen) => !prevOpen)
-  }
-
-  const handleCloseBalancesPopover = () => {
-    setBalancesOpen(false)
-  }
-
-  // const handleSelectNetworkClick = (network) => {
-  //   cryptoContext.setNetwork(network)
-  //   handleCloseNetworkPopover()
-  // }
-
   return (
     <>
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
@@ -426,51 +345,7 @@ export default function TopBar(props) {
           </Box>
 
           <div className={classes.networkSelectContainer}>
-            <Button
-              ref={networkSelectAnchorRef}
-              aria-controls={networkSelectOpen ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              onClick={handleToggleNetworkPopover}
-            >
-              {cryptoContext.network.label}
-            </Button>
-            <Popper
-              open={networkSelectOpen}
-              anchorEl={networkSelectAnchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloseNetworkPopover}>
-                      <MenuList
-                        autoFocusItem={networkSelectOpen}
-                        id="menu-list-grow"
-                      >
-                        {supportedNetworks.map((n) => (
-                          <MenuItem
-                            disabled={!n.enabled}
-                            onClick={() => {
-                              handleSelectNetworkClick(n)
-                            }}
-                          >
-                            {n.enabled ? n.label : n.label}
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
+            <NetworkSelect />
           </div>
 
           <div className={classes.searchContainer}>
@@ -502,89 +377,8 @@ export default function TopBar(props) {
           </div> */}
 
           <div>
-            <Button
-              className={classes.balancesButton}
-              ref={balancesAnchorRef}
-              aria-controls={balancesOpen ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              onClick={
-                walletContext.address
-                  ? handleToggleBalancesPopover
-                  : handleConnectWalletClick
-              }
-            >
-              <a className={classes.balancesButtonText}>
-                {walletContext.address
-                  ? walletContext.address
-                  : "Connect Wallet"}
-              </a>
-            </Button>
-
-            <Popper
-              open={balancesOpen}
-              anchorEl={balancesAnchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloseBalancesPopover}>
-                      {/* todo: search bar */}
-
-                      <MenuList
-                        autoFocusItem={networkSelectOpen}
-                        id="menu-list-grow"
-                      >
-                        {walletContext.balances.map((b) => (
-                          <MenuItem
-                            onClick={() => {
-                              // handleSelectNetworkClick(n)
-                            }}
-                          >
-                            <Grid>
-                              <Grid container item>
-                                <span className={classes.balanceSymbol}>
-                                  {b.currency.symbol}
-                                </span>
-                              </Grid>
-                              <Grid container item>
-                                <span className={classes.balanceAddress}>
-                                  {" "}
-                                  {b.currency.address}
-                                </span>
-                              </Grid>
-                              {/* <span className={classes.balanceSymbol}>
-                                {b.currency.symbol}
-                              </span>
-                              <span className={classes.balanceAddress}></span> */}
-                            </Grid>
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
+            <Wallet />
           </div>
-          {/* <PSButton
-            onClick={
-              walletContext.address
-                ? handleOpenDialogClick
-                : handleConnectWalletClick
-            }
-            text={
-              walletContext.address ? walletContext.address : "Connect Wallet"
-            }
-          /> */}
         </Toolbar>
       </AppBar>
       <PSDialog

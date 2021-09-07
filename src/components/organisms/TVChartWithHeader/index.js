@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import TVChartHeader from "../../molecules/TVChartHeader/TVChartHeader"
-import TVChart from "../../molecules/TVChart/TVChart"
+import TVChartHeader from "../../molecules/TVChartHeader/index"
+import TVChart from "../../molecules/TVChart/index"
 import { useCrypto } from "../../../contexts/cryptoContext"
 
 // note: can only support one chart instance at a time
