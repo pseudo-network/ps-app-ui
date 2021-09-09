@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     paddingTop: ".60em",
     paddingBottom: ".60em",
-    borderBottom: ".01px solid #545761",
+    borderBottom: `.01px solid ${theme.palette.text.disabled}`,
   },
   menuButton: {
     margin: theme.spacing(2),

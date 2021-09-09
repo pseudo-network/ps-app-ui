@@ -1,7 +1,7 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import PSCard from "../PSCard"
-import { List, ListItem, ListItemText } from "@material-ui/core"
+import { List, ListItem, ListItemText, ListSubheader } from "@material-ui/core"
 import PSLink from "../../atoms/PSLink"
 import { CheckBox, Info, InfoOutlined, ListAlt } from "@material-ui/icons"
 import { useCrypto } from "../../../contexts/cryptoContext"
@@ -20,8 +20,7 @@ export default function CryptoDetailCard(props) {
       content={
         <>
           <List dense={true}>
-            <Typography>BscScan</Typography>
-
+            <ListSubheader>BscScan</ListSubheader>
             <ListItem>
               <ListItemText
                 primary={
@@ -52,7 +51,7 @@ export default function CryptoDetailCard(props) {
                 }
               />
             </ListItem>
-            <Typography>Bitquery</Typography>
+            <ListSubheader>Bitquery</ListSubheader>{" "}
             <ListItem>
               <ListItemText
                 primary={

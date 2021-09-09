@@ -67,7 +67,6 @@ export default {
     onSymbolResolvedCallback,
     onResolveErrorCallback
   ) => {
-    console.log("symbolTicker", symbolTicker)
     // expects a symbolInfo object in response
     const splitData = symbolTicker.split(":")
     const symbolStub = {
@@ -113,8 +112,6 @@ export default {
     } else if (resolution == "60") {
       resolution = 1
     }
-
-    console.log("FIRST REQUEST", firstDataRequest)
 
     if (firstDataRequest) {
       limit = 5000

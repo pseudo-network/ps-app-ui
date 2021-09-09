@@ -21,7 +21,7 @@ var currencyFormatter = require("currency-formatter")
 
 const useStyles = makeStyles((theme) => ({
   tableHeader: {
-    backgroundColor: "#0D111B",
+    // backgroundColor: "#0D111B",
     padding: "20px",
   },
   table: {
@@ -49,14 +49,14 @@ const TransactionTable = (props) => {
   var timezoneOffset = moment().utcOffset()
   return (
     <TableContainer className={classes.table} component={Paper}>
-      <Table stickyHeader size="small">
-        <TableHead className={classes.tableHead}>
+      <Table size="small">
+        <TableHead>
           <TableRow>
             <TableCell align="center" className={classes.tableHeader}>
               Transaction
             </TableCell>
             <TableCell className={classes.tableHeader}>Coin Amount</TableCell>
-            <TableCell className={classes.tableHeader}>Trade Value</TableCell>
+            <TableCell className={classes.tableHeader}>USD</TableCell>
             <TableCell className={classes.tableHeader}>Time</TableCell>
             <TableCell align="center" className={classes.tableHeader}>
               Transaction

@@ -9,7 +9,8 @@ export default function TVChart(props) {
   const appThemeContext = useAppTheme()
 
   const widgetOptions = {
-    theme: appThemeContext.darkMode ? "Dark" : "Light",
+    // theme: appThemeContext.darkMode == 1 ? "Dark" : "Light",
+    theme: "Light",
     symbol: props.symbol || "UNKNOWN",
     height: props.height || "calc(100vh - 444px)",
     container_id: props.chartName || "Coin-Chart",
@@ -50,85 +51,21 @@ export default function TVChart(props) {
       "disable_resolution_rebuild",
     ],
     minmov: 0.25,
-    // overrides: {
-    //   "mainSeriesProperties.style": 1,
-    //   "mainSeriesProperties.showPrevClosePriceLine": true,
-
-    //   // Candles styles
-    //   // "mainSeriesProperties.candleStyle.upColor": upColor,
-    //   // "mainSeriesProperties.candleStyle.downColor": downColor,
-    //   "mainSeriesProperties.candleStyle.drawWick": true,
-    //   "mainSeriesProperties.candleStyle.drawBorder": true,
-    //   "mainSeriesProperties.candleStyle.borderColor": "none",
-    //   // "mainSeriesProperties.candleStyle.borderUpColor": upColor,
-    //   // "mainSeriesProperties.candleStyle.borderDownColor": downColor,
-    //   // "mainSeriesProperties.candleStyle.wickUpColor": upColor,
-    //   // "mainSeriesProperties.candleStyle.wickDownColor": downColor,
-    //   "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
-
-    //   // Hollow Candles styles
-    //   // "mainSeriesProperties.hollowCandleStyle.upColor": upColor,
-    //   // "mainSeriesProperties.hollowCandleStyle.downColor": downColor,
-    //   "mainSeriesProperties.hollowCandleStyle.drawWick": true,
-    //   "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
-    //   "mainSeriesProperties.hollowCandleStyle.borderColor": "none",
-    //   // "mainSeriesProperties.hollowCandleStyle.borderUpColor": upColor,
-    //   // "mainSeriesProperties.hollowCandleStyle.borderDownColor": downColor,
-    //   // "mainSeriesProperties.hollowCandleStyle.wickUpColor": upColor,
-    //   // "mainSeriesProperties.hollowCandleStyle.wickDownColor": downColor,
-
-    //   // Heikin Ashi styles
-    //   // "mainSeriesProperties.haStyle.upColor": upColor,
-    //   // "mainSeriesProperties.haStyle.downColor": downColor,
-    //   "mainSeriesProperties.haStyle.drawWick": true,
-    //   "mainSeriesProperties.haStyle.drawBorder": true,
-    //   "mainSeriesProperties.haStyle.borderColor": "none",
-    //   // "mainSeriesProperties.haStyle.borderUpColor": upColor,
-    //   // "mainSeriesProperties.haStyle.borderDownColor": downColor,
-    //   // "mainSeriesProperties.haStyle.wickUpColor": upColor,
-    //   // "mainSeriesProperties.haStyle.wickDownColor": downColor,
-    //   "mainSeriesProperties.haStyle.barColorsOnPrevClose": false,
-
-    //   // Bar styles
-    //   // "mainSeriesProperties.barStyle.upColor": upColor,
-    //   // "mainSeriesProperties.barStyle.downColor": downColor,
-    //   "mainSeriesProperties.barStyle.barColorsOnPrevClose": false,
-    //   "mainSeriesProperties.barStyle.dontDrawOpen": false,
-
-    //   // Line styles
-    //   // "mainSeriesProperties.lineStyle.color": lineColor,
-    //   "mainSeriesProperties.lineStyle.linestyle": 0,
-    //   "mainSeriesProperties.lineStyle.linewidth": 2,
-    //   "mainSeriesProperties.lineStyle.priceSource": "close",
-
-    //   // // Area styles
-    //   // "mainSeriesProperties.areaStyle.color1": areaColor,
-    //   // "mainSeriesProperties.areaStyle.color2": lineColor,
-    //   // "mainSeriesProperties.areaStyle.linecolor": lineColor,
-    //   "mainSeriesProperties.areaStyle.linestyle": 0,
-    //   "mainSeriesProperties.areaStyle.linewidth": 2,
-    //   "mainSeriesProperties.areaStyle.priceSource": "close",
-
-    //   // Baseline styles
-    //   "mainSeriesProperties.baselineStyle.baselineColor": "rgb(117,134,150)",
-    //   // "mainSeriesProperties.baselineStyle.topFillColor1": upColor,
-    //   // "mainSeriesProperties.baselineStyle.topFillColor2": descendingColor,
-    //   // "mainSeriesProperties.baselineStyle.bottomFillColor1": ascendingColor,
-    //   // "mainSeriesProperties.baselineStyle.bottomFillColor2": downColor,
-    //   // "mainSeriesProperties.baselineStyle.topLineColor": upColor,
-    //   // "mainSeriesProperties.baselineStyle.bottomLineColor": downColor,
-    //   "mainSeriesProperties.baselineStyle.topLineWidth": 2,
-    //   "mainSeriesProperties.baselineStyle.bottomLineWidth": 2,
-    //   "mainSeriesProperties.baselineStyle.priceSource": "close",
-    //   "mainSeriesProperties.baselineStyle.transparency": 50,
-    //   "mainSeriesProperties.baselineStyle.baseLevelPercentage": 50,
-    // },
+    overrides: {
+      "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0)",
+      "scalesProperties.backgroundColor": "red",
+    },
   }
 
   useEffect(() => {
-    if (tv.current) tv.current.remove()
+    if (tv.current) {
+      // document.getElementById("Coin-Chart").remove()
+      tv.current.remove()
+    }
     tv.current = new widget(widgetOptions)
-  }, [props.symbol, appThemeContext.darkMode])
+
+    // .applyOverrides({ "mainSeriesProperties.minTick": "default" })
+  }, [props.symbol])
 
   return (
     <div

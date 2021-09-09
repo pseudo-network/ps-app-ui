@@ -19,6 +19,7 @@ const DarkTheme = createMuiTheme({
       primary: "#ACB0BB",
       secondary: "#25272D",
       disabled: "#545761",
+      psPurple: "#836AFF",
     },
     action: {
       active: "#836AFF",
@@ -30,11 +31,35 @@ const DarkTheme = createMuiTheme({
     background: {
       default: "#151c2c",
       paper: "#0D111B",
+      psLightPurple: "#836aff",
     },
     typography: {
       bold: "Now-Bold, Arial",
       light: "Now-Bold, Arial",
       regular: "Poppins, Arial",
+    },
+  },
+  overrides: {
+    MuiCardHeader: {
+      title: {
+        color: "#ACB0BB",
+      },
+      root: {
+        color: "#ACB0BB",
+      },
+    },
+    MuiListSubheader: {
+      title: {
+        color: "#ACB0BB",
+      },
+      root: {
+        color: "#ACB0BB",
+      },
+    },
+    MuiButton: {
+      root: {
+        color: "#fff",
+      },
     },
   },
 })

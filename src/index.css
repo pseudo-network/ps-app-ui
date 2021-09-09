@@ -14,7 +14,6 @@ body {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 *::-webkit-scrollbar {
@@ -31,4 +30,36 @@ iframe {
 }
 button {
   border-radius: 0.5rem !important;
+}
+
+:root:not(.theme-dark) {
+  --tv-color-platform-background: #d1c4e9;
+  --tv-color-pane-background: rgb(251, 223, 244);
+  --tv-color-pane-background-secondary: rgb(249, 185, 233);
+  --tv-color-toolbar-button-background-hover: rgb(244, 143, 177);
+  --tv-color-toolbar-button-background-secondary-hover: red;
+  --tv-color-toolbar-button-background-expanded: rgb(244, 143, 177);
+  --tv-color-toolbar-button-text: rgb(136, 24, 79);
+  --tv-color-toolbar-button-text-hover: rgb(74, 20, 140);
+  --tv-color-toolbar-button-text-active: red;
+  --tv-color-toolbar-button-text-active-hover: red;
+  --tv-color-item-active-text: rgb(6, 6, 255);
+  --tv-color-toolbar-toggle-button-background-active: red;
+  --tv-color-toolbar-toggle-button-background-active-hover: magenta;
+}
+
+.theme-dark:root {
+  --tv-color-platform-background: #d1c4e9;
+  --tv-color-pane-background: rgb(251, 223, 244);
+  --tv-color-pane-background-secondary: rgb(249, 185, 233);
+  --tv-color-toolbar-button-background-hover: rgb(244, 143, 177);
+  --tv-color-toolbar-button-background-secondary-hover: red;
+  --tv-color-toolbar-button-background-expanded: rgb(244, 143, 177);
+  --tv-color-toolbar-button-text: rgb(136, 24, 79);
+  --tv-color-toolbar-button-text-hover: rgb(74, 20, 140);
+  --tv-color-toolbar-button-text-active: red;
+  --tv-color-toolbar-button-text-active-hover: red;
+  --tv-color-item-active-text: rgb(6, 255, 6);
+  --tv-color-toolbar-toggle-button-background-active: red;
+  --tv-color-toolbar-toggle-button-background-active-hover: magenta;
 }

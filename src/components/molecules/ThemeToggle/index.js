@@ -31,22 +31,26 @@ const ThemeToggle = (props) => {
     <Box className={classes.root}>
       <IconButton
         className={
-          appThemeContext.darkMode ? classes.unselectedDark : classes.selected
+          appThemeContext.darkMode == 1
+            ? classes.unselectedDark
+            : classes.selected
         }
         aria-label="menu"
         onClick={() => {
-          appThemeContext.setDarkMode(false)
+          appThemeContext.setDarkMode(0)
         }}
       >
         <WbSunny />
       </IconButton>
       <IconButton
         className={
-          !appThemeContext.darkMode ? classes.unselectedLight : classes.selected
+          appThemeContext.darkMode != 1
+            ? classes.unselectedLight
+            : classes.selected
         }
         aria-label="menu"
         onClick={() => {
-          appThemeContext.setDarkMode(true)
+          appThemeContext.setDarkMode(1)
         }}
       >
         <NightsStay />

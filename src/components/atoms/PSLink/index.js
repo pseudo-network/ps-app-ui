@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    color: "#ACB0BB",
+    color: theme.palette.text.psPurple,
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -27,7 +27,11 @@ const PSLink = (props) => {
         target={props.target ? props.target : "_blank"}
         onClick={props.onClick}
         rel="noreferrer"
-        style={{ color: props.color, display: "flex", alignItems: "center" }}
+        style={{
+          color: props.color ?? props.color,
+          display: "flex",
+          alignItems: "center",
+        }}
       >
         {props.text}
         <div className={classes.icon}>{props.icon ?? props.icon}</div>
