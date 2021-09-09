@@ -1,38 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;0,900;1,200;1,300;1,500&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Roboto;
+html .chart-page,
+html .chart-page .chart-container-border,
+html .chart-controls-bar,
+html .apply-common-tooltip,
+html .group-wWM3zP_M,
+html .drawingToolbar-U3_QXRof- {
+  background: transparent !important;
+  background-color: transparent !important;
+  --tv-color-toolbar-button-background-hover: rgb(0, 0, 0, 0);
+  --tv-color-item-active-text: "#836AFF";
+  --tv-color-toolbar-button-text: "#836AFF";
+  --tv-color-toolbar-button-text-hover: "#836AFF";
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Poppins", "sans-serif";
+.chart-controls-bar {
+  border-top: none !important;
 }
 
-a {
-  text-decoration: none;
-}
-*::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  box-sizing: border-box;
-  font-family: "Poppins", "sans-serif" !important;
-}
-
-iframe {
-  border-radius: 0.5rem !important;
-}
-button {
-  border-radius: 0.5rem !important;
-}
-
-:root:not(.theme-dark) {
+/* :root:not(.theme-dark) {
   --tv-color-platform-background: #d1c4e9;
   --tv-color-pane-background: rgb(251, 223, 244);
   --tv-color-pane-background-secondary: rgb(249, 185, 233);
@@ -62,25 +46,4 @@ button {
   --tv-color-item-active-text: rgb(6, 255, 6);
   --tv-color-toolbar-toggle-button-background-active: red;
   --tv-color-toolbar-toggle-button-background-active-hover: magenta;
-}
-
-html .chart-page,
-html .chart-page .chart-container-border,
-html .chart-controls-bar,
-html .drawingToolbar-U3_QXRof- {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.chart-controls-bar {
-  border-top: none !important;
-}
-
-.chart-page,
-.group-wWM3zP_M- {
-  background: transparent !important;
-}
-
-.pane-separator {
-  display: none !important;
-}
+} */

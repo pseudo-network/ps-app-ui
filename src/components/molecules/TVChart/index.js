@@ -3,14 +3,33 @@ import { widget } from "../../../charting_library/charting_library"
 import Datafeed from "./api"
 import { useRef, useEffect } from "react"
 import { useAppTheme } from "../../../contexts/appThemeContext"
+import { dark } from "@material-ui/core/styles/createPalette"
+
+const darkThemePath = "/../src/components/molecules/TVChart/themes/dark.css"
+const lightThemePath = "/../src/components/molecules/TVChart/themes/light.css"
 
 export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
 
+  // todo: clean up
+  const chartTheme = {
+    customCssPath:
+      appThemeContext.darkMode == 1 ? darkThemePath : lightThemePath,
+    backgroundColor: appThemeContext.darkMode == 1 ? "#0D111B" : "#fff",
+    textColor: appThemeContext.darkMode == 1 ? "#c5cbce" : "#0D111B",
+    dividerColor:
+      appThemeContext.darkMode == 1
+        ? "rgba(197, 203, 206, .12)"
+        : "rgba(0, 0, 0, 0.12)",
+    lineColor:
+      appThemeContext.darkMode == 1
+        ? "rgba(197, 203, 206, .05)"
+        : "rgba(0, 0, 0, 0.05)",
+  }
+
   const widgetOptions = {
-    // theme: appThemeContext.darkMode == 1 ? "Dark" : "Light",
-    theme: "Light",
+    // theme: appThemeContext.darkMode ? "Dark" : "Light",
     symbol: props.symbol || "UNKNOWN",
     height: props.height || "calc(100vh - 444px)",
     container_id: props.chartName || "Coin-Chart",
@@ -21,7 +40,6 @@ export default function TVChart(props) {
     user_id: "public_user_id",
     datafeed: Datafeed,
     autosize: true,
-    studies_overrides: {},
     debug: false,
     interval: "5",
     time_frames: [
@@ -30,6 +48,7 @@ export default function TVChart(props) {
       { text: "1m", resolution: "120", description: "1 month" },
     ],
     timeframe: "1M",
+    custom_css_url: dark.css,
     disabled_features: [
       "header_symbol_search",
       "popup_hints",
@@ -52,25 +71,43 @@ export default function TVChart(props) {
     ],
     minmov: 0.25,
     overrides: {
-      "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0)",
-      "scalesProperties.backgroundColor": "red",
+      // "mainSeriesProperties.candleStyle.upColor": "#30d158",
+      // "mainSeriesProperties.candleStyle.downColor": "#ff375f",
+      // "mainSeriesProperties.candleStyle.wickUpColor": "#30d158",
+      // "mainSeriesProperties.candleStyle.wickDownColor": "#ff375f",
+      "mainSeriesProperties.candleStyle.drawBorder": false,
+      "mainSeriesProperties.showCountdown": true,
+      "paneProperties.background": chartTheme.backgroundColor,
+      "paneProperties.secondaryBackground": chartTheme.backgroundColor,
+      "paneProperties.vertGridProperties.color": chartTheme.lineColor,
+      "paneProperties.horzGridProperties.color": chartTheme.lineColor,
+      "scalesProperties.backgroundColor": chartTheme.backgroundColor,
+      "scalesProperties.textColor": chartTheme.textColor,
+      "scalesProperties.lineColor": chartTheme.dividerColor,
+      "symbolWatermarkProperties.color": "#fff",
     },
+    studies_overrides: {
+      // "volume.volume.color.0": "#ff375f",
+      // "volume.volume.color.1": "#30d158",
+    },
+    loading_screen: {
+      backgroundColor: chartTheme.backgroundColor,
+    },
+    toolbar_bg: chartTheme.backgroundColor,
+    toolbar_color: chartTheme.textColor,
   }
 
   useEffect(() => {
-    if (tv.current) {
-      // document.getElementById("Coin-Chart").remove()
-      tv.current.remove()
-    }
+    if (tv.current) tv.current.remove()
     tv.current = new widget(widgetOptions)
-
-    // .applyOverrides({ "mainSeriesProperties.minTick": "default" })
-  }, [props.symbol])
+  }, [props.symbol, appThemeContext.darkMode])
 
   return (
     <div
       style={{
+        background: chartTheme.backgroundColor,
         height: widgetOptions.height,
+        borderRadius: "0.5rem",
       }}
       id={props.chartName || "Coin-Chart"}
     />
