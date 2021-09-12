@@ -28,7 +28,7 @@ const App = () => {
       <ProvideAppTheme>
         <AppThemeContext.Consumer>
           {(theme) => (
-            <ThemeProvider theme={theme.darkMode ? DarkTheme : LightTheme}>
+            <ThemeProvider theme={theme.darkMode == 1 ? DarkTheme : LightTheme}>
               <Router>
                 <Switch>
                   <Route path="/:network/:address" component={Chart} />

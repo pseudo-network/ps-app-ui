@@ -1,36 +1,15 @@
-.App {
-  text-align: center;
+html .chart-page,
+html .chart-page .chart-container-border,
+html .chart-controls-bar,
+html .apply-common-tooltip,
+html .group-wWM3zP_M,
+html .drawingToolbar-U3_QXRof- {
+  background: transparent !important;
+  background-color: transparent !important;
+  --tv-color-toolbar-button-background-hover: rgb(0, 0, 0, 0);
 }
 
-.App-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  background-color: #222;
-  color: #fff;
-}
-
-.App-tv-logo {
-  height: 45px;
-}
-
-.App-react-logo {
-  display: block;
-  height: 62px;
-}
-
-.App-title {
-  display: block;
-  font-size: 1.5em;
-}
-
-* {
-  -ms-overflow-style: none;
-}
-::-webkit-scrollbar {
-  display: none;
-}
+/* overrides */
 
 /* :root:not(.theme-dark) {
   --tv-color-platform-background: #d1c4e9;

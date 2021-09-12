@@ -25,8 +25,9 @@ import { Close } from "@material-ui/icons"
 
 const useStyles = makeStyles((theme) => ({
   balancesButton: {
-    backgroundColor: "rgba(131, 106, 255, 0.25)",
-    border: "1px solid #836AFF",
+    // backgroundColor: "rgba(131, 106, 255, 0.25)",
+    // border: "1px solid #836AFF",
+    color: theme.palette.text.psPurple,
     padding: ".66em",
   },
   balancesButtonText: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     textOverflow: "ellipsis",
     maxWidth: "20ch",
-    color: "#A694FE",
+    color: theme.palette.text.psPurple,
     fontWeight: 600,
     textTransform: "none",
   },
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
     maxWidth: "10ch",
     textTransform: "none",
-    color: "#ACB0BB",
+    color: theme.palette.text.disabled,
   },
   balanceValue: {
     textAlign: "right",
@@ -174,9 +175,7 @@ export default function Wallet(props) {
                 <List dense={true} className={classes.root} subheader={<li />}>
                   <li className={classes.listSection}>
                     <ul style={{ padding: 0 }}>
-                      <ListSubheader className={classes.subheader}>
-                        Profile
-                      </ListSubheader>
+                      <ListSubheader>Profile</ListSubheader>
                       <ListItem>
                         <ListItemText
                           primary={
@@ -216,7 +215,7 @@ export default function Wallet(props) {
                   </li>
                   <li>
                     <ul style={{ padding: 0 }}>
-                      <ListSubheader className={classes.subheader}>
+                      <ListSubheader>
                         Holdings
                         <br />
                       </ListSubheader>

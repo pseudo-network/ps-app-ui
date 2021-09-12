@@ -18,23 +18,34 @@ const LightTheme = createMuiTheme({
     text: {
       primary: "#1d1d1f",
       secondary: "#25272D",
+      psPurple: "#836AFF",
       // disabled: "#545761",
     },
     action: {
       active: "#836AFF",
-      // hover: "#14171F",
-      // selected: "#25272D",
-      // disabled: "#0D111B",
-      // disabledBackground: "#0D111B",
     },
     background: {
-      // default: "#151c2c",
-      // paper: "#0D111B",
+      psLightPurple: "#836AFF",
     },
     typography: {
       bold: "Now-Bold, Arial",
       light: "Now-Bold, Arial",
       regular: "Poppins, Arial",
+    },
+  },
+  overrides: {
+    MuiCardHeader: {
+      title: {
+        color: "#1d1d1f",
+      },
+      root: {
+        color: "#1d1d1f",
+      },
+    },
+    MuiButton: {
+      root: {
+        color: "#1d1d1f",
+      },
     },
   },
 })

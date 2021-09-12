@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "rgba(131, 106, 255, 0.25)",
+    backgroundColor: theme.palette.background.psLightPurple,
     border: "1px solid #836AFF",
     padding: ".66em",
   },
