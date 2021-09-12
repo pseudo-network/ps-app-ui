@@ -7,14 +7,9 @@ html .drawingToolbar-U3_QXRof- {
   background: transparent !important;
   background-color: transparent !important;
   --tv-color-toolbar-button-background-hover: rgb(0, 0, 0, 0);
-  --tv-color-item-active-text: "#836AFF";
-  --tv-color-toolbar-button-text: "#836AFF";
-  --tv-color-toolbar-button-text-hover: "#836AFF";
 }
 
-.chart-controls-bar {
-  border-top: none !important;
-}
+/* overrides */
 
 /* :root:not(.theme-dark) {
   --tv-color-platform-background: #d1c4e9;
