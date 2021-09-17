@@ -26,6 +26,8 @@ export default function TVChartNative(props) {
       { text: "1w", resolution: "15", description: "1 week" },
       { text: "1m", resolution: "120", description: "1 month" },
     ],
+    hide_side_toolbar: false,
+    withdateranges: true,
     disabled_features: [
       "header_symbol_search",
       "popup_hints",
@@ -42,16 +44,17 @@ export default function TVChartNative(props) {
       "header_compare",
     ],
     enabled_features: [
-      "hide_left_toolbar_by_default",
-      "pricescale_currency",
-      "disable_resolution_rebuild",
+      "bottom_toolbar",
+      // "hide_left_toolbar_by_default",
+      // "pricescale_currency",
+      // "disable_resolution_rebuild",
     ],
     minmov: 0.25,
   }
 
   setTimeout(() => {
     new TradingView.widget(widgetOptions)
-  }, 500)
+  }, 250)
 
   return (
     <div

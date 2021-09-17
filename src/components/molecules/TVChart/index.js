@@ -6,13 +6,11 @@ import { useAppTheme } from "../../../contexts/appThemeContext"
 
 export default function TVChart(props) {
   const tv = useRef(null)
-  const appThemeContext = useAppTheme()
 
   const containerID = "chart"
-  const theme = appThemeContext.darkMode == 1 ? "Dark" : "Light"
 
   const widgetOptions = {
-    theme: theme,
+    theme: props.theme,
     symbol: props.symbol || "UNKNOWN",
     height: props.height || "calc(100vh - 444px)",
     container_id: props.chartName || containerID,
@@ -60,7 +58,7 @@ export default function TVChart(props) {
   }, [props.symbol])
 
   tv.current?.onChartReady(() => {
-    tv.current?.changeTheme(theme)
+    tv.current?.changeTheme(widgetOptions.theme)
   })
 
   return (

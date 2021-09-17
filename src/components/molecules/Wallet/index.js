@@ -135,6 +135,7 @@ export default function Wallet(props) {
 
   const handleSelectOptionClick = (address) => {
     history.push(`/${tokenContext.chain.route}/${address}`)
+    setBalancesOpen(false)
   }
 
   return (

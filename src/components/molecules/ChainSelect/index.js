@@ -11,9 +11,24 @@ import {
 } from "@material-ui/core"
 import { useToken } from "../../../contexts/tokenContext"
 import { supportedChains } from "../../../utils/supportedChains"
-import { useHistory } from "react-router"
+import { useHistory } from "react-router-dom"
 
-const useStyles = makeStyles((theme) => ({}))
+const useStyles = makeStyles((theme) => ({
+  chainSelectButton: {
+    color: theme.palette.text.psPurple,
+    padding: ".66em",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "16ch",
+    fontWeight: 600,
+    textTransform: "none",
+  },
+  chainSelectItem: {
+    color: theme.palette.text.psPurple,
+    fontWeight: 600,
+  },
+}))
 
 export default function ChainSelect(props) {
   const classes = useStyles()
@@ -51,6 +66,7 @@ export default function ChainSelect(props) {
   return (
     <>
       <Button
+        className={classes.chainSelectButton}
         ref={chainSelectAnchorRef}
         aria-controls={chainSelectOpen ? "menu-list-grow" : undefined}
         aria-haspopup="true"
@@ -78,6 +94,7 @@ export default function ChainSelect(props) {
                 <MenuList autoFocusItem={chainSelectOpen} id="menu-list-grow">
                   {supportedChains.map((n) => (
                     <MenuItem
+                      className={classes.chainSelectItem}
                       disabled={!n.enabled}
                       onClick={() => {
                         handleSelectChainClick(n)

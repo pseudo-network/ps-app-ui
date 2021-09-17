@@ -67,6 +67,7 @@ function getTokenInfoByAddress(address, busd) {
 // todo: revise
 function getChainFromURL() {
   const currentURL = new URL(window.location.href)
+
   if (currentURL.pathname.includes(binance.route)) {
     return binance
   } else if (currentURL.pathname.includes(cardano.route)) {

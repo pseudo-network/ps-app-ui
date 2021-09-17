@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({}))
 
 export default function TokenSearch(props) {
   const classes = useStyles()
-  const [userInput, setUserInput] = useState("")
+  const [userInput, setUserInput] = useState()
   const history = useHistory()
   const tokensContext = useTokens()
   const tokenContext = useToken()
@@ -58,6 +58,7 @@ export default function TokenSearch(props) {
                 variant="outlined"
                 onChange={onFieldChange}
                 value={userInput}
+                placeholder={"search by token address, name, or symbol..."}
               />
             )}
           />

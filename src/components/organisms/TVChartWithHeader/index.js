@@ -10,14 +10,14 @@ export default function TVChartWithHeader(props) {
   return (
     <>
       <TVChartHeader
-        name={tokenContext.name}
-        percentChange={tokenContext.percentChange}
-        volume={tokenContext.volume}
-        currentPrice={tokenContext.currentPrice}
-        symbol={tokenContext.tvSymbol}
+        name={props.name}
+        percentChange={props.percentChange}
+        volume={props.volume}
+        currentPrice={props.currentPrice}
+        symbol={props.tvSymbol}
       />
       <br />
-      <TVChart symbol={tokenContext.tvSymbol} />
+      <TVChart symbol={props.tvSymbol} theme={props.theme} />
     </>
   )
 }

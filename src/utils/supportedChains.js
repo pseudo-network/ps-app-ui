@@ -3,6 +3,7 @@ export const binance = {
   label: "Binance (BSC)",
   route: "bsc",
   enabled: true,
+  nativeTVSymbol: "BINANCEUS:BNBUSD",
 }
 
 export const ethereum = {
@@ -10,6 +11,7 @@ export const ethereum = {
   label: "Ethereum",
   route: "ethereum",
   enabled: false,
+  nativeTVSymbol: "",
 }
 
 export const cardano = {
@@ -17,6 +19,7 @@ export const cardano = {
   label: "Cardano",
   route: "cardano",
   enabled: true,
+  nativeTVSymbol: "BITFINEX:ADAUSD",
 }
 
 export const solana = {
@@ -24,6 +27,7 @@ export const solana = {
   label: "Solana",
   route: "solana",
   enabled: false,
+  nativeTVSymbol: "",
 }
 
 export const supportedChains = [binance, cardano, ethereum, solana]
