@@ -8,9 +8,9 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import {
-  useCrypto,
+  useToken,
   convertExponentialToDecimal,
-} from "../../../contexts/cryptoContext"
+} from "../../../contexts/tokenContext"
 import { makeStyles } from "@material-ui/core/styles"
 import Chip from "@material-ui/core/Chip"
 import { Paper, rgbToHex, Button, Grid, IconButton } from "@material-ui/core"
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TransactionTable = (props) => {
-  const cryptoContext = useCrypto()
+  const tokenContext = useToken()
   const classes = useStyles()
 
   useEffect(() => {}, [])
@@ -64,13 +64,13 @@ const TransactionTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {!cryptoContext.infoIsLoading &&
-            cryptoContext.transactions.length > 0 &&
-            cryptoContext.transactions.map((transaction, index) => {
+          {!tokenContext.infoIsLoading &&
+            tokenContext.transactions.length > 0 &&
+            tokenContext.transactions.map((transaction, index) => {
               return (
                 <TableRow key={index}>
                   <TableCell align="center">
-                    {transaction.sellCurrency.symbol == cryptoContext.symbol ? (
+                    {transaction.sellCurrency.symbol == tokenContext.symbol ? (
                       <Chip
                         label="BUY"
                         style={{
@@ -93,11 +93,11 @@ const TransactionTable = (props) => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {transaction.buyCurrency.symbol == cryptoContext.symbol
+                    {transaction.buyCurrency.symbol == tokenContext.symbol
                       ? numberWithCommas(transaction.buyAmount)
                       : numberWithCommas(transaction.sellAmount)}
                     <br />
-                    {transaction.buyCurrency.symbol == cryptoContext.symbol
+                    {transaction.buyCurrency.symbol == tokenContext.symbol
                       ? transaction.buyCurrency.symbol
                       : transaction.sellCurrency.symbol}
                   </TableCell>

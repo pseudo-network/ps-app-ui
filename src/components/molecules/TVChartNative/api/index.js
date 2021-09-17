@@ -72,7 +72,7 @@ export default {
     const symbolStub = {
       name: splitData[0],
       description: splitData[1],
-      type: "crypto",
+      type: "token",
       supported_resolution: supportedResolutions,
       currency_code: "USD",
       original_currency_code: "USD",

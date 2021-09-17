@@ -1,6 +1,6 @@
 // api/stream.js
 // import historyProvider from "./historyProvider.js"
-// // we use Socket.io client to connect to cryptocompare's socket.io stream
+// // we use Socket.io client to connect to tokencompare's socket.io stream
 // var io = require("socket.io-client")
 // var socket_url = "wss://bsc-ws-node.nariox.org:443"
 // // var socket = io(socket_url)
@@ -45,7 +45,7 @@ export default {
 // socket.on("m", e => {
 //   console.log(e)
 
-//   // // here we get all events the CryptoCompare connection has subscribed to
+//   // // here we get all events the TokenCompare connection has subscribed to
 //   // // we need to send this new data to our subscribed charts
 //   // const _data = e.split("~")
 //   // if (_data[0] === "3") {
@@ -124,12 +124,12 @@ function updateBar(data, sub) {
   return _lastBar
 }
 
-// takes symbolInfo object as input and creates the subscription string to send to CryptoCompare
+// takes symbolInfo object as input and creates the subscription string to send to TokenCompare
 function createChannelString(symbolInfo) {
   const channel = symbolInfo.name.split(/[:/]/)
   const exchange = channel[0] === "GDAX" ? "Coinbase" : channel[0]
   const to = channel[2]
   const from = channel[1]
-  // subscribe to the CryptoCompare trade channel for the pair and exchange
+  // subscribe to the TokenCompare trade channel for the pair and exchange
   return `0~${exchange}~${from}~${to}`
 }

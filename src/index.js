@@ -3,19 +3,20 @@ import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
 import { BrowserRouter } from "react-router-dom"
-import { ProvideCryptos } from "./contexts/cryptosContext"
+import { ProvideTokens } from "./contexts/tokensContext"
 import { ProvideWallet } from "./contexts/walletContext"
-import { ProvideCrypto } from "./contexts/cryptoContext"
+import { ProvideToken } from "./contexts/tokenContext"
 
 ReactDOM.render(
-  <ProvideCryptos>
-    <ProvideCrypto>
+  <ProvideTokens>
+    <ProvideToken>
       <ProvideWallet>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </ProvideWallet>
-    </ProvideCrypto>
-  </ProvideCryptos>,
+    </ProvideToken>
+  </ProvideTokens>,
+
   document.getElementById("root")
 )

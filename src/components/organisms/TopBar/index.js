@@ -4,13 +4,13 @@ import MenuIcon from "@material-ui/icons/Menu"
 import { AppBar, Toolbar } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { useHistory } from "react-router-dom"
-import { useCryptos } from "../../../contexts/cryptosContext"
+import { useTokens } from "../../../contexts/tokensContext"
 import { useWallet } from "../../../contexts/walletContext"
-import { useCrypto } from "../../../contexts/cryptoContext"
+import { useToken } from "../../../contexts/tokenContext"
 import Wallet from "../../molecules/Wallet"
-import NetworkSelect from "../../molecules/NetworkSelect"
+import ChainSelect from "../../molecules/ChainSelect"
 import AppSelect from "../../molecules/AppSelect"
-import CryptoSearch from "../../molecules/CryptoSearch"
+import TokenSearch from "../../molecules/TokenSearch"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     display: "flex",
   },
-  networkSelectContainer: {
+  chainSelectContainer: {
     display: "flex",
     margin: "auto",
     flexGrow: 1,
@@ -57,7 +57,7 @@ export default function TopBar(props) {
 
   useEffect(() => {
     if (userInput != "") {
-      cryptosContext.setSearchQuery(userInput)
+      tokensContext.setSearchQuery(userInput)
     }
   }, [userInput])
 
@@ -79,12 +79,12 @@ export default function TopBar(props) {
             <AppSelect />
           </div>
 
-          <div className={classes.networkSelectContainer}>
-            <NetworkSelect />
+          <div className={classes.chainSelectContainer}>
+            <ChainSelect />
           </div>
 
           <div className={classes.searchContainer}>
-            <CryptoSearch address={props.address} />
+            <TokenSearch address={props.address} />
           </div>
 
           <div>

@@ -8,26 +8,25 @@ import {
   WBNB_ADDRESS,
 } from "../core/environments"
 import axios from "axios"
-import { binance } from "../utils/supportedNetworks"
+import { binance, cardano } from "../utils/supportedChains"
+import { useHistory } from "react-router-dom"
 
-const cryptoContext = createContext()
+const tokenContext = createContext()
 
-export function useCrypto() {
-  return useContext(cryptoContext)
+export function useToken() {
+  return useContext(tokenContext)
 }
 
-export function ProvideCrypto({ children }) {
-  const crypto = useProvideCrypto()
-  return (
-    <cryptoContext.Provider value={crypto}>{children}</cryptoContext.Provider>
-  )
+export function ProvideToken({ children }) {
+  const token = useProvideToken()
+  return <tokenContext.Provider value={token}>{children}</tokenContext.Provider>
 }
 
 function formatTVSymbol(name, symbol, address, quoteCurrency) {
   return `${name}:${symbol}:${address}:${quoteCurrency}`
 }
 
-function getCryptoByAddress(address, busd) {
+function getTokenByAddress(address, busd) {
   return axios
     .get(`${CHARTDATA_BASE_URL}/cryptos?search_query=${address}`)
     .then((res) => {
@@ -44,7 +43,7 @@ function getCryptoByAddress(address, busd) {
     })
 }
 
-function getCryptoInfoByAddress(address, busd) {
+function getTokenInfoByAddress(address, busd) {
   // let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
@@ -65,8 +64,20 @@ function getCryptoInfoByAddress(address, busd) {
     })
 }
 
-function useProvideCrypto() {
-  const [network, setNetwork] = useState(binance) // binance is default network
+// todo: revise
+function getChainFromURL() {
+  const currentURL = new URL(window.location.href)
+  if (currentURL.pathname.includes(binance.route)) {
+    return binance
+  } else if (currentURL.pathname.includes(cardano.route)) {
+    return cardano
+  } else {
+    return binance
+  }
+}
+
+function useProvideToken() {
+  const [chain, setChain] = useState(getChainFromURL()) // binance is default chain
   const [address, setAddress] = useState(null)
   const [name, setName] = useState(null)
   const [symbol, setSymbol] = useState(null)
@@ -81,7 +92,7 @@ function useProvideCrypto() {
   const [busd, setBUSD] = useState(false)
   const [transactions, setTransactions] = useState([])
 
-  const [cryptoIsLoading, setCryptoIsLoading] = useState(true)
+  const [tokenIsLoading, setTokenIsLoading] = useState(true)
   const [infoIsLoading, setInfoIsLoading] = useState(true)
 
   const { data: transactionsData, transactionsValidating } = useSWR(
@@ -89,6 +100,10 @@ function useProvideCrypto() {
     fetcher,
     { refreshInterval: 10000 }
   )
+
+  useEffect(() => {
+    setChain(getChainFromURL())
+  }, [chain])
 
   useEffect(() => {
     if (transactionsData && !transactionsValidating) {
@@ -99,9 +114,9 @@ function useProvideCrypto() {
 
   useEffect(() => {
     if (address && address != "") {
-      setCryptoIsLoading(true)
-      getCryptoByAddress(address, busd).then((res) => {
-        setCryptoIsLoading(false)
+      setTokenIsLoading(true)
+      getTokenByAddress(address, busd).then((res) => {
+        setTokenIsLoading(false)
 
         if (!res) return
         setName(res.name)
@@ -118,7 +133,7 @@ function useProvideCrypto() {
       })
 
       setInfoIsLoading(true)
-      getCryptoInfoByAddress(address, busd).then((res) => {
+      getTokenInfoByAddress(address, busd).then((res) => {
         setInfoIsLoading(false)
 
         if (!res) return
@@ -137,7 +152,7 @@ function useProvideCrypto() {
   }, [address, busd])
 
   // try {
-  //   getCryptoTransactionsByAddress(address).then((res) => {
+  //   getTokenTransactionsByAddress(address).then((res) => {
   //     setTransactions(res);
   //   });
   // } catch (e) {
@@ -147,8 +162,8 @@ function useProvideCrypto() {
   // clearInterval(interval);
 
   return {
-    network,
-    setNetwork,
+    chain,
+    setChain,
     address,
     setAddress,
     name,
@@ -160,7 +175,7 @@ function useProvideCrypto() {
     volume,
     setBUSD,
     busd,
-    cryptoIsLoading,
+    tokenIsLoading,
     infoIsLoading,
     transactions,
     uniqueWalletsCount,

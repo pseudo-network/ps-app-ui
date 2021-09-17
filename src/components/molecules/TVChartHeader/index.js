@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Typography, Box, Badge } from "@material-ui/core"
 import Switch from "@material-ui/core/Switch"
 import { AttachMoney } from "@material-ui/icons"
-import { useCrypto } from "../../../contexts/cryptoContext"
+import { useToken } from "../../../contexts/tokenContext"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,7 +117,7 @@ const Volume = (props) => {
 
 export default function TVChartHeader(props) {
   const classes = useStyles()
-  const cryptoContext = useCrypto()
+  const tokenContext = useToken()
 
   return (
     <>

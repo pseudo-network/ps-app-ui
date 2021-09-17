@@ -13,9 +13,9 @@ import {
   Typography,
 } from "@material-ui/core"
 import { useHistory } from "react-router-dom"
-import { useCryptos } from "../../../contexts/cryptosContext"
+import { useTokens } from "../../../contexts/tokensContext"
 import { useWallet } from "../../../contexts/walletContext"
-import { useCrypto } from "../../../contexts/cryptoContext"
+import { useToken } from "../../../contexts/tokenContext"
 import { abbreviateAddress, abbreviateBalance } from "../../../utils/utils"
 import PSLink from "../../atoms/PSLink"
 import PSTextButton from "../../atoms/PSTextButton"
@@ -90,14 +90,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Wallet(props) {
   const classes = useStyles()
   const [userInput, setUserInput] = useState("")
-  const cryptosContext = useCryptos()
+  const tokensContext = useTokens()
   const walletContext = useWallet()
   const history = useHistory()
-  const cryptoContext = useCrypto()
+  const tokenContext = useToken()
 
   useEffect(() => {
     if (userInput != "") {
-      cryptosContext.setSearchQuery(userInput)
+      tokensContext.setSearchQuery(userInput)
     }
   }, [userInput])
 
@@ -134,7 +134,7 @@ export default function Wallet(props) {
   }
 
   const handleSelectOptionClick = (address) => {
-    history.push(`/${cryptoContext.network.route}/${address}`)
+    history.push(`/${tokenContext.network.route}/${address}`)
   }
 
   return (
