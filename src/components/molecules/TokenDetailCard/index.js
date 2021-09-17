@@ -4,14 +4,14 @@ import PSCard from "../PSCard"
 import { List, ListItem, ListItemText, ListSubheader } from "@material-ui/core"
 import PSLink from "../../atoms/PSLink"
 import { CheckBox, Info, InfoOutlined, ListAlt } from "@material-ui/icons"
-import { useCrypto } from "../../../contexts/cryptoContext"
+import { useToken } from "../../../contexts/tokenContext"
 import { Typography } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({}))
 
-export default function CryptoDetailCard(props) {
+export default function TokenDetailCard(props) {
   const classes = useStyles()
-  const cryptoContext = useCrypto()
+  const tokenContext = useToken()
 
   return (
     <PSCard
@@ -25,8 +25,8 @@ export default function CryptoDetailCard(props) {
               <ListItemText
                 primary={
                   <PSLink
-                    text={`${cryptoContext.symbol} Transactions`}
-                    url={`https://bscscan.com/token/${cryptoContext.address}`}
+                    text={`${tokenContext.symbol} Transactions`}
+                    url={`https://bscscan.com/token/${tokenContext.address}`}
                   />
                 }
               />
@@ -35,8 +35,8 @@ export default function CryptoDetailCard(props) {
               <ListItemText
                 primary={
                   <PSLink
-                    text={`${cryptoContext.symbol} Contract`}
-                    url={`https://bscscan.com/address/${cryptoContext.address}#code`}
+                    text={`${tokenContext.symbol} Contract`}
+                    url={`https://bscscan.com/address/${tokenContext.address}#code`}
                   />
                 }
               />
@@ -45,8 +45,8 @@ export default function CryptoDetailCard(props) {
               <ListItemText
                 primary={
                   <PSLink
-                    text={`${cryptoContext.symbol} Holders`}
-                    url={`https://bscscan.com/token/${cryptoContext.address}#balances`}
+                    text={`${tokenContext.symbol} Holders`}
+                    url={`https://bscscan.com/token/${tokenContext.address}#balances`}
                   />
                 }
               />
@@ -56,8 +56,8 @@ export default function CryptoDetailCard(props) {
               <ListItemText
                 primary={
                   <PSLink
-                    text={`${cryptoContext.symbol} Explorer`}
-                    url={`https://explorer.bitquery.io/bsc/token/${cryptoContext.address}`}
+                    text={`${tokenContext.symbol} Explorer`}
+                    url={`https://explorer.bitquery.io/bsc/token/${tokenContext.address}`}
                   />
                 }
               />

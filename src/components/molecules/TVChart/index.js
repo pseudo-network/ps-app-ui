@@ -8,13 +8,14 @@ export default function TVChart(props) {
   const tv = useRef(null)
   const appThemeContext = useAppTheme()
 
+  const containerID = "chart"
   const theme = appThemeContext.darkMode == 1 ? "Dark" : "Light"
 
   const widgetOptions = {
     theme: theme,
     symbol: props.symbol || "UNKNOWN",
     height: props.height || "calc(100vh - 444px)",
-    container_id: props.chartName || "Coin-Chart",
+    container_id: props.chartName || containerID,
     library_path: "/charting_library/",
     charts_storage_url: "https://saveload.tradingview.com",
     charts_storage_api_version: "1.1",
@@ -68,7 +69,7 @@ export default function TVChart(props) {
         height: widgetOptions.height,
         borderRadius: "0.5rem",
       }}
-      id={props.chartName || "Coin-Chart"}
+      id={props.chartName || containerID}
     />
   )
 }

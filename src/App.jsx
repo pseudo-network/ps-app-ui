@@ -20,6 +20,7 @@ import DarkTheme from "./themes/dark-theme"
 import LightTheme from "./themes/light-theme"
 import Chart from "./pages/chart"
 import { ThemeProvider } from "@material-ui/core/styles"
+import Cardano from "./pages/cardano"
 
 // NOTE: This is where new pages are added to the router
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
               <Router>
                 <Switch>
                   <Route path="/:network/:address" component={Chart} />
+                  <Route path="/cardano" component={Cardano} />
                   <Route path="/" component={Chart} />
                 </Switch>
               </Router>

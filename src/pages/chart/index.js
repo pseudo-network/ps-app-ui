@@ -1,26 +1,26 @@
 import React, { useEffect } from "react"
 import NavFrame from "../../components/templates/NavFrame"
-import { useCrypto } from "../../contexts/cryptoContext"
+import { useToken } from "../../contexts/tokenContext"
 import TVChartWithHeader from "../../components/organisms/TVChartWithHeader"
 import { Box, CircularProgress, Typography, Grid } from "@material-ui/core"
-import CryptoDetailCard from "../../components/molecules/CryptoDetailCard"
-import CryptoTradesTable from "../../components/molecules/CryptoTradesTable"
+import TokenDetailCard from "../../components/molecules/TokenDetailCard"
+import TokenTradesTable from "../../components/molecules/TokenTradesTable"
 import { PSEUDOCOIN_ADDRESS } from "../../core/environments"
-import { binance } from "../../utils/supportedNetworks"
+import { binance } from "../../utils/supportedChains"
 
 export default function Chart(props) {
-  const cryptoContext = useCrypto()
+  const tokenContext = useToken()
   const { address } = props.match.params
 
   useEffect(() => {
     if (!address || address == "") {
       window.location.href = `/${binance.route}/${PSEUDOCOIN_ADDRESS}`
     } else {
-      cryptoContext.setAddress(address)
+      tokenContext.setAddress(address)
     }
   }, [address])
 
-  if (cryptoContext.infoIsLoading) {
+  if (tokenContext.infoIsLoading) {
     return (
       <Box
         display={"flex"}
@@ -46,10 +46,10 @@ export default function Chart(props) {
         <br />
         <Grid container spacing={3}>
           <Grid container item sm={12} md={9} lg={9}>
-            <CryptoTradesTable />
+            <TokenTradesTable />
           </Grid>
           <Grid container item sm={12} md={3} lg={3}>
-            <CryptoDetailCard />
+            <TokenDetailCard />
           </Grid>
         </Grid>
       </NavFrame>
