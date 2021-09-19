@@ -5,11 +5,12 @@ import useScript from "../../../hooks/useScript"
 
 export default function TVChartNative(props) {
   const tv = useRef(null)
-  const appThemeContext = useAppTheme()
+  // const appThemeContext = useAppTheme()
   useScript("https://s3.tradingview.com/tv.js")
 
   const widgetOptions = {
-    theme: appThemeContext.darkMode == 1 ? "Dark" : "Light",
+    // theme: appThemeContext.darkMode == 1 ? "Dark" : "Light",
+    theme: "Dark",
     symbol: props.symbol || "BITFINEX:ADAUSD",
     height: "100%",
     width: "100%",
@@ -52,9 +53,12 @@ export default function TVChartNative(props) {
     minmov: 0.25,
   }
 
-  setTimeout(() => {
-    new TradingView.widget(widgetOptions)
-  }, 250)
+  // todo: rerender :(
+  useEffect(() => {
+    setTimeout(() => {
+      new TradingView.widget(widgetOptions)
+    }, 300)
+  })
 
   return (
     <div
@@ -65,34 +69,4 @@ export default function TVChartNative(props) {
       id={widgetOptions.container_id}
     />
   )
-}
-
-// OR EMBED WIDGET
-{
-  /* 
-<!-- TradingView Widget BEGIN -->
-  <div class="tradingview-widget-container">
-  <div id="tradingview_40e0e"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/ADAUSD/?exchange=BITFINEX" rel="noopener" target="_blank"><span class="blue-text">ADAUSD Chart</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-  <script type="text/javascript">
-  new TradingView.widget(
-  {
-  "width": 980,
-  "height": 610,
-  "symbol": "BITFINEX:ADAUSD",
-  "interval": "D",
-  "timezone": "Etc/UTC",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#f1f3f6",
-  "enable_publishing": false,
-  "allow_symbol_change": true,
-  "container_id": "tradingview_40e0e"
-}
-  );
-  </script>
-</div>
-<!-- TradingView Widget END --> */
 }

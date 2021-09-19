@@ -9,9 +9,9 @@ import {
   Paper,
   MenuItem,
 } from "@material-ui/core"
-import { useToken } from "../../../contexts/tokenContext"
 import { supportedChains } from "../../../utils/supportedChains"
 import { useHistory } from "react-router-dom"
+import { useChain } from "../../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({
   chainSelectButton: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChainSelect(props) {
   const classes = useStyles()
-  const tokenContext = useToken()
+  const chainContext = useChain()
   const history = useHistory()
 
   // chain select
@@ -48,7 +48,7 @@ export default function ChainSelect(props) {
   }
 
   const handleSelectChainClick = (chain) => {
-    tokenContext.setChain(chain)
+    chainContext.setChain(chain)
     history.push(`/${chain.route}`)
     handleCloseChainPopover()
   }
@@ -72,7 +72,7 @@ export default function ChainSelect(props) {
         aria-haspopup="true"
         onClick={handleToggleChainPopover}
       >
-        {tokenContext.chain.label}
+        {chainContext.chain.label}
       </Button>
       <Popper
         open={chainSelectOpen}

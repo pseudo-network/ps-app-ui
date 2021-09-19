@@ -10,6 +10,7 @@ import TVChartNative from "../../components/molecules/TVChartNative"
 import { PSEUDOCOIN_ADDRESS } from "../../core/environments"
 import { binance } from "../../utils/supportedChains"
 import { useAppTheme } from "../../contexts/appThemeContext"
+import { useChain } from "../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({
   chartContainer: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Chart(props) {
   const classes = useStyles()
   const tokenContext = useToken()
+  const chainContext = useChain()
   const appThemeContext = useAppTheme()
   const [useNativeChart, setUseNativeChart] = useState(false)
 
@@ -70,7 +72,7 @@ export default function Chart(props) {
         {useNativeChart ? (
           <Box className={classes.chartContainer}>
             <TVChartNative
-              symbol={tokenContext.chain.nativeTVSymbol}
+              symbol={chainContext.chain.tvSymbol}
               theme={appThemeContext.darkMode == 1 ? "Dark" : "Light"}
             />
           </Box>

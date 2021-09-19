@@ -8,6 +8,7 @@ import {
   ETHEREUM_ADDRESS,
 } from "../core/environments"
 import axios from "axios"
+import { useChain } from "./chainContext"
 
 const walletContext = createContext()
 
@@ -23,12 +24,15 @@ export function ProvideWallet({ children }) {
 }
 
 function useProvideWallet() {
+  const chainContext = useChain()
   const [balances, setBalances] = useState([])
   const [address, setAddress] = useState("")
 
   function getBalances(address) {
     return axios
-      .get(`${CHARTDATA_BASE_URL}/wallets/${address}/balances`)
+      .get(
+        `${CHARTDATA_BASE_URL}/chains/${chainContext.chain.id}/accounts/${address}/balances`
+      )
       .then((res) => {
         if (res.data) {
           return res.data

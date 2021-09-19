@@ -1,17 +1,20 @@
+// todo: move to db
 export const binance = {
-  id: 1,
+  id: 2,
   label: "Binance (BSC)",
   route: "bsc",
   enabled: true,
-  nativeTVSymbol: "BINANCEUS:BNBUSD",
+  tvSymbol: "BINANCEUS:BNBUSD",
+  usdTokenAddress: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
 }
 
 export const ethereum = {
-  id: 2,
+  id: 1,
   label: "Ethereum",
   route: "ethereum",
-  enabled: false,
-  nativeTVSymbol: "",
+  enabled: true,
+  tvSymbol: "BITFINEX:ETHUSD",
+  usdTokenAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
 }
 
 export const cardano = {
@@ -19,7 +22,8 @@ export const cardano = {
   label: "Cardano",
   route: "cardano",
   enabled: true,
-  nativeTVSymbol: "BITFINEX:ADAUSD",
+  tvSymbol: "BITFINEX:ADAUSD",
+  usdTokenAddress: "",
 }
 
 export const solana = {
@@ -27,7 +31,8 @@ export const solana = {
   label: "Solana",
   route: "solana",
   enabled: false,
-  nativeTVSymbol: "",
+  tvSymbol: "",
+  usdTokenAddress: "",
 }
 
-export const supportedChains = [binance, cardano, ethereum, solana]
+export const supportedChains = [binance, ethereum, cardano, solana]

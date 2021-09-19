@@ -3,9 +3,9 @@ import { makeStyles } from "@material-ui/core/styles"
 import { TextField, Typography } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { useHistory } from "react-router-dom"
-import { useTokens } from "../../../contexts/tokensContext"
 import { useToken } from "../../../contexts/tokenContext"
-import { binance } from "../../../utils/supportedChains"
+import { binance, cardano } from "../../../utils/supportedChains"
+import { useChain } from "../../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({}))
 
@@ -13,12 +13,12 @@ export default function TokenSearch(props) {
   const classes = useStyles()
   const [userInput, setUserInput] = useState()
   const history = useHistory()
-  const tokensContext = useTokens()
   const tokenContext = useToken()
+  const chainContext = useChain()
 
   useEffect(() => {
     if (userInput != "") {
-      tokensContext.setSearchQuery(userInput)
+      tokenContext.setSearchQuery(userInput)
     }
   }, [userInput])
 
@@ -29,7 +29,7 @@ export default function TokenSearch(props) {
   const handleSelectOptionClick = (event, value) => {
     if (value && value.address) {
       setUserInput(value.address)
-      history.push(`/${tokenContext.chain.route}/${value.address}`)
+      history.push(`/${chainContext.chain.route}/${value.address}`)
     }
   }
 
@@ -37,11 +37,11 @@ export default function TokenSearch(props) {
     <>
       {
         // todo: revise
-        tokenContext.chain == binance ? (
+        chainContext.chain != cardano ? (
           <Autocomplete
             id="combo-box-demo"
             defaultValue={props.address}
-            options={tokensContext.tokens}
+            options={tokenContext.tokens}
             getOptionLabel={(option) => {
               if (option && option.name) {
                 return option.name + " : " + option.address
@@ -53,7 +53,7 @@ export default function TokenSearch(props) {
             onChange={handleSelectOptionClick}
             renderInput={(params) => (
               <TextField
-                // disabled={tokensContext.chain == binance ? false : true} // todo: revise
+                // disabled={chainContext.chain == binance ? false : true} // todo: revise
                 {...params}
                 variant="outlined"
                 onChange={onFieldChange}

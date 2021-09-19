@@ -1,15 +1,9 @@
 import React, { useContext, createContext, useState, useEffect } from "react"
 import useSWR from "swr"
 import { convertExponentialToDecimal, fetcher } from "../utils/utils"
-import {
-  CHARTDATA_BASE_URL,
-  BUSD,
-  BUSD_ADDRESS,
-  WBNB_ADDRESS,
-} from "../core/environments"
+import { CHARTDATA_BASE_URL, WBNB_ADDRESS } from "../core/environments"
 import axios from "axios"
-import { binance, cardano } from "../utils/supportedChains"
-import { useHistory } from "react-router-dom"
+import { useChain } from "./chainContext"
 
 const tokenContext = createContext()
 
@@ -22,13 +16,15 @@ export function ProvideToken({ children }) {
   return <tokenContext.Provider value={token}>{children}</tokenContext.Provider>
 }
 
-function formatTVSymbol(name, symbol, address, quoteCurrency) {
-  return `${name}:${symbol}:${address}:${quoteCurrency}`
+function formatTVSymbol(name, symbol, address, quoteCurrency, chainID) {
+  return `${name}:${symbol}:${address}:${quoteCurrency}:${chainID}`
 }
 
-function getTokenByAddress(address, busd) {
+function getTokenByAddress(address, chainID) {
   return axios
-    .get(`${CHARTDATA_BASE_URL}/cryptos?search_query=${address}`)
+    .get(
+      `${CHARTDATA_BASE_URL}/chains/${chainID}/tokens?search_query=${address}`
+    )
     .then((res) => {
       if (res.data.length > 0) {
         return res.data[0]
@@ -43,11 +39,11 @@ function getTokenByAddress(address, busd) {
     })
 }
 
-function getTokenInfoByAddress(address, busd) {
+function getTokenInfoByAddress(address, chainID) {
   // let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
-      `${CHARTDATA_BASE_URL}/cryptos/${address}/day-summary?quote_currency=${WBNB_ADDRESS}`
+      `${CHARTDATA_BASE_URL}/chains/${chainID}/tokens/${address}/day-summary?quote_currency=${WBNB_ADDRESS}`
     )
     .then((res) => {
       if (res.data) {
@@ -64,21 +60,27 @@ function getTokenInfoByAddress(address, busd) {
     })
 }
 
-// todo: revise
-function getChainFromURL() {
-  const currentURL = new URL(window.location.href)
-
-  if (currentURL.pathname.includes(binance.route)) {
-    return binance
-  } else if (currentURL.pathname.includes(cardano.route)) {
-    return cardano
-  } else {
-    return binance
-  }
+function getTokens(searchQuery) {
+  // let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
+  return axios
+    .get(`${CHARTDATA_BASE_URL}/chains/2/tokens?search_query=${searchQuery}`)
+    .then((res) => {
+      if (res.data) {
+        return res.data
+      } else {
+        return null
+      }
+    })
+    .catch((e) => {
+      // console.log(e)
+      console.log("error", e)
+      return e
+      // todo: handle error
+    })
 }
 
 function useProvideToken() {
-  const [chain, setChain] = useState(getChainFromURL()) // binance is default chain
+  const chainContext = useChain()
   const [address, setAddress] = useState(null)
   const [name, setName] = useState(null)
   const [symbol, setSymbol] = useState(null)
@@ -90,25 +92,35 @@ function useProvideToken() {
   const [supply, setSupply] = useState(null)
   const [burned, setBurned] = useState(null)
   const [uniqueWalletsCount, setUniqueWalletsCount] = useState(null)
-  const [busd, setBUSD] = useState(false)
   const [transactions, setTransactions] = useState([])
+  const [tokens, setTokens] = useState([])
+  const [searchQuery, setSearchQuery] = useState(null)
 
   const [tokenIsLoading, setTokenIsLoading] = useState(true)
   const [infoIsLoading, setInfoIsLoading] = useState(true)
 
   const { data: transactionsData, transactionsValidating } = useSWR(
-    `${CHARTDATA_BASE_URL}/cryptos/${address}/transactions`,
+    `${CHARTDATA_BASE_URL}/chains/${chainContext.chain.id}/tokens/${address}/transactions`,
     fetcher,
     { refreshInterval: 10000 }
   )
 
   useEffect(() => {
-    setChain(getChainFromURL())
-  }, [chain])
+    getTokens(searchQuery).then((tokens) => {
+      // remove other pseudocoin that we made and abandoned
+      if (tokens?.length) {
+        const filteredTokens = tokens.filter(function (t) {
+          return t.address !== "0x63c14c64aaae6ca2f721e62b14c3bbcee9efcf9d"
+        })
+        setTokens([...filteredTokens])
+      } else {
+        setTokens([])
+      }
+    })
+  }, [searchQuery])
 
   useEffect(() => {
     if (transactionsData && !transactionsValidating) {
-      // console.log(transactionsData)
       setTransactions(transactionsData)
     }
   }, [transactionsData, address])
@@ -116,7 +128,7 @@ function useProvideToken() {
   useEffect(() => {
     if (address && address != "") {
       setTokenIsLoading(true)
-      getTokenByAddress(address, busd).then((res) => {
+      getTokenByAddress(address, chainContext.chain.id).then((res) => {
         setTokenIsLoading(false)
 
         if (!res) return
@@ -128,13 +140,14 @@ function useProvideToken() {
             res.name,
             res.symbol,
             res.address,
-            busd ? BUSD_ADDRESS : WBNB_ADDRESS
+            chainContext.chain.usdTokenAddress,
+            chainContext.chain.id
           )
         )
       })
 
       setInfoIsLoading(true)
-      getTokenInfoByAddress(address, busd).then((res) => {
+      getTokenInfoByAddress(address, chainContext.chain.id).then((res) => {
         setInfoIsLoading(false)
 
         if (!res) return
@@ -143,28 +156,11 @@ function useProvideToken() {
         setSupply(res.minted_count)
         setUniqueWalletsCount(res.unique_wallets_count)
         setBurned(res.burned_count)
-
-        // console.log(
-        //   "currentPrice",
-        //   convertExponentialToDecimal(res.current_price_usd)
-        // )
       })
     }
-  }, [address, busd])
-
-  // try {
-  //   getTokenTransactionsByAddress(address).then((res) => {
-  //     setTransactions(res);
-  //   });
-  // } catch (e) {
-  //    console.log(e);
-  // }
-  // const interval = setInterval(() => loadTransactionData(), 2000);
-  // clearInterval(interval);
+  }, [address])
 
   return {
-    chain,
-    setChain,
     address,
     setAddress,
     name,
@@ -174,13 +170,14 @@ function useProvideToken() {
     beginningPrice,
     currentPrice,
     volume,
-    setBUSD,
-    busd,
     tokenIsLoading,
     infoIsLoading,
     transactions,
     uniqueWalletsCount,
     supply,
     burned,
+    tokens: tokens,
+    // isLoadingTokens,
+    setSearchQuery,
   }
 }
