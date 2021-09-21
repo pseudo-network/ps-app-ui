@@ -80,6 +80,11 @@ export default function Chart(props) {
                   <Typography paragraph>
                     {chainContext.chain?.infoCard?.description}
                   </Typography>
+                  {chainContext.chain?.infoCard?.other && (
+                    <Typography paragraph>
+                      {chainContext.chain?.infoCard?.other}
+                    </Typography>
+                  )}
                 </>
               }
             ></PSCard>

@@ -40,6 +40,8 @@ export const cardano = {
     title: "Welcome to PseudoCoin Cardano Charting",
     description:
       "Coming Soon! Here, you'll be able to search for just about any token on the Cardano blockchain platform. Track recent trends with our charts, watch realtime transactions in our Transaction Table and check out important info in our Explore section. We'll be releasing a ton of updates over the next couple of weeks as the Cardano ecosystem develops.",
+    other:
+      "Feel free to check out some tokens on Ethereum or Binance while you wait. Just click the Chain Select dropdown in the topbar.",
   },
   blockchainExplorerURL: "",
 }
