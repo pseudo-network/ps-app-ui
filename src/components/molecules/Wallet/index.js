@@ -204,10 +204,8 @@ export default function Wallet(props) {
                           primary={
                             <PSLink
                               text={"View on BscScan"}
-                              url={
-                                "https://bscscan.com/address/" +
-                                walletContext.address
-                              }
+                              url={`${chainContext?.chain?.blockchainExplorerURL}/address/${walletContext.address}
+                                `}
                             ></PSLink>
                           }
                         />

@@ -17,6 +17,7 @@ import { Paper, rgbToHex, Button, Grid, IconButton } from "@material-ui/core"
 import moment from "moment"
 import SearchIcon from "@material-ui/icons/Search"
 import PSLink from "../../atoms/PSLink"
+import { useChain } from "../../../contexts/chainContext"
 var currencyFormatter = require("currency-formatter")
 
 const useStyles = makeStyles((theme) => ({
@@ -35,11 +36,12 @@ const useStyles = makeStyles((theme) => ({
 const TransactionTable = (props) => {
   const tokenContext = useToken()
   const classes = useStyles()
+  const chainContext = useChain()
 
   useEffect(() => {}, [])
 
-  function toBSCScan(hash) {
-    window.open("https://bscscan.com/tx/" + hash)
+  function toBlockchainExplorer(hash) {
+    window.open(`${chainContext?.chain?.blockchainExplorerURL}/tx/${hash}`)
   }
   function numberWithCommas(x) {
     var parts = x.toString().split(".")
@@ -122,7 +124,7 @@ const TransactionTable = (props) => {
                         </div>
                       }
                       onClick={() => {
-                        toBSCScan(transaction.transaction.hash)
+                        toBlockchainExplorer(transaction.transaction.hash)
                       }}
                     />
                   </TableCell>
