@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@material-ui/core"
 import { useHistory } from "react-router-dom"
-import { useTokens } from "../../../contexts/tokensContext"
 import { useWallet } from "../../../contexts/walletContext"
 import { useToken } from "../../../contexts/tokenContext"
 import { abbreviateAddress, abbreviateBalance } from "../../../utils/utils"
@@ -22,6 +21,7 @@ import PSTextButton from "../../atoms/PSTextButton"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import { Close } from "@material-ui/icons"
+import { useChain } from "../../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({
   balancesButton: {
@@ -90,14 +90,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Wallet(props) {
   const classes = useStyles()
   const [userInput, setUserInput] = useState("")
-  const tokensContext = useTokens()
+  const tokenContext = useToken()
   const walletContext = useWallet()
   const history = useHistory()
-  const tokenContext = useToken()
+  const chainContext = useChain()
 
   useEffect(() => {
     if (userInput != "") {
-      tokensContext.setSearchQuery(userInput)
+      tokenContext.setSearchQuery(userInput)
     }
   }, [userInput])
 
@@ -134,7 +134,8 @@ export default function Wallet(props) {
   }
 
   const handleSelectOptionClick = (address) => {
-    history.push(`/${tokenContext.chain.route}/${address}`)
+    history.push(`/${chainContext.chain.route}/${address}`)
+    setBalancesOpen(false)
   }
 
   return (

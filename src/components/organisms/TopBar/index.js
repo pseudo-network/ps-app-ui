@@ -3,10 +3,6 @@ import { makeStyles } from "@material-ui/core/styles"
 import MenuIcon from "@material-ui/icons/Menu"
 import { AppBar, Toolbar } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
-import { useHistory } from "react-router-dom"
-import { useTokens } from "../../../contexts/tokensContext"
-import { useWallet } from "../../../contexts/walletContext"
-import { useToken } from "../../../contexts/tokenContext"
 import Wallet from "../../molecules/Wallet"
 import ChainSelect from "../../molecules/ChainSelect"
 import AppSelect from "../../molecules/AppSelect"
@@ -57,7 +53,7 @@ export default function TopBar(props) {
 
   useEffect(() => {
     if (userInput != "") {
-      tokensContext.setSearchQuery(userInput)
+      tokenContext.setSearchQuery(userInput)
     }
   }, [userInput])
 

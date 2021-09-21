@@ -6,27 +6,29 @@ import PSLink from "../../atoms/PSLink"
 import { CheckBox, Info, InfoOutlined, ListAlt } from "@material-ui/icons"
 import { useToken } from "../../../contexts/tokenContext"
 import { Typography } from "@material-ui/core"
+import { useChain } from "../../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({}))
 
 export default function TokenDetailCard(props) {
   const classes = useStyles()
   const tokenContext = useToken()
+  const chainContext = useChain()
 
   return (
     <PSCard
-      title={"Relevant Links"}
+      title={"Explore"}
       avatar={<ListAlt />}
       content={
         <>
           <List dense={true}>
-            <ListSubheader>BscScan</ListSubheader>
+            <ListSubheader>Blockchain Explorer</ListSubheader>
             <ListItem>
               <ListItemText
                 primary={
                   <PSLink
                     text={`${tokenContext.symbol} Transactions`}
-                    url={`https://bscscan.com/token/${tokenContext.address}`}
+                    url={`${chainContext.chain.blockchainExplorerURL}/token/${tokenContext.address}`}
                   />
                 }
               />
@@ -36,7 +38,7 @@ export default function TokenDetailCard(props) {
                 primary={
                   <PSLink
                     text={`${tokenContext.symbol} Contract`}
-                    url={`https://bscscan.com/address/${tokenContext.address}#code`}
+                    url={`${chainContext.chain.blockchainExplorerURL}/address/${tokenContext.address}#code`}
                   />
                 }
               />
@@ -46,7 +48,7 @@ export default function TokenDetailCard(props) {
                 primary={
                   <PSLink
                     text={`${tokenContext.symbol} Holders`}
-                    url={`https://bscscan.com/token/${tokenContext.address}#balances`}
+                    url={`${chainContext.chain.blockchainExplorerURL}/token/${tokenContext.address}#balances`}
                   />
                 }
               />
@@ -57,7 +59,7 @@ export default function TokenDetailCard(props) {
                 primary={
                   <PSLink
                     text={`${tokenContext.symbol} Explorer`}
-                    url={`https://explorer.bitquery.io/bsc/token/${tokenContext.address}`}
+                    url={`https://explorer.bitquery.io/${chainContext?.chain.route}/token/${tokenContext.address}`}
                   />
                 }
               />

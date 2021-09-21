@@ -8,16 +8,39 @@ import {
   MenuList,
   Paper,
   MenuItem,
+  Typography,
 } from "@material-ui/core"
-import { useToken } from "../../../contexts/tokenContext"
 import { supportedChains } from "../../../utils/supportedChains"
-import { useHistory } from "react-router"
+import { useHistory } from "react-router-dom"
+import { useChain } from "../../../contexts/chainContext"
 
-const useStyles = makeStyles((theme) => ({}))
+const useStyles = makeStyles((theme) => ({
+  chainSelectButton: {
+    marginLeft: 3,
+    color: theme.palette.text.psPurple,
+    padding: ".66em",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "16ch",
+    fontWeight: 600,
+    textTransform: "none",
+    // border: "1px solid",
+    // borderColor: theme.palette.text.psPurple,
+  },
+  chainSelectItem: {
+    color: theme.palette.text.psPurple,
+    fontWeight: 600,
+  },
+  container: {
+    display: "flex",
+    alignItems: "center",
+  },
+}))
 
 export default function ChainSelect(props) {
   const classes = useStyles()
-  const tokenContext = useToken()
+  const chainContext = useChain()
   const history = useHistory()
 
   // chain select
@@ -33,7 +56,7 @@ export default function ChainSelect(props) {
   }
 
   const handleSelectChainClick = (chain) => {
-    tokenContext.setChain(chain)
+    chainContext.setChain(chain)
     history.push(`/${chain.route}`)
     handleCloseChainPopover()
   }
@@ -49,14 +72,18 @@ export default function ChainSelect(props) {
   }, [chainSelectOpen])
 
   return (
-    <>
+    <div className={classes.container}>
+      <Typography paragraph style={{ marginBottom: "0px" }}>
+        chain:
+      </Typography>
       <Button
+        className={classes.chainSelectButton}
         ref={chainSelectAnchorRef}
         aria-controls={chainSelectOpen ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggleChainPopover}
       >
-        {tokenContext.chain.label}
+        {chainContext.chain.label}
       </Button>
       <Popper
         open={chainSelectOpen}
@@ -78,6 +105,7 @@ export default function ChainSelect(props) {
                 <MenuList autoFocusItem={chainSelectOpen} id="menu-list-grow">
                   {supportedChains.map((n) => (
                     <MenuItem
+                      className={classes.chainSelectItem}
                       disabled={!n.enabled}
                       onClick={() => {
                         handleSelectChainClick(n)
@@ -92,6 +120,6 @@ export default function ChainSelect(props) {
           </Grow>
         )}
       </Popper>
-    </>
+    </div>
   )
 }

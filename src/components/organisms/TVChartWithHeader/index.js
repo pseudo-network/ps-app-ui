@@ -5,19 +5,17 @@ import { useToken } from "../../../contexts/tokenContext"
 
 // note: can only support one chart instance at a time
 export default function TVChartWithHeader(props) {
-  const tokenContext = useToken()
-
   return (
     <>
       <TVChartHeader
-        name={tokenContext.name}
-        percentChange={tokenContext.percentChange}
-        volume={tokenContext.volume}
-        currentPrice={tokenContext.currentPrice}
-        symbol={tokenContext.tvSymbol}
+        name={props.name}
+        percentChange={props.percentChange}
+        volume={props.volume}
+        currentPrice={props.currentPrice}
+        symbol={props.tvSymbol}
       />
       <br />
-      <TVChart symbol={tokenContext.tvSymbol} />
+      <TVChart symbol={props.tvSymbol} theme={props.theme} />
     </>
   )
 }

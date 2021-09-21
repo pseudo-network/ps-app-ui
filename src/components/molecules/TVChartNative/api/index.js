@@ -32,36 +32,6 @@ export default {
     setTimeout(() => cb(config), 0)
   },
 
-  // searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
-  //   console.log("====Search Symbols running")
-
-  //   const url = `${CHARTDATA_BASE_URL}/cryptos?search_query=${userInput.toLowerCase()}`
-  //   return rp({
-  //     url: `${url}`,
-  //   })
-  //     .then((res) => {
-  //       if (res && res.length > 0) {
-  //         const searchresults = res.map((item) => {
-  //           return {
-  //             symbol: item.name,
-  //             full_name: item.name,
-  //             description: item.symbol,
-  //             exchange: item.exchange,
-  //             ticker: `${item.name}:${item.symbol}:${item.address}:${WBNB_ADDRESS}`, // a concatenated string of needed fields
-  //             type: item.address,
-  //           }
-  //         })
-  //         onResultReadyCallback(searchresults)
-  //       } else {
-  //         onResultReadyCallback([])
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e)
-  //       onResultReadyCallback([])
-  //     })
-  // },
-
   resolveSymbol: (
     symbolTicker,
     onSymbolResolvedCallback,
@@ -122,7 +92,7 @@ export default {
       from = null
     }
 
-    var url = `${CHARTDATA_BASE_URL}/cryptos/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${limit}`
+    var url = `${CHARTDATA_BASE_URL}/chains/2/tokens/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${limit}`
 
     let bars = []
 
