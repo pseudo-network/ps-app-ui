@@ -1,20 +1,19 @@
 import * as React from "react"
 import { useRef, useEffect } from "react"
-import { useAppTheme } from "../../../contexts/appThemeContext"
-import useScript from "../../../hooks/useScript"
 
 export default function TVChartNative(props) {
   const tv = useRef(null)
-  // const appThemeContext = useAppTheme()
-  useScript("https://s3.tradingview.com/tv.js")
+  const containerID = "chart"
+
+  // useScript("https://s3.tradingview.com/tv.js")
 
   const widgetOptions = {
-    // theme: appThemeContext.darkMode == 1 ? "Dark" : "Light",
-    theme: "Dark",
-    symbol: props.symbol || "BITFINEX:ADAUSD",
+    theme: props.theme,
+    // theme: "Dark",
+    symbol: props.symbol || "UNKNOWN",
     height: "100%",
     width: "100%",
-    container_id: props.chartName || "native-chart",
+    container_id: props.chartName || containerID,
     interval: "5",
     timezone: "Etc/UTC",
     style: "1",
@@ -53,12 +52,10 @@ export default function TVChartNative(props) {
     minmov: 0.25,
   }
 
-  // todo: rerender :(
   useEffect(() => {
-    setTimeout(() => {
-      new TradingView.widget(widgetOptions)
-    }, 300)
-  })
+    if (tv.current) tv.current.remove()
+    tv.current = new TradingView.widget(widgetOptions)
+  }, [props.symbol, props.theme])
 
   return (
     <div

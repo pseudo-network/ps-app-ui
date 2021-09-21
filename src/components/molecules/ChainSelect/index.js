@@ -8,6 +8,7 @@ import {
   MenuList,
   Paper,
   MenuItem,
+  Typography,
 } from "@material-ui/core"
 import { supportedChains } from "../../../utils/supportedChains"
 import { useHistory } from "react-router-dom"
@@ -15,6 +16,7 @@ import { useChain } from "../../../contexts/chainContext"
 
 const useStyles = makeStyles((theme) => ({
   chainSelectButton: {
+    marginLeft: 3,
     color: theme.palette.text.psPurple,
     padding: ".66em",
     whiteSpace: "nowrap",
@@ -23,10 +25,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "16ch",
     fontWeight: 600,
     textTransform: "none",
+    // border: "1px solid",
+    // borderColor: theme.palette.text.psPurple,
   },
   chainSelectItem: {
     color: theme.palette.text.psPurple,
     fontWeight: 600,
+  },
+  container: {
+    display: "flex",
+    alignItems: "center",
   },
 }))
 
@@ -64,7 +72,10 @@ export default function ChainSelect(props) {
   }, [chainSelectOpen])
 
   return (
-    <>
+    <div className={classes.container}>
+      <Typography paragraph style={{ marginBottom: "0px" }}>
+        chain:
+      </Typography>
       <Button
         className={classes.chainSelectButton}
         ref={chainSelectAnchorRef}
@@ -109,6 +120,6 @@ export default function ChainSelect(props) {
           </Grow>
         )}
       </Popper>
-    </>
+    </div>
   )
 }

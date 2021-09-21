@@ -31,7 +31,7 @@ function useProvideWallet() {
   function getBalances(address) {
     return axios
       .get(
-        `${CHARTDATA_BASE_URL}/chains/${chainContext.chain.id}/accounts/${address}/balances`
+        `${CHARTDATA_BASE_URL}/chains/${chainContext.chain.id}/addresses/${address}/balances`
       )
       .then((res) => {
         if (res.data) {

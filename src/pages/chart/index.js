@@ -11,6 +11,7 @@ import { PSEUDOCOIN_ADDRESS } from "../../core/environments"
 import { binance } from "../../utils/supportedChains"
 import { useAppTheme } from "../../contexts/appThemeContext"
 import { useChain } from "../../contexts/chainContext"
+import PSCard from "../../components/molecules/PSCard"
 
 const useStyles = makeStyles((theme) => ({
   chartContainer: {
@@ -29,6 +30,7 @@ export default function Chart(props) {
   const { address } = props.match.params
 
   useEffect(() => {
+    console.log("use effect index")
     // todo: revise
     if (!address || address == "" || address == "-") {
       setUseNativeChart(true)
@@ -71,6 +73,17 @@ export default function Chart(props) {
       <NavFrame page={"Chart"} address={address}>
         {useNativeChart ? (
           <Box className={classes.chartContainer}>
+            <PSCard
+              title={chainContext.chain?.infoCard?.title}
+              content={
+                <>
+                  <Typography paragraph>
+                    {chainContext.chain?.infoCard?.description}
+                  </Typography>
+                </>
+              }
+            ></PSCard>
+            <br />
             <TVChartNative
               symbol={chainContext.chain.tvSymbol}
               theme={appThemeContext.darkMode == 1 ? "Dark" : "Light"}

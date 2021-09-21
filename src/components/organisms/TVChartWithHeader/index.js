@@ -5,8 +5,6 @@ import { useToken } from "../../../contexts/tokenContext"
 
 // note: can only support one chart instance at a time
 export default function TVChartWithHeader(props) {
-  const tokenContext = useToken()
-
   return (
     <>
       <TVChartHeader

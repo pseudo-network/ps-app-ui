@@ -43,7 +43,7 @@ function getTokenInfoByAddress(address, chainID) {
   // let quoteCurrency = busd ? BUSD_ADDRESS : WBNB_ADDRESS
   return axios
     .get(
-      `${CHARTDATA_BASE_URL}/chains/${chainID}/tokens/${address}/day-summary?quote_currency=${WBNB_ADDRESS}`
+      `${CHARTDATA_BASE_URL}/chains/${chainID}/tokens/${address}/day-summary`
     )
     .then((res) => {
       if (res.data) {
@@ -106,17 +106,17 @@ function useProvideToken() {
   )
 
   useEffect(() => {
-    getTokens(searchQuery).then((tokens) => {
-      // remove other pseudocoin that we made and abandoned
-      if (tokens?.length) {
-        const filteredTokens = tokens.filter(function (t) {
-          return t.address !== "0x63c14c64aaae6ca2f721e62b14c3bbcee9efcf9d"
-        })
-        setTokens([...filteredTokens])
-      } else {
-        setTokens([])
-      }
-    })
+    if (searchQuery != null && searchQuery != "") {
+      getTokens(searchQuery).then((tokens) => {
+        // remove other pseudocoin that we made and abandoned
+        if (tokens?.length) {
+          const filteredTokens = tokens.filter(function (t) {
+            return t.address !== "0x63c14c64aaae6ca2f721e62b14c3bbcee9efcf9d"
+          })
+          setTokens([...filteredTokens])
+        }
+      })
+    }
   }, [searchQuery])
 
   useEffect(() => {

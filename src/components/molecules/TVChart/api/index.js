@@ -93,7 +93,7 @@ export default {
       from = null
     }
 
-    var url = `${CHARTDATA_BASE_URL}/chains/2/tokens/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&quote_currency=${quoteCurrency}&limit=${limit}`
+    var url = `${CHARTDATA_BASE_URL}/chains/${chainID}/tokens/${baseCurrency}/bars?since=${from}&till=${to}&interval=${resolution}&limit=${limit}`
 
     let bars = []
 
