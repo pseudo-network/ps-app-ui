@@ -18,7 +18,7 @@ const AddressDetail = (props) => {
   /*
     ON RENDER FUNCTION/ MOUNT COMPENENT
   */
-  return <Box>PseudoCoin Charts Alpha 0.0.2</Box>
+  return <Box>PseudoCoin Charts Alpha 0.0.3</Box>
 }
 
 export default AddressDetail
