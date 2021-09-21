@@ -203,7 +203,7 @@ export default function Wallet(props) {
                         <ListItemText
                           primary={
                             <PSLink
-                              text={"View on BscScan"}
+                              text={"View on Blockchain Explorer"}
                               url={`${chainContext?.chain?.blockchainExplorerURL}/address/${walletContext.address}
                                 `}
                             ></PSLink>
